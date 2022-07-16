@@ -1,0 +1,36 @@
+.navbar {
+    background-color: #ffffffe3;
+    display: flex;
+
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    color: white;
+    background-color: #000000e3;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    transition: background-color 0.5s;
+    border: 2px solid transparent;
+}
+
+.btn:hover{
+    background-color: #000;
+}
+
+li:last-child{
+    margin-right: 2rem;
+}
+
+.img {
+    height: 50px;
+    padding: 0rem 1rem;
+    padding: 0.3rem 1rem;
+}

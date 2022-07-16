@@ -1,0 +1,30 @@
+/* ESTILOS GLOBALES */
+
+@import url(./normalize.css);
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
+
+body {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    background-color: #080808;
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
+    font-size: 1.2rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+li {
+    list-style: none;
+}
+
+a.active {
+    border: 2px solid blue;
+}

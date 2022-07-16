@@ -31,11 +31,19 @@ countryRoute.get('/', async (req, res, next) => {
         if (!cache.allCountries) await getAllCountries();
 
         if (name) {
-            const filterCountries = cache.allCountries.filter(country => country.name === name)
+            const filterCountries = cache.allCountries.filter(country => {
+                const regex = new RegExp(name, "gmi");
+                const isCountry = regex.exec(country.name);
+                if (isCountry) {
+                    country.index = isCountry.index
+                    return country;
+                }
+            })
+            filterCountries.sort((a, b) => a.index - b.index);
             return res.status(200).send(filterCountries);
         }
 
-        res.status(201).send('Datos agregados con exito');
+        res.status(201).send(cache.allCountries);
 
     } catch (error) {
         next(error);
@@ -44,14 +52,14 @@ countryRoute.get('/', async (req, res, next) => {
 
 countryRoute.get('/:id', async (req, res, next) => {
     const { id } = req.params;
-    if (!id) next(new Error('El ID es invalido'));
+    if (!id) next(new Error('El ID es requerido'));
 
     try {
         if (!cache.allCountries) await getAllCountries();
         const country = await Country.findByPk(id, { include: Activity });
 
         if (!country) next(new Error('El ID es invalido'));
-        res.status(200).send('Se encontro el pais' + country);
+        res.status(200).send(country);
 
     } catch (error) {
         next(error);

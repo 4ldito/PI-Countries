@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.infoContainer {
+    background-color: #0000ff77;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    padding: 4rem 10rem;
+    gap: 4rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.img {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.btn {
+    background-color: #0e0e14;;
+    padding: 1rem 4rem;
+    border-radius: 10px;
+    font-size: 1.8rem;
+    transition: background-color 0.3s;
+}
+
+.btn:hover { 
+    background-color: #000000;;
+}

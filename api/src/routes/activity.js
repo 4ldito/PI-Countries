@@ -9,7 +9,9 @@ router.post('/', async (req, res, next) => {
     const { name, difficulty, duration, season, countries } = req.body;
     try {
         if (!name || !difficulty || !duration || !season || !countries) next(new Error('Faltan datos'));
+
         if (!cache.allCountries) await getAllCountries();
+        
     } catch (error) {
         next(error)
     }
