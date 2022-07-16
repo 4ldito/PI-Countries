@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const countryRoute = require('./country');
+const { countryRoute } = require('./country');
 const activityRoute = require('./activity');
 
 const router = Router();
 
-router.use('/country', countryRoute)
-router.use('/activity', activityRoute)
+router.use('/countries', countryRoute)
+router.use('/activities', activityRoute)
 
 module.exports = router;

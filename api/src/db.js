@@ -41,9 +41,12 @@ Country.belongsToMany(Activity, { through: 'Country_Activity' });
 Activity.belongsToMany(Country, { through: 'Country_Activity' });
 
 // const test = Country.create({ name: 'argentina' }).then((value) => { console.log(value) })
+
 const cache = { allCountries: null };
+
 module.exports = {
-  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
+  Country, // Los guardo de esta forma para poder tener la ayuda Intellisense de vs
+  Activity,
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
   cache
 };
