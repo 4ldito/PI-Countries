@@ -54,10 +54,25 @@ countryRoute.get('/', async (req, res, next) => {
     }
 });
 
+countryRoute.get('/population/', async (req, res, next) => {
+    const { order } = req.query;
+    console.log('entro');
+    try {
+        if (!cache.allCountries) await getAllCountries();
+
+        if (order) cache.allCountries.sort((a, b) => b.population - a.population);
+        else cache.allCountries.sort((a, b) => a.population - b.population);
+        console.log('va a retornar:')
+        console.log(cache.allCountries)
+        res.status(200).send(cache.allCountries);
+    } catch (error) {
+        next(error);
+    }
+});
+
 countryRoute.get('/:id', async (req, res, next) => {
     const { id } = req.params;
     if (!id) next(new Error('El ID es requerido'));
-
     try {
         if (!cache.allCountries) await getAllCountries();
         const country = await Country.findByPk(id, { include: Activity });
@@ -94,7 +109,5 @@ countryRoute.get('/continent/:name', async (req, res, next) => {
         next(error);
     }
 });
-
-
 
 module.exports = { countryRoute, getAllCountries };

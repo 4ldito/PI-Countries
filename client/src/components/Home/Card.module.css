@@ -6,7 +6,15 @@
     width: 200px;
     height: 250px;
     text-align: center;
-    border-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: background-color 0.5s, transform 0.5s;
+}
+
+.container:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    background-color: #0d0c10;
 }
 
 .infoContainer {
@@ -30,3 +38,4 @@ h4.nameCountry {
     color: #1EB53A;
     margin-bottom: 0.4rem;
 }
+

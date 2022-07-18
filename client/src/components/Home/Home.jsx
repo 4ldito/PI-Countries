@@ -1,10 +1,10 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
-import { getCountries, getCountriesByName, getCountriesByContinent, getCountriesAlphabetically } from './../../redux/actions/actions';
+import { getCountriesByName, getCountriesByContinent, getCountriesAlphabetically, getCountriesByPopulation} from './../../redux/actions/actions';
 
 import style from './Home.module.css';
 import styleAside from './Aside.module.css';
@@ -19,12 +19,13 @@ const Home = () => {
   const [limit, setLimit] = useState({ min: 0, max: 8 });
   const [filteredCountries, setFilteredCountries] = useState([]);
 
-  const countries  = useSelector(state => state.countries.countries);
+  const countries = useSelector(state => state.countries.countries);
   const loaded = useSelector(state => state.countries.loaded);
   const countriesByName = useSelector(state => state.countries.countriesByName);
   const countriesByContinent = useSelector(state => state.countries.countriesByContinent);
+  const countriesByPopulation = useSelector(state => state.countries.countriesByPopulation);
 
-  const selectRef = useRef(null);
+  // const selectRef = useRef(null);
 
   let buttonsPage = [];
 
@@ -90,6 +91,21 @@ const Home = () => {
     else dispatch(getCountriesAlphabetically());
   }
 
+  const handlePopulationSelect = (e) => {
+    clearFilters();
+    console.log(countriesByPopulation)
+    if (e.target.value === 'Descendent') dispatch(getCountriesByPopulation('DES'))
+    else dispatch(getCountriesByPopulation());
+  }
+
+  const handleActivitySelect = (e) => {
+
+  }
+
+  useEffect(() => {
+    console.log(countriesByPopulation);
+  }, [countriesByPopulation]);
+
   useEffect(() => {
     if (countriesByContinent.length) setFilteredCountries(countriesByContinent);
   }, [countriesByContinent]);
@@ -125,7 +141,7 @@ const Home = () => {
 
         <div className={styleAside.filterContainer}>
           <label>Order Alphabetically</label>
-          <select ref={selectRef} defaultValue={'A-Z'} className={styleAside.select} name="continent">
+          <select defaultValue={'A-Z'} className={styleAside.select} name="continent">
             {Array.from(['A-Z', 'Z-A']).map((continent) => {
               return <option onClick={handleAlphabeticallySelect} key={continent} value={continent}>{continent}</option>
             })
@@ -134,11 +150,31 @@ const Home = () => {
         </div>
 
         <div className={styleAside.filterContainer}>
-          <label >Order Continent</label>
-          <select ref={selectRef} defaultValue={'Default'} className={styleAside.select} name="continent">
-            <option value={'Default'} disabled>Select a continent</option>
-            {Array.from(['All', 'Africa', 'South America', 'North America', 'Asia', 'Europe', 'Oceania', 'Antarctica']).map((continent) => {
+          <label>Order by Continent</label>
+          <select defaultValue={'All'} className={styleAside.select} name="continent">
+            {Array.from(['All', 'Africa', 'Antarctica', 'Asia', 'Europe', 'South America', 'North America', 'Oceania']).map((continent) => {
               return <option onClick={handleContinentSelect} key={continent} value={continent}>{continent}</option>
+            })
+            }
+          </select>
+        </div>
+
+        <div className={styleAside.filterContainer}>
+          <label>Order by Population</label>
+          <select defaultValue={'None'} className={styleAside.select} name="continent">
+            <option disabled selected value="None">None</option>
+            {Array.from(['Ascendent', 'Descendent']).map((continent) => {
+              return <option onClick={handlePopulationSelect} key={continent} value={continent}>{continent}</option>
+            })
+            }
+          </select>
+        </div>
+
+        <div className={styleAside.filterContainer}>
+          <label>Order by Activity</label>
+          <select defaultValue={'None'} className={styleAside.select} name="continent">
+            {Array.from(['None']).map((continent) => {
+              return <option onClick={handleActivitySelect} key={continent} value={continent}>{continent}</option>
             })
             }
           </select>

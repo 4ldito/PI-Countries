@@ -9,33 +9,42 @@ export function getCountries() {
 }
 
 export function getCountriesByName(name) {
-    return function (dispatch) { 
+    return function (dispatch) {
         return axios.get(`http://127.0.0.1:3001/api/countries?name=${name}`)
-        .then((response) => {
-            dispatch({type: GET_ALL_COUNTRIES_BY_NAME, payload: response.data});
-        }).catch(err => console.log(err))
+            .then((response) => {
+                dispatch({ type: GET_ALL_COUNTRIES_BY_NAME, payload: response.data });
+            }).catch(err => console.log(err))
     }
 }
 
 export function getCountriesAlphabetically(order) {
     order ? order = `?order=${order}` : order = '';
-    console.log(order);
-    return function (dispatch) { 
-        return axios.get(`http://127.0.0.1:3001/api/countries${order}`)
-        .then((response) => {
-            console.log(response.data)
-            dispatch({type: GET_ALL_COUNTRIES_BY_ALPHABETICALLY, payload: response.data});
-        }).catch(err => console.log(err))
+    return async function (dispatch) {
+        try {
+            const response = await axios.get(`http://127.0.0.1:3001/api/countries${order}`);
+            dispatch({ type: GET_ALL_COUNTRIES_BY_ALPHABETICALLY, payload: response.data });
+        } catch (err) {
+            return console.log(err);
+        }
     }
 }
-
 
 export function getCountriesByContinent(name) {
     return function (dispatch) {
         return axios.get(`http://127.0.0.1:3001/api/countries/continent/${name}`)
-        .then((response) => {
+            .then((response) => {
 
-            dispatch({type: GET_ALL_COUNTRIES_BY_CONTINENT, payload: response.data})
-        })
+                dispatch({ type: GET_ALL_COUNTRIES_BY_CONTINENT, payload: response.data })
+            })
+    }
+}
+
+export function getCountriesByPopulation(order) {
+    order ? order = `?order=${order}` : order = '';
+    return async function (dispatch) {
+        const response = await axios.get(`http://127.0.0.1:3001/api/countries/population${order}`);
+        console.log('respondio:')
+        console.log(response.data);
+        dispatch({ type: GET_ALL_COUNTRIES_BY_CONTINENT, payload: response.data });
     }
 }
