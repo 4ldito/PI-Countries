@@ -1,10 +1,10 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
-import { getCountries } from './../../redux/actions/actions';
+import { getCountries, getCountriesByName, getCountriesByContinent, getCountriesAlphabetically } from './../../redux/actions/actions';
 
 import style from './Home.module.css';
 import styleAside from './Aside.module.css';
@@ -14,24 +14,28 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const [searchedCountry, setSearchedCountry] = useState({value: ''});
-  //Limite de paginas
+  const [searchedCountry, setSearchedCountry] = useState({ value: '' });
+
   const [limit, setLimit] = useState({ min: 0, max: 8 });
   const [filteredCountries, setFilteredCountries] = useState([]);
 
-  const { countries } = useSelector(state => state.countries);
+  const countries  = useSelector(state => state.countries.countries);
   const loaded = useSelector(state => state.countries.loaded);
+  const countriesByName = useSelector(state => state.countries.countriesByName);
+  const countriesByContinent = useSelector(state => state.countries.countriesByContinent);
 
+  const selectRef = useRef(null);
 
   let buttonsPage = [];
 
   const pageActive = (btn) => {
     const lastActive = document.querySelector(`.${styleCountries.active}`);
     if (lastActive) lastActive.classList.remove(styleCountries.active);
+    if (!btn) btn = document.querySelector(`.${styleCountries.btnPage}`);
     btn.classList.add(styleCountries.active);
   }
 
-  const selectedPage = (pag) => {
+  const selectedPage = (pag, btn) => {
     let min, max;
     if (pag === 1) {
       min = 0;
@@ -41,36 +45,7 @@ const Home = () => {
       max = ((pag - 1) * 10) + 8;
     }
     setLimit({ min, max });
-  }
-
-  const handleOnClick = (e) => {
-    e.preventDefault();
-    const pag = Number(e.target.innerText);
-    selectedPage(pag);
-    pageActive(e.target)
-  }
-
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    // modificar para que sea con /post?query
-    const newFilter = countries.filter(country => {
-      const regex = new RegExp(searchedCountry.value.trim(), "gmi");
-      const isCountry = regex.exec(country.name);
-      if (isCountry) {
-        country.index = isCountry.index
-        return country;
-      }
-    });
-
-    if (newFilter.length <= 0) alert('No se encontraron >c');
-
-    newFilter.sort((a, b) => a.index - b.index);
-    setFilteredCountries(newFilter);
-    selectedPage(1);
-  }
-
-  const handleOnChange = (e) => {
-    setSearchedCountry({value: e.target.value})
+    pageActive(btn)
   }
 
   const getAllButtonsPages = () => {
@@ -82,36 +57,90 @@ const Home = () => {
     return buttonsPage;
   }
 
+  const clearFilters = () => {
+    // setSearchedCountry({value: ''});
+    // console.log(selectRef.current);
+    selectedPage(1);
+  }
+
+  const handleOnClick = (e) => {
+    e.preventDefault();
+    const pag = Number(e.target.innerText);
+    selectedPage(pag, e.target);
+  }
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    clearFilters();
+    dispatch(getCountriesByName(searchedCountry.value.trim()));
+  }
+
+  const handleInputChange = (e) => {
+    setSearchedCountry({ value: e.target.value })
+  }
+
+  const handleContinentSelect = (e) => {
+    clearFilters();
+    dispatch(getCountriesByContinent(e.target.value));
+  }
+
+  const handleAlphabeticallySelect = (e) => {
+    clearFilters();
+    if (e.target.value === 'Z-A') dispatch(getCountriesAlphabetically('DES'))
+    else dispatch(getCountriesAlphabetically());
+  }
+
+  useEffect(() => {
+    if (countriesByContinent.length) setFilteredCountries(countriesByContinent);
+  }, [countriesByContinent]);
+
+  useEffect(() => {
+    setFilteredCountries(countries);
+  }, [countries]);
+
   useEffect(() => {
     if (!loaded) {
-      dispatch(getCountries());
+      dispatch(getCountriesAlphabetically());
     } else {
-      setFilteredCountries(countries);
+      if (countriesByName.length) {
+        setFilteredCountries(countriesByName);
+      }
     }
-
-  }, [loaded]);
-
+  }, [loaded, countriesByName]);
 
   return (
     <div className={style.container}>
       <aside className={styleAside.container}>
+        <p htmlFor="">Filters</p>
         <div className={styleAside.searchContainer}>
           <div className={styleAside.labelSearch}>
-            <label htmlFor="filter">Search</label>
+            <label htmlFor="filter">By Name</label>
           </div>
           <div className={styleAside.inputSearchContainer}>
             <form onSubmit={handleOnSubmit} >
-              <input onChange={handleOnChange} value={searchedCountry.value} type="text" placeholder='Country name' id='filter' /><a href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
+              <input onChange={handleInputChange} value={searchedCountry.value} type="text" placeholder='Country name' id='filter' /><a onClick={handleOnSubmit} href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
             </form>
           </div>
         </div>
 
-        <div className={styleAside.filterContinentsContainer}>
-          <select defaultValue={'test'} className={styleAside.select} name="continent" id="">
-            {/* <option disabled selected>Select a continent</option> */}
-            <option value="item 1">Item 1</option>
-            <option value="item 2">Item 2</option>
-            <option value="item 3">Item 3</option>
+        <div className={styleAside.filterContainer}>
+          <label>Order Alphabetically</label>
+          <select ref={selectRef} defaultValue={'A-Z'} className={styleAside.select} name="continent">
+            {Array.from(['A-Z', 'Z-A']).map((continent) => {
+              return <option onClick={handleAlphabeticallySelect} key={continent} value={continent}>{continent}</option>
+            })
+            }
+          </select>
+        </div>
+
+        <div className={styleAside.filterContainer}>
+          <label >Order Continent</label>
+          <select ref={selectRef} defaultValue={'Default'} className={styleAside.select} name="continent">
+            <option value={'Default'} disabled>Select a continent</option>
+            {Array.from(['All', 'Africa', 'South America', 'North America', 'Asia', 'Europe', 'Oceania', 'Antarctica']).map((continent) => {
+              return <option onClick={handleContinentSelect} key={continent} value={continent}>{continent}</option>
+            })
+            }
           </select>
         </div>
       </aside>
@@ -122,18 +151,20 @@ const Home = () => {
         </div>
         <div className={styleCountries.cardsContainer}>
           {loaded ?
-            <>
-              {filteredCountries.map((element, index) => {
+            <> {filteredCountries[0]?.error ? 'no se encontraron' :
+
+              filteredCountries.map((element, index) => {
                 if (index <= limit.max && index >= limit.min) {
                   return <Card
                     name={element.name}
                     continent={element.continent}
+                    subregion={element.subregion}
                     flag={element.flag}
                     key={element.id}
                   />
                 }
               })
-              }
+            }
             </>
             : <p>cargando</p>}
         </div>

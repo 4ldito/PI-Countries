@@ -11,10 +11,13 @@
 
 .infoContainer {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .container h4 {
-    margin: 0.3rem;
+    margin: 0;
 }
 
 .imgContainer img{
@@ -23,6 +26,7 @@
     object-fit: cover;
 }
 
-.nameCountry {
+h4.nameCountry {
     color: #1EB53A;
+    margin-bottom: 0.4rem;
 }

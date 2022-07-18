@@ -43,9 +43,11 @@
 
 .pages {
     margin: 1rem;
-    border: 1px solid white;
+    border: 2px solid white;
     padding: 1rem;
     width: max-content;
+    border-radius: 10px;
+    background-color: #0000008a;
 }
 
 .btnPage {

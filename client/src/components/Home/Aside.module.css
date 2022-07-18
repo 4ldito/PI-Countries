@@ -48,6 +48,11 @@ input {
     background-color: #173CAA;
     padding: 0.7rem;
     border-top-right-radius: 10px;
+    transition: background-color 0.5s;
+}
+
+.inputSearchContainer i:hover {
+    background-color: #0e2468;
 }
 
 select {
@@ -55,10 +60,9 @@ select {
     width: 100%;
 }
 
-.select {
-    margin-top: 2rem;
-}
-
-.filterContinentsContainer {
+.filterContainer {
     display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    gap: 1rem;
 }
