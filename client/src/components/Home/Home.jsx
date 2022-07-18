@@ -93,7 +93,7 @@ const Home = () => {
 
   const handlePopulationSelect = (e) => {
     clearFilters();
-    console.log(countriesByPopulation)
+    // console.log(countriesByPopulation)
     if (e.target.value === 'Descendent') dispatch(getCountriesByPopulation('DES'))
     else dispatch(getCountriesByPopulation());
   }
@@ -103,7 +103,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log(countriesByPopulation);
+    setFilteredCountries(countriesByPopulation);
   }, [countriesByPopulation]);
 
   useEffect(() => {
@@ -162,7 +162,7 @@ const Home = () => {
         <div className={styleAside.filterContainer}>
           <label>Order by Population</label>
           <select defaultValue={'None'} className={styleAside.select} name="continent">
-            <option disabled selected value="None">None</option>
+            <option disabled value="None">None</option>
             {Array.from(['Ascendent', 'Descendent']).map((continent) => {
               return <option onClick={handlePopulationSelect} key={continent} value={continent}>{continent}</option>
             })

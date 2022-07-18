@@ -43,8 +43,6 @@ export function getCountriesByPopulation(order) {
     order ? order = `?order=${order}` : order = '';
     return async function (dispatch) {
         const response = await axios.get(`http://127.0.0.1:3001/api/countries/population${order}`);
-        console.log('respondio:')
-        console.log(response.data);
         dispatch({ type: GET_ALL_COUNTRIES_BY_CONTINENT, payload: response.data });
     }
 }
