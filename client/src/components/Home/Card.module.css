@@ -1,0 +1,28 @@
+.container {
+    background-color: #1C1B22;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 250px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.infoContainer {
+    height: 100%;
+}
+
+.container h4 {
+    margin: 0.3rem;
+}
+
+.imgContainer img{
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+}
+
+.nameCountry {
+    color: #1EB53A;
+}

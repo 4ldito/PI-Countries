@@ -2,3 +2,63 @@
     background-color: #1C1B22;
     padding: 1rem;
 }
+
+.searchContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.icon {
+    align-self: end;
+    font-size: 1.6rem;
+}
+
+.labelSearch {
+    display: flex;
+    align-items: center;
+}
+
+.labelSearch i {
+    margin-right: 0.5rem;
+}
+
+input {
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    outline: none;
+    box-shadow: none;
+    width: 170px;
+}
+
+.inputSearchContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.inputSearchContainer i {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background-color: #173CAA;
+    padding: 0.7rem;
+    border-top-right-radius: 10px;
+}
+
+select {
+    padding: 0.7rem;
+    width: 100%;
+}
+
+.select {
+    margin-top: 2rem;
+}
+
+.filterContinentsContainer {
+    display: flex;
+}

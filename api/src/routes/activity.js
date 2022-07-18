@@ -25,8 +25,6 @@ router.post('/', async (req, res, next) => {
         return res.send('Se agregaron correctamente las actividades!');
     }).catch(error => next(error));
 
-
-
 });
 
 

@@ -7,12 +7,12 @@
 }
 
 .infoContainer {
-    background-color: #0000ff77;
+    background-color: #4484a98a;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    padding: 4rem 10rem;
+    padding: 12rem 24rem;
     gap: 4rem;
     border-radius: 10px;
     margin-bottom: 1rem;

@@ -12,7 +12,8 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
     font-size: 1.2rem;
 }
 
@@ -27,4 +28,8 @@ li {
 
 a.active {
     border: 2px solid blue;
+}
+
+p {
+    margin: 0;
 }

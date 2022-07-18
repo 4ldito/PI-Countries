@@ -1,0 +1,60 @@
+.container {
+    background-color: #4484a98a;
+    margin: 2rem 3rem 0 3rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 74rem;
+}
+
+.titleContainer {
+    background: #1C1B22;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-bottom: 1.3rem;
+}
+
+.container h3 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 1rem;
+}
+
+.cardsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    max-width: 1200px;
+    min-height: 550px;
+    padding: 1rem;
+    gap: 2rem;
+
+}
+
+.containerPages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pages {
+    margin: 1rem;
+    border: 1px solid white;
+    padding: 1rem;
+    width: max-content;
+}
+
+.btnPage {
+    color: white;
+    margin: 0.3rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+}
+
+.active {
+    background-color: #0082FC;
+}
