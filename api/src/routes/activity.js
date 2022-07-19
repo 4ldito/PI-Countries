@@ -7,10 +7,11 @@ const router = Router();
 
 router.post('/', async (req, res, next) => {
     const { name, difficulty, duration, season, countries } = req.body;
+    console.log(name, difficulty, duration, season, countries);
+
     try {
         if (!name || !difficulty || !duration || !season || !countries) next(new Error('Faltan datos'));
         if (!cache.allCountries) await getAllCountries();
-        
     } catch (error) {
         next(error)
     }
@@ -21,7 +22,7 @@ router.post('/', async (req, res, next) => {
                 country.addActivity(activity);
             })
         });
-        return res.send('Se agregaron correctamente las actividades!');
+        return res.status(201).send(activity);
     }).catch(error => next(error));
 
 });

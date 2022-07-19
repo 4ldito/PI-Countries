@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
-import { getCountriesByName, getCountriesByContinent, getCountriesAlphabetically, getCountriesByPopulation} from './../../redux/actions/actions';
+import { getCountriesByName, getCountriesByContinent, getCountriesAlphabetically, getCountriesByPopulation} from './../../redux/actions/countries';
 
 import style from './Home.module.css';
 import styleAside from './Aside.module.css';

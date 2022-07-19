@@ -1,0 +1,145 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+.infoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #14364adf;
+    width: 50rem;
+    border-radius: 20px;
+    margin-bottom: 5rem;
+}
+
+.titleContainer {
+    width: 50rem;
+}
+
+.titleContainer h3 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 1rem;
+}
+
+.title {
+    background: #1C1B22;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-bottom: 1.3rem;
+    text-align: center;
+}
+
+.containerInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem
+}
+
+.label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+}
+
+.containerInput p {
+    font-size: 1.4rem;
+}
+
+
+.veryEasy {
+    color: #34FF5A;
+}
+
+.easy {
+    color: #05ed05;
+}
+
+.normal {
+    color: yellow;
+}
+
+.hard {
+    color: #FF002A;
+}
+
+.extreme {
+    color: #DA0024;
+
+}
+
+.durationInput {
+    width: 130px;
+}
+
+.select {
+    width: auto;
+}
+
+.containerSelectedCountries {
+    margin-top: 2rem;
+}
+
+.containerSelectedCountries h4 {
+    margin: 1rem;
+    text-align: center;
+}
+
+.selectedCountries {
+    border: 2px solid #009fff;
+    border-radius: 20px;
+    padding: 1rem;
+    background-color: #0000006e;
+}
+
+.noneCountry {
+    text-align: center;
+}
+
+.actualCountriesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.actualCountriesContainer img {
+    width: 60px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.listCountriesContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem 3rem;
+}
+
+.containerButton {
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    background-color: #0082FC;
+    color: white;
+    cursor: pointer;
+    font-size: 1.4rem;
+    border: 2px solid white;
+    transition: background-color 0.5s;
+}
+
+.btn:hover {
+    background-color: #0059ac;
+}

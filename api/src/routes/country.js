@@ -23,6 +23,7 @@ const getAllCountries = async () => {
 
     cache.allCountries = countriesProps;
     Country.bulkCreate(countriesProps);
+    
 }
 
 countryRoute.get('/', async (req, res, next) => {
