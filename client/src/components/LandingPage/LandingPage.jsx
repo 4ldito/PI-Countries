@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './LandingPage.module.css'
-import logo from '../../img/logo5.png';
+import logo from '../../img/logo.png';
 import { Link } from 'react-router-dom'
 
 const InitialPage = () => {

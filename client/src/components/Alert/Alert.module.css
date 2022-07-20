@@ -1,0 +1,46 @@
+.popup {
+    width: 400px;
+    background-color: #295197;
+    border: 10px;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    color: black;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 20px;
+    color: white;
+    border: 2px solid white;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.openPopUp {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.img{
+    width: 100px;
+    margin-top: -60px;
+}
+
+.title {
+    font-size: 1.4rem;
+}
+
+.btn {
+    margin-top: 1rem;
+    background-color: #28A128;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    border-radius: 10px;
+    border: 1px solid #191919;
+    transition: background-color 0.5s;
+}
+
+.btn:hover {
+    background-color: #057205;
+}

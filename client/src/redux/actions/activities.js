@@ -1,11 +1,20 @@
 import axios from "axios";
-import { CREATE_NEW_ACTIVITY } from "./ActionTypes";
+import { CREATE_NEW_ACTIVITY, CLEAN } from "./ActionTypes";
 
 export function createActivity(activity) {
-    console.log(activity);
     return async function (dispatch) {
-        const response = await axios.post('http://127.0.0.1:3001/api/activities/', activity);
+        try {
+            const response = await axios.post('http://127.0.0.1:3001/api/activities/', activity);
+            dispatch({ type: CREATE_NEW_ACTIVITY, payload: response.data });
+        } catch (error) {
+            dispatch({ type: CREATE_NEW_ACTIVITY, payload: { error: error.response.data } });
+        }
+    }
+}
 
-        dispatch({ type: CREATE_NEW_ACTIVITY, payload: response.data });
+
+export function clean() {
+    return {
+        type: CLEAN
     }
 }

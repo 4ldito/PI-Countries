@@ -28,8 +28,10 @@ server.use('/api/', routes);
 server.use((err, req, res) => { // eslint-disable-line no-unused-vars
   const status = err.status || 500;
   const message = err.message || err;
+  console.log('pq no entra al endware???')
   console.error(err);
-  res.status(status).send(message);
+  console.log('si entra')
+  res.status(status).json({message});
 });
 
 module.exports = server;

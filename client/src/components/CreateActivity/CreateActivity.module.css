@@ -107,6 +107,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 
 }
 
@@ -142,4 +143,31 @@
 
 .btn:hover {
     background-color: #0059ac;
+}
+
+.backgroundAlert {
+    background-color: #1c1b2294;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    visibility: hidden;
+}
+
+.btnX {
+    background-color: #d70024;
+    border: none;
+    padding: 0.1rem 0.45rem;
+    font-size: 1.1rem;
+    border-radius: 5000px;
+    margin-bottom: 0.3rem;
+    transition: background-color 0.3s;
+}
+.btnX:hover {
+    background-color: #940019;
+}
+
+.showVisibility {
+    visibility: visible;
 }
