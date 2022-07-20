@@ -10,7 +10,6 @@ import style from './CreateActivity.module.css';
 import styleAlert from '../Alert/Alert.module.css'
 
 /**
- * arreglar que cuando DESPUES de haber validado correctamente una actividad, si cambias de pagina y volves, q no aparezca la alerta
  * modificar input range
  * mostrar cuales son los inputs que faltan por rellenarrr
  */
