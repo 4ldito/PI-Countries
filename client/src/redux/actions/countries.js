@@ -1,4 +1,4 @@
-import { GET_ALL_COUNTRIES, GET_ALL_COUNTRIES_BY_ALPHABETICALLY, GET_ALL_COUNTRIES_BY_CONTINENT, GET_ALL_COUNTRIES_BY_NAME } from "./ActionTypes";
+import { CLEAN, GET_ALL_COUNTRIES, GET_ALL_COUNTRIES_BY_ALPHABETICALLY, GET_ALL_COUNTRIES_BY_CONTINENT, GET_ALL_COUNTRIES_BY_NAME } from "./ActionTypes";
 import axios from 'axios';
 
 export function getCountries() {
@@ -44,5 +44,20 @@ export function getCountriesByPopulation(order) {
     return async function (dispatch) {
         const response = await axios.get(`http://127.0.0.1:3001/api/countries/population${order}`);
         dispatch({ type: GET_ALL_COUNTRIES_BY_CONTINENT, payload: response.data });
+    }
+}
+
+export function getCountriesByActivity(name) {
+    return function (dispatch) {
+        return axios.get(`http://127.0.0.1:3001/api/countries/activities/${name}`)
+            .then((response) => {
+                dispatch({ type: GET_ALL_COUNTRIES_BY_CONTINENT, payload: response.data })
+            })
+    }
+}
+
+export function clean() {
+    return {
+        type: CLEAN
     }
 }

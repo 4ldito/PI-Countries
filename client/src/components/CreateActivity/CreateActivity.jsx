@@ -2,18 +2,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clean, createActivity } from '../../redux/actions/activities';
+import { cleanActivity, createActivity } from '../../redux/actions/activities';
 import { getCountries } from './../../redux/actions/countries';
 import Alert from './../Alert/Alert';
 
 import style from './CreateActivity.module.css';
 import styleAlert from '../Alert/Alert.module.css'
+import Loading from '../Loading/Loading';
 
 /**
  * modificar input range
- * mostrar cuales son los inputs que faltan por rellenarrr
  */
-
 
 const CreateActivity = () => {
 
@@ -23,7 +22,13 @@ const CreateActivity = () => {
   const createdActivity = useSelector(state => state.activities.newActivity);
 
   const containerAlert = useRef(null);
+  const containerLoading = useRef(null);
   const diffText = useRef(null);
+
+  const lblName = useRef(null);
+  const lblDuration = useRef(null);
+  const lblSeason = useRef(null);
+  const lblCountries = useRef(null);
 
   const [newActivity, setNewActivity] = useState({
     name: '',
@@ -38,8 +43,44 @@ const CreateActivity = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const { name, difficulty, duration, season, countries } = newActivity;
-    if (!name || !difficulty || !Number(duration) || !season || !countries.length) return showAlert('Error!', 'All inputs are required.', 'OK', 'error');
+    if (!name || !difficulty || !Number(duration) || !season || !countries.length) {
+      if (!name) {
+        lblName.current.classList.add(style.display);
+        lblName.current.parentElement.classList.add(style.errorContainer);
+      }
+      if (!Number(duration)) {
+        lblDuration.current.classList.add(style.display);
+        lblDuration.current.parentElement.classList.add(style.errorContainer);
+      }
+      if (!season) {
+        lblSeason.current.classList.add(style.display);
+        lblSeason.current.parentElement.classList.add(style.errorContainer);
+      }
+      if (!countries.length) {
+        lblCountries.current.classList.add(style.display);
+        lblCountries.current.parentElement.classList.add(style.errorContainer);
+      }
+      return showAlert('Error!', 'All inputs are required.', 'OK', 'error')
+    }
+    showLoading();
     dispatch(createActivity(newActivity));
+  }
+
+  const showLoading = () => {
+    containerLoading.current.classList.add(style.display);
+  }
+
+  const handleChangeName = (e) => {
+    const value = e.target.value;
+    if (!value) {
+      lblName.current.classList.add(style.display);
+      lblName.current.parentElement.classList.add(style.errorContainer);
+      setNewActivity(state => { return { ...state, name: value } });
+      return;
+    }
+    lblName.current.classList.remove(style.display);
+    lblName.current.parentElement.classList.remove(style.errorContainer);
+    setNewActivity(state => { return { ...state, name: value } });
   }
 
   const handleChangeDifficulty = (e) => {
@@ -57,10 +98,32 @@ const CreateActivity = () => {
     diffText.current.className = difficulties[difficulty - 1].className;
   }
 
+  const hanldeChangeDuration = (e) => {
+    const value = e.target.value;
+    if (!value) {
+      lblDuration.current.classList.add(style.display);
+      lblDuration.current.parentElement.classList.add(style.errorContainer);
+      setNewActivity(state => { return { ...state, duration: value } });
+      return;
+    }
+    lblDuration.current.classList.remove(style.display);
+    lblDuration.current.parentElement.classList.remove(style.errorContainer);
+    setNewActivity(state => { return { ...state, duration: value } })
+  }
+
+  const hanldeSeasonChange = (e) => {
+    const value = e.target.value;
+    lblSeason.current.classList.remove(style.display);
+    lblSeason.current.parentElement.classList.remove(style.errorContainer);
+    setNewActivity(state => { return { ...state, season: value } })
+  }
+
   const handleCountrySelect = (e) => {
     const country = e.target.value;
     const existsCountry = newActivity.countries.find(c => c === country);
-    if (existsCountry) return alert('Ya esta ese pais papi');
+    if (existsCountry) return showAlert('Error!', 'You can\'t add the same country twice.', 'OK', 'error');
+    lblCountries.current.classList.remove(style.display);
+    lblCountries.current.parentElement.classList.remove(style.errorContainer);
     setNewActivity(state => { return { ...state, countries: [...newActivity.countries, country] } })
   }
 
@@ -92,24 +155,32 @@ const CreateActivity = () => {
   useEffect(() => {
     if (alertInfo.showed) {
       const alert = containerAlert.current.children[0];
-      containerAlert.current.classList.toggle(style.showVisibility);
-      alert.classList.toggle(`${styleAlert.openPopUp}`);
+      containerAlert.current.classList.add(style.showVisibility);
+      alert.classList.add(`${styleAlert.openPopUp}`);
     }
   }, [alertInfo]);
 
   useEffect(() => {
-    if (createdActivity.created) showAlert('Activity Created', 'Activity has been created successfully =)', 'OK', 'success');
-    else if (createdActivity.info.error) showAlert('Error', createdActivity.info.error, 'OK', 'error');
+    if (createdActivity.created) {
+      containerLoading.current.classList.remove(style.display);
+      showAlert('Activity Created', 'Activity has been created successfully =)', 'OK', 'success')
+    } else if (createdActivity.info.error) {
+      containerLoading.current.classList.remove(style.display);
+      showAlert('Error', createdActivity.info.error, 'OK', 'error')
+    }
   }, [createdActivity]);
 
   useEffect(() => {
     return () => {
-      dispatch(clean());
+      dispatch(cleanActivity());
     }
   }, []);
 
   return (
     <>
+      <div ref={containerLoading} className={style.containerLoading}>
+        <Loading />
+      </div>
       <div className={style.container}>
         <div className={style.infoContainer}>
           <div className={style.titleContainer}>
@@ -118,7 +189,8 @@ const CreateActivity = () => {
           <form action="" method="post" onSubmit={handleOnSubmit}>
             <div className={style.containerInput}>
               <label className={style.label} htmlFor="name">Nombre</label>
-              <input value={newActivity.name} onChange={(e) => setNewActivity(state => { return { ...state, name: e.target.value } })} type="text" placeholder='Nombre' id='name' />
+              <input value={newActivity.name} onChange={handleChangeName} type="text" placeholder='Nombre' id='name' />
+              <label ref={lblName} htmlFor="name" className={style.lblWrong}>Please, type a name for the activity</label>
             </div>
 
             <div className={style.containerInput}>
@@ -129,28 +201,31 @@ const CreateActivity = () => {
 
             <div className={style.containerInput}>
               <label className={style.label} htmlFor="duration">Duration in hours (Max: 24)</label>
-              <input className={style.durationInput} value={newActivity.duration} onKeyPress={dontAllowLeters} onChange={(e) => setNewActivity(state => { return { ...state, duration: e.target.value } })} min={0} max={24} type="number" placeholder='Duration' id='duration' />
+              <input className={style.durationInput} value={newActivity.duration} onKeyPress={dontAllowLeters} onChange={hanldeChangeDuration} min={0} max={24} type="number" placeholder='Duration' id='duration' />
+              <label ref={lblDuration} htmlFor="duration" className={style.lblWrong}>Please, type a duration for the activity</label>
             </div>
 
             <div className={style.containerInput}>
               <label className={style.label} htmlFor="season">Season</label>
-              <select className={style.select} onChange={(e) => setNewActivity(state => { return { ...state, season: e.target.value } })} defaultValue={'None'} name="continent">
+              <select className={style.select} onChange={hanldeSeasonChange} defaultValue={'None'} name="continent" id='continent'>
                 <option disabled value="None">Select Season</option>
                 <option value="Summer">Summer</option>
                 <option value="Autumn">Autumn</option>
                 <option value="Winter">Winter</option>
                 <option value="Spring">Spring</option>
               </select>
+              <label ref={lblSeason} htmlFor="continent" className={style.lblWrong}>Please, choose a season for the activity</label>
             </div>
 
             <div className={style.containerInput}>
               <label className={style.label} htmlFor="season">Countries</label>
-              <select className={style.select} onChange={handleCountrySelect} defaultValue={'None'} name="continent">
+              <select className={style.select} onChange={handleCountrySelect} defaultValue={'None'} name="countries" id='countries'>
                 <option disabled value="None">Select a Country</option>
                 {allCountries?.map((country) => {
                   return <option key={country.id} value={country.id}>{country.name}</option>
                 })}
               </select>
+              <label ref={lblCountries} htmlFor="countries" className={style.lblWrong}>Please, choose at least one country for the activity</label>
               <div>
                 <div className={style.containerSelectedCountries}>
                   <h4>Selected Countries</h4>
@@ -176,21 +251,17 @@ const CreateActivity = () => {
             </div>
           </form>
         </div>
-
       </div>
-      {alertInfo.showed ?
-        <div className={style.backgroundAlert} ref={containerAlert}>
-          <Alert
-            title={alertInfo.title}
-            text={alertInfo.text}
-            textBTN={alertInfo.textBTN}
-            type={alertInfo.type}
-            background={containerAlert}
-          />
-        </div> : ''}
-
+      <div className={style.backgroundAlert} ref={containerAlert}>
+        <Alert
+          title={alertInfo.title}
+          text={alertInfo.text}
+          textBTN={alertInfo.textBTN}
+          type={alertInfo.type}
+          background={containerAlert}
+        />
+      </div>
     </>
-
   )
 }
 

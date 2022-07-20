@@ -1,0 +1,64 @@
+.globeLoader {
+    position: fixed;
+    font-size: 15rem;
+    color: #0082FC;
+    z-index: 10;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1C1B22;
+    padding: 1.4rem 6rem;
+    border-radius: 20px;
+    border: 4px solid salmon;
+}
+
+.globeLoader>i {
+    display: block;
+    position: absolute;
+    color: white;
+    font-size: 0.2em;
+    height: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(0deg);
+    transform-origin: center bottom;
+    animation: loader-spin 3s infinite ease-in-out;
+}
+
+.globeLoader>i::before {
+    position: relative;
+    top: -1.25em;
+}
+.globeLoader>p {
+    padding: 3rem 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+@keyframes loader-spin {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+
+    to {
+        transform: translateX(-50%) rotate(1turn);
+    }
+}
+
+.containerLoading {
+    background-color: black;
+    position: absolute;
+    
+    top: 50%;
+    left: 50%;
+
+}
+
+.background {
+    background-color: #1c1b2294;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}

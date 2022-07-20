@@ -4,14 +4,15 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
-import { getCountriesByName, getCountriesByContinent, getCountriesAlphabetically, getCountriesByPopulation} from './../../redux/actions/countries';
+import { getCountriesByName, getCountriesByContinent, getCountriesAlphabetically, getCountriesByPopulation, getCountriesByActivity } from './../../redux/actions/countries';
 
 import style from './Home.module.css';
 import styleAside from './Aside.module.css';
 import styleCountries from './Countries.module.css';
+import { cleanActivity, getActivities } from './../../redux/actions/activities';
+import Loading from '../Loading/Loading';
 
 const Home = () => {
-
   const dispatch = useDispatch();
 
   const [searchedCountry, setSearchedCountry] = useState({ value: '' });
@@ -25,7 +26,7 @@ const Home = () => {
   const countriesByContinent = useSelector(state => state.countries.countriesByContinent);
   const countriesByPopulation = useSelector(state => state.countries.countriesByPopulation);
 
-  // const selectRef = useRef(null);
+  const activities = useSelector(state => state.activities.activities);
 
   let buttonsPage = [];
 
@@ -99,7 +100,8 @@ const Home = () => {
   }
 
   const handleActivitySelect = (e) => {
-
+    clearFilters();
+    dispatch(getCountriesByActivity(e.target.value));
   }
 
   useEffect(() => {
@@ -111,8 +113,18 @@ const Home = () => {
   }, [countriesByContinent]);
 
   useEffect(() => {
+    // console.log(countries);
     setFilteredCountries(countries);
   }, [countries]);
+
+  useEffect(() => {
+    if (!activities.loaded) dispatch(getActivities());
+  }, [activities]);
+
+  useEffect(() => {
+
+    return () => { cleanActivity() }
+  }, []);
 
   useEffect(() => {
     if (!loaded) {
@@ -172,9 +184,10 @@ const Home = () => {
 
         <div className={styleAside.filterContainer}>
           <label>Order by Activity</label>
-          <select defaultValue={'None'} className={styleAside.select} name="continent">
-            {Array.from(['None']).map((continent) => {
-              return <option onClick={handleActivitySelect} key={continent} value={continent}>{continent}</option>
+          <select defaultValue={'All'} className={styleAside.select} name="continent">
+            <option onClick={handleActivitySelect} value="All">All</option>
+            {activities.all.map((activity) => {
+              return <option onClick={handleActivitySelect} key={activity.id} value={activity.name}>{activity.name}</option>
             })
             }
           </select>
@@ -202,7 +215,7 @@ const Home = () => {
               })
             }
             </>
-            : <p>cargando</p>}
+            : <Loading />}
         </div>
         <div className={styleCountries.containerPages}>
           <div className={styleCountries.pages}>
@@ -210,6 +223,7 @@ const Home = () => {
           </div>
         </div>
       </main>
+
     </div>
   )
 }

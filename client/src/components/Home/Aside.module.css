@@ -29,7 +29,7 @@
 input {
     padding: 0.48rem 0.8rem;
     border-radius: 10px;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     outline: none;
     box-shadow: none;
     width: 200px;
@@ -47,7 +47,7 @@ input {
     top: -1px;
     right: -1px;
     background-color: #173CAA;
-    padding: 0.7rem;
+    padding: 0.8rem;
     border-top-right-radius: 10px;
     transition: background-color 0.5s;
 }

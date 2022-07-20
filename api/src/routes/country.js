@@ -8,22 +8,26 @@ const countryRoute = Router();
 
 const getAllCountries = async () => {
     const { data } = await axios.get(API_ALL_URL);
-    const countriesProps = data.map((element) => {
-        return {
-            id: element.cca3,
-            name: element.name.common,
-            capital: element.capital ? element.capital[0] : 'This country doesn\'t have capital.',
-            flag: element.flags[0],
-            continent: element.continents[0],
-            subregion: element.subregion,
-            area: element.area,
-            population: element.population,
-        }
-    });
-
-    cache.allCountries = countriesProps;
-    Country.bulkCreate(countriesProps);
-    
+    if (!cache.allCountries) { // Si el cache está vacio, significa que la base de datos esta vacia, entonces la lleno
+        const countriesProps = data.map((element) => {
+            return {
+                id: element.cca3,
+                name: element.name.common,
+                capital: element.capital ? element.capital[0] : 'This country doesn\'t have capital.',
+                flag: element.flags[0],
+                continent: element.continents[0],
+                subregion: element.subregion,
+                area: element.area,
+                population: element.population,
+            }
+        });
+        await Country.bulkCreate(countriesProps);
+    }
+    // Guardo en caché todos los paises con las nuevas actividades
+    const countriesWithActivities = await Country.findAll({ include: Activity });
+    // console.log('En getAll')
+    // console.log(countriesWithActivities[0].dataValues.Activities);
+    cache.allCountries = countriesWithActivities;
 }
 
 countryRoute.get('/', async (req, res, next) => {
@@ -49,6 +53,8 @@ countryRoute.get('/', async (req, res, next) => {
             }
             return res.status(200).send(filterCountries);
         }
+        // console.log('//////////////desde get normal')
+        // console.log(cache.allCountries[0].dataValues.Activities);
         res.status(200).send(cache.allCountries);
     } catch (error) {
         next(error);
@@ -103,6 +109,30 @@ countryRoute.get('/continent/:name', async (req, res, next) => {
             return res.status(200).send(filterCountries);
         }
         res.status(404).send(new Error('El nombre del continente es requerido'));
+    } catch (error) {
+        next(error);
+    }
+});
+
+countryRoute.get('/activities/:name', async (req, res, next) => {
+    const { name } = req.params;
+
+    try {
+        if (!cache.allCountries) await getAllCountries();
+        if (name) {
+            let filterCountries;
+            if (name === 'All') filterCountries = cache.allCountries;
+            else {
+                filterCountries = cache.allCountries.filter(country => {
+                    if (country.Activities.length) {
+                        const countryHas = country.Activities.find((ac) => ac.name === name);
+                        return countryHas ? true : false;
+                    }
+                });
+            }
+            return res.status(200).send(filterCountries);
+        }
+        res.status(404).send(new Error('El nombre de la actividad es requerido'));
     } catch (error) {
         next(error);
     }

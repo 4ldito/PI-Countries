@@ -2,7 +2,7 @@
     width: 400px;
     background-color: #295197;
     border: 10px;
-    position: fixed;
+    position: relative;
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);

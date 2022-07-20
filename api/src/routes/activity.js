@@ -4,6 +4,14 @@ const { getAllCountries } = require('./country');
 
 const router = Router();
 
+router.get('/', async (req, res, next) => {
+    try {
+        const activities = await Activity.findAll();
+        res.send(activities)
+    } catch (error) {
+        next(error);
+    }
+});
 
 router.post('/', async (req, res, next) => {
     const { name, difficulty, duration, season, countries } = req.body;
@@ -19,9 +27,13 @@ router.post('/', async (req, res, next) => {
         countries.forEach(id => {
             Country.findByPk(id).then(country => {
                 country.addActivity(activity);
-            })
+            });
         });
-        return res.status(201).send(activity);
+
+        getAllCountries().then(() => {
+            return res.status(201).send(activity);
+        }).catch(error => next(error));
+
     }).catch(error => {
         if (error.name === 'SequelizeUniqueConstraintError') return res.status(500).send('Activity already exists.');
         res.status(500).send(error.message);
