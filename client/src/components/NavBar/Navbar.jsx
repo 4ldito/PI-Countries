@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <nav className={style.navbar}>
-      <Link to='/'>
+      <Link to='/home'>
         <img className={style.img} src={logo} alt="Logo" />
       </Link>
       <div className={style.btnsContainer}>
@@ -24,7 +24,7 @@ const Navbar = () => {
             <NavLink className={style.btn} to='/about'>About</NavLink>
           </li>
           <li>
-            <a onClick={() => navigate(-1)} className={style.btn} to='/'>Back</a>
+            <a onClick={() => navigate(-1)} className={style.btn}>Back</a>
           </li>
         </ul>
       </div>

@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { cleanCountryId, getCountryById } from './../../redux/actions/countries';
+import { cleanCountryId, getCountries, getCountryById } from './../../redux/actions/countries';
 
 import style from './CountryDetails.module.css';
 import Loading from './../Loading/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const subregions = {
   'Caribbean': 'America',
@@ -41,14 +42,51 @@ const CountryDetails = () => {
 
   /**
    * cuando se hace click en la bandera, mostrarla en grande 
-   * 
    */
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const params = useParams();
   const country = useSelector(state => state.countries.countryById);
+  const allCountries = useSelector(state => state.countries.countries);
   const [infoCountry, setInfoCountry] = useState({});
+
+  const moreInfo = useRef();
+
+  const [randomCountry, setRandomCountry] = useState(false);
+
+  const randomPage = () => {
+    setRandomCountry(true);
+    if (!allCountries.length) return dispatch(getCountries());
+    const max = allCountries.length - 1;
+    const numRandom = Math.round(Math.random() * max);
+    const country = allCountries[numRandom];
+    window.scroll({
+      top: 0,
+      left: 0
+    });
+    dispatch(cleanCountryId());
+    navigate(`/details/${country.id}`);
+  }
+
+  const handleBtnImg = () => {
+    moreInfo.current.classList.add(style.display)
+  }
+
+  const closeMoreInfo = () => {
+    moreInfo.current.classList.remove(style.display)
+  }
+
+  const handleBtnBack = () => {
+    dispatch(cleanCountryId());
+    navigate(-1);
+  }
+
+  useEffect(() => {
+    if (randomCountry) {
+      randomPage();
+    }
+  }, [allCountries]);
 
   useEffect(() => {
     if (!country.id) dispatch(getCountryById(params.id));
@@ -56,8 +94,7 @@ const CountryDetails = () => {
       if (!country.subregion) country.subregion = 'Antarctica';
       setInfoCountry({ ...country, continent: subregions[country.subregion] })
     }
-    console.log(country.Activities);
-  }, [country]);
+  }, [country, params]);
 
   useEffect(() => {
     window.scroll({
@@ -71,13 +108,16 @@ const CountryDetails = () => {
 
   return (
     <div className={style.container}>
+
       <div className={style.infoContainer}>
         {infoCountry.id ?
           <>
             <div className={style.containerTitleInfo}>
               <div className={style.containerTitleFlag}>
                 <div className={style.flagContainer}>
-                  <img src={infoCountry.flag} alt="" />
+                  <button onClick={handleBtnImg} className={style.btnImg}>
+                    <img src={infoCountry.flag} alt="" />
+                  </button>
                 </div>
                 <h2 className={style.countryName}>{infoCountry.name}</h2>
               </div>
@@ -119,36 +159,44 @@ const CountryDetails = () => {
             </div>
             <div className={style.containerActivities}>
               <h3>Activities</h3>
-              <div className={style.totalActivities}>
-                {infoCountry.Activities.length ?
-                  <>
-                    {infoCountry.Activities.map(activity => {
-                      return (
-                        <div key={activity.id} className={style.activityContainer}>
-                          <h4>{activity.name}</h4>
-                          <p>Duration: {activity.duration} hours</p>
-                          <p>Perfect season: {activity.season}</p>
-                          <p>Difficulty: {difficulties[activity.difficulty - 1]}</p>
-                        </div>
-                      )
-                    })}
-                  </>
-                  :
-                  <div style={{ width: '500px' }}>
-                    <p className={style.dontFound}>There is no activities for this country =(</p>
-                    <div className={style.containerAddBtn}>
-                      <Link to='/create-activities'>Add one by yourself!</Link>
+              <div>
+                <div className={style.totalActivities}>
+                  {infoCountry.Activities.length ?
+                    <>
+                      {infoCountry.Activities.map(activity => {
+                        return (
+                          <div key={activity.id} className={style.activityContainer}>
+                            <h4>{activity.name}</h4>
+                            <p>Duration: {activity.duration} hours</p>
+                            <p>Perfect season: {activity.season}</p>
+                            <p>Difficulty: {difficulties[activity.difficulty - 1]}</p>
+                          </div>
+                        )
+                      })}
+                    </>
+                    :
+                    <div style={{ width: '500px' }}>
+                      <p className={style.dontFound}>There is no activities for this country =(</p>
                     </div>
-                  </div>
-                }
+                  }
+                </div>
+                <div className={style.containerAddBtn}>
+                  <Link className={style.btn} to='/create-activities'>Add one by yourself!</Link>
+                </div>
+              </div>
+            </div>
+            <div onClick={closeMoreInfo} ref={moreInfo} className={style.background}>
+              <div className={style.containerMoreInfo}>
+                <h2 className={style.titleMoreInfo}>{infoCountry.name}</h2>
+                <img src={infoCountry.flag} alt="" />
               </div>
             </div>
           </>
           : <Loading />
         }
-        <div className="containerButons">
-          <button>Back</button>
-          <button>Go to a random Country</button>
+        <div className={style.containerButons}>
+          <button onClick={handleBtnBack} className={style.btn}>Back</button>
+          <button onClick={randomPage} className={style.btn}>Random Country</button>
         </div>
       </div>
     </div>

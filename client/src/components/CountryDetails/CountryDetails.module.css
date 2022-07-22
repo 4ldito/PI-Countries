@@ -1,3 +1,7 @@
+:root {
+    --container-background-color: #0275bae0;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -24,7 +28,7 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    background-color: #0c3147e0;
+    background-color: var(--container-background-color);
     border: 2px solid white;
     border-radius: 20px;
     padding: 1rem;
@@ -32,7 +36,7 @@
 }
 
 .codeContainer p {
-    background-color: #0056A7F2;
+    background-color: #101010;
     border: 2px solid white;
     padding: 1.6rem 1rem;
     max-width: 5rem;
@@ -62,10 +66,22 @@
     display: flex;
     align-items: center;
     padding: 0.5rem;
-    background-color: #0c3147e0;
+    background-color: var(--container-background-color);
     border: 2px solid white;
     border-radius: 20px;
     gap: 1rem;
+}
+
+.btnImg {
+    border: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.btnImg:hover {
+    transform: scale(1.25);
 }
 
 .flagContainer img {
@@ -95,19 +111,17 @@ path {
 }
 
 .icon {
-    background-color: #162025;
+    background-color: #101010;
     padding: 0.2rem 0.6rem;
     border-radius: 5000px;
 }
 
 .containerActivities {
     padding: 0.5rem;
-    background-color: #0c3147e0;
+    background-color: var(--container-background-color);
     border: 2px solid white;
     border-radius: 20px;
-    gap: 1rem;
     height: max-content;
-    padding-bottom: 15rem;
 }
 
 .containerActivities h3 {
@@ -124,7 +138,7 @@ path {
 }
 
 .activityContainer {
-    background-color: #000000c9;
+    background-color: #3a03ff47;
     border: 2px solid white;
     border-radius: 20px;
     padding: 0.5rem;
@@ -150,7 +164,8 @@ path {
     margin: 0.4rem;
 }
 
-.containerAddBtn a {
+.btn {
+    margin: 5rem 0rem 0rem 0rem;
     padding: 1rem 2rem;
     border-radius: 10px;
     background-color: #0082FC;
@@ -161,6 +176,45 @@ path {
     transition: background-color 0.5s;
 }
 
-.containerAddBtn a:hover {
+.btn:hover {
     background-color: #0059ac;
+}
+
+.containerButons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.background {
+    background-color: #1c1b2294;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.containerMoreInfo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1c1b22e6;
+    padding: 1rem;
+    border-radius: 20px;
+}
+
+.containerMoreInfo img {
+    border: 2px solid #101010;
+    border-radius: 20px;
+}
+
+.titleMoreInfo {
+    text-align: center;
+}
+
+.display {
+    display: block;
 }
