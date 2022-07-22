@@ -53,8 +53,6 @@ countryRoute.get('/', async (req, res, next) => {
             }
             return res.status(200).send(filterCountries);
         }
-        // console.log('//////////////desde get normal')
-        // console.log(cache.allCountries[0].dataValues.Activities);
         res.status(200).send(cache.allCountries);
     } catch (error) {
         next(error);
@@ -68,6 +66,7 @@ countryRoute.get('/population/', async (req, res, next) => {
 
         if (order) cache.allCountries.sort((a, b) => b.population - a.population);
         else cache.allCountries.sort((a, b) => a.population - b.population);
+        
         res.status(200).send(cache.allCountries);
     } catch (error) {
         next(error);
@@ -129,6 +128,7 @@ countryRoute.get('/activities/:name', async (req, res, next) => {
                         return countryHas ? true : false;
                     }
                 });
+                console.log(filterCountries);
             }
             return res.status(200).send(filterCountries);
         }

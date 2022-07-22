@@ -14,10 +14,11 @@
     width: 50rem;
     border-radius: 20px;
     margin-bottom: 5rem;
+    border: 2px solid #fff;
 }
 
 .titleContainer {
-    width: 50rem;
+    width: 100%;
 }
 
 .titleContainer h3 {
@@ -54,7 +55,7 @@
     padding-top: 0.2rem;
     font-weight: 100;
     color: #d93025;
-    display: none;
+
 }
 
 .containerLoading {

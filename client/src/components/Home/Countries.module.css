@@ -1,14 +1,14 @@
 .container {
     background-color: #4484a98a;
-    margin: 2rem 3rem 0px 3rem;
+    margin: 2rem 3rem 5rem 3rem;
     border-radius: 20px;
     text-align: center;
-    margin-bottom: 5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 74rem;
+    width: 75rem;
+    border: 2px solid white;
 }
 
 .titleContainer {
@@ -32,7 +32,11 @@
     min-height: 570px;
     padding: 1rem;
     gap: 2rem;
+}
 
+.cardsContainer a {
+    width: 200px;
+    height: 250px;
 }
 
 .containerPages {

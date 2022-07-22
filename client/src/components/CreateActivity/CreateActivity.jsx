@@ -25,17 +25,12 @@ const CreateActivity = () => {
   const containerLoading = useRef(null);
   const diffText = useRef(null);
 
-  const lblName = useRef(null);
-  const lblDuration = useRef(null);
-  const lblSeason = useRef(null);
-  const lblCountries = useRef(null);
-
   const [newActivity, setNewActivity] = useState({
-    name: '',
+    name: { text: '', error: false },
     difficulty: '1',
-    duration: '',
-    season: '',
-    countries: []
+    duration: { hours: '', error: false },
+    season: { name: '', error: false },
+    countries: { all: [], error: false }
   });
 
   const [alertInfo, setAlertInfo] = useState({ title: '', text: '', textBTN: '', type: '' });
@@ -43,27 +38,30 @@ const CreateActivity = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const { name, difficulty, duration, season, countries } = newActivity;
-    if (!name || !difficulty || !Number(duration) || !season || !countries.length) {
-      if (!name) {
-        lblName.current.classList.add(style.display);
-        lblName.current.parentElement.classList.add(style.errorContainer);
+    if (!name.text || !difficulty || !Number(duration.hours) || !season.name || !countries.all.length) {
+      if (!name.text) {
+        setNewActivity(state => { return { ...state, name: { text: state.name.text, error: true } } });
       }
-      if (!Number(duration)) {
-        lblDuration.current.classList.add(style.display);
-        lblDuration.current.parentElement.classList.add(style.errorContainer);
+      if (!Number(duration.hours)) {
+        setNewActivity(state => { return { ...state, duration: { hours: state.duration.hours, error: true } } })
       }
-      if (!season) {
-        lblSeason.current.classList.add(style.display);
-        lblSeason.current.parentElement.classList.add(style.errorContainer);
+      if (!season.name) {
+        setNewActivity(state => { return { ...state, season: { name: state.season.name, error: true } } })
       }
-      if (!countries.length) {
-        lblCountries.current.classList.add(style.display);
-        lblCountries.current.parentElement.classList.add(style.errorContainer);
+      if (!countries.all.length) {
+        setNewActivity(state => { return { ...state, countries: { all: state.countries.all, error: true } } });
       }
       return showAlert('Error!', 'All inputs are required.', 'OK', 'error')
     }
     showLoading();
-    dispatch(createActivity(newActivity));
+    const activity = {
+      name: newActivity.name.text,
+      difficulty: newActivity.difficulty,
+      duration: newActivity.duration.hours,
+      season: newActivity.season.name,
+      countries: newActivity.countries.all
+    }
+    dispatch(createActivity(activity));
   }
 
   const showLoading = () => {
@@ -73,14 +71,10 @@ const CreateActivity = () => {
   const handleChangeName = (e) => {
     const value = e.target.value;
     if (!value) {
-      lblName.current.classList.add(style.display);
-      lblName.current.parentElement.classList.add(style.errorContainer);
-      setNewActivity(state => { return { ...state, name: value } });
+      setNewActivity(state => { return { ...state, name: { text: value, error: true } } });
       return;
     }
-    lblName.current.classList.remove(style.display);
-    lblName.current.parentElement.classList.remove(style.errorContainer);
-    setNewActivity(state => { return { ...state, name: value } });
+    setNewActivity(state => { return { ...state, name: { text: value, error: false } } });
   }
 
   const handleChangeDifficulty = (e) => {
@@ -101,37 +95,29 @@ const CreateActivity = () => {
   const hanldeChangeDuration = (e) => {
     const value = e.target.value;
     if (!value) {
-      lblDuration.current.classList.add(style.display);
-      lblDuration.current.parentElement.classList.add(style.errorContainer);
-      setNewActivity(state => { return { ...state, duration: value } });
+      setNewActivity(state => { return { ...state, duration: { hours: value, error: true } } });
       return;
     }
-    lblDuration.current.classList.remove(style.display);
-    lblDuration.current.parentElement.classList.remove(style.errorContainer);
-    setNewActivity(state => { return { ...state, duration: value } })
+    setNewActivity(state => { return { ...state, duration: { hours: value, error: false } } });
   }
 
   const hanldeSeasonChange = (e) => {
     const value = e.target.value;
-    lblSeason.current.classList.remove(style.display);
-    lblSeason.current.parentElement.classList.remove(style.errorContainer);
-    setNewActivity(state => { return { ...state, season: value } })
+    setNewActivity(state => { return { ...state, season: { name: value, error: false } } });
   }
 
   const handleCountrySelect = (e) => {
     const country = e.target.value;
-    const existsCountry = newActivity.countries.find(c => c === country);
+    const existsCountry = newActivity.countries.all.find(c => c === country);
     if (existsCountry) return showAlert('Error!', 'You can\'t add the same country twice.', 'OK', 'error');
-    lblCountries.current.classList.remove(style.display);
-    lblCountries.current.parentElement.classList.remove(style.errorContainer);
-    setNewActivity(state => { return { ...state, countries: [...newActivity.countries, country] } })
+    setNewActivity(state => { return { ...state, countries: { all: [...newActivity.countries.all, country], error: false } } });
   }
 
   const handleRemoveClick = (e) => {
     e.preventDefault();
     const id = e.target.id;
-    const countries = newActivity.countries.filter(c => c !== id);
-    setNewActivity(state => { return { ...state, countries } });
+    const countries = newActivity.countries.all.filter(c => c !== id);
+    setNewActivity(state => { return { ...state, countries: { all: countries, error: false } } });
   }
 
   const dontAllowLeters = (e) => {
@@ -145,8 +131,8 @@ const CreateActivity = () => {
   }
 
   useEffect(() => {
-    if (newActivity.duration > 24) setNewActivity(state => { return { ...state, duration: 24 } });
-  }, [newActivity.duration]);
+    if (newActivity.duration.hours > 24) setNewActivity(state => { return { ...state, duration: { hours: 24, error: false } } });
+  }, [newActivity.duration.hours]);
 
   useEffect(() => {
     if (!allCountries.length) dispatch(getCountries());
@@ -187,10 +173,10 @@ const CreateActivity = () => {
             <h3 className={style.title}>New Activity</h3>
           </div>
           <form action="" method="post" onSubmit={handleOnSubmit}>
-            <div className={style.containerInput}>
-              <label className={style.label} htmlFor="name">Nombre</label>
-              <input value={newActivity.name} onChange={handleChangeName} type="text" placeholder='Nombre' id='name' />
-              <label ref={lblName} htmlFor="name" className={style.lblWrong}>Please, type a name for the activity</label>
+            <div className={newActivity.name.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
+              <label className={style.label} htmlFor="name">Name</label>
+              <input value={newActivity.name.text} onChange={handleChangeName} type="text" placeholder='Name' id='name' />
+              {newActivity.name.error && <label htmlFor="name" className={style.lblWrong}>Please, type a name for the activity</label>}
             </div>
 
             <div className={style.containerInput}>
@@ -199,13 +185,13 @@ const CreateActivity = () => {
               <p ref={diffText} className={style.veryEasy} >Very Easy</p>
             </div>
 
-            <div className={style.containerInput}>
+            <div className={newActivity.duration.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
               <label className={style.label} htmlFor="duration">Duration in hours (Max: 24)</label>
-              <input className={style.durationInput} value={newActivity.duration} onKeyPress={dontAllowLeters} onChange={hanldeChangeDuration} min={0} max={24} type="number" placeholder='Duration' id='duration' />
-              <label ref={lblDuration} htmlFor="duration" className={style.lblWrong}>Please, type a duration for the activity</label>
+              <input className={style.durationInput} value={newActivity.duration.hours} onKeyPress={dontAllowLeters} onChange={hanldeChangeDuration} min={0} max={24} type="number" placeholder='Duration' id='duration' />
+              {newActivity.duration.error && <label htmlFor="duration" className={style.lblWrong}>Please, type a duration for the activity</label>}
             </div>
 
-            <div className={style.containerInput}>
+            <div className={newActivity.season.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
               <label className={style.label} htmlFor="season">Season</label>
               <select className={style.select} onChange={hanldeSeasonChange} defaultValue={'None'} name="continent" id='continent'>
                 <option disabled value="None">Select Season</option>
@@ -214,25 +200,25 @@ const CreateActivity = () => {
                 <option value="Winter">Winter</option>
                 <option value="Spring">Spring</option>
               </select>
-              <label ref={lblSeason} htmlFor="continent" className={style.lblWrong}>Please, choose a season for the activity</label>
+              {newActivity.season.error && <label htmlFor="continent" className={style.lblWrong}>Please, choose a season for the activity</label>}
             </div>
 
-            <div className={style.containerInput}>
-              <label className={style.label} htmlFor="season">Countries</label>
+            <div className={newActivity.countries.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
+              <label className={style.label} htmlFor="countries">Countries</label>
               <select className={style.select} onChange={handleCountrySelect} defaultValue={'None'} name="countries" id='countries'>
                 <option disabled value="None">Select a Country</option>
                 {allCountries?.map((country) => {
                   return <option key={country.id} value={country.id}>{country.name}</option>
                 })}
               </select>
-              <label ref={lblCountries} htmlFor="countries" className={style.lblWrong}>Please, choose at least one country for the activity</label>
+              {newActivity.countries.error && <label htmlFor="countries" className={style.lblWrong}>Please, choose at least one country for the activity</label>}
               <div>
                 <div className={style.containerSelectedCountries}>
                   <h4>Selected Countries</h4>
                   <div className={style.selectedCountries}>
-                    {newActivity.countries.length ?
+                    {newActivity.countries.all.length ?
                       <div className={style.listCountriesContainer}>
-                        {newActivity.countries.map(country => {
+                        {newActivity.countries.all.map(country => {
                           const actualCountry = allCountries.find((c) => c.id === country)
                           return (
                             <div key={actualCountry.id} className={style.actualCountriesContainer}>

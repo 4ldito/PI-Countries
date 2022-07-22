@@ -1,0 +1,93 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+.infoContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #4484a98a;
+    width: 70rem;
+    min-height: 50rem;
+    border-radius: 20px;
+    margin-bottom: 5rem;
+    border: 2px solid white;
+}
+
+.countryInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 2rem;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background-color: #0c3147e0;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.codeContainer {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.textIconContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.titleContainer {
+    width: 100%;
+}
+
+.flagContainer {
+    margin: 1rem;
+}
+
+.flagContainer img {
+    width: 500px;
+    border-radius: 40px;
+}
+
+.titleContainer h3 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 1rem;
+}
+
+.title {
+    background-color: #1C1B22;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-bottom: 1.3rem;
+    text-align: center;
+}
+
+.test {
+    color: red;
+}
+
+path {
+    fill: white;
+}
+
+.icon {
+    background-color: #162025;
+    padding: 0.2rem 0.6rem;
+    border-radius: 5000px;
+
+}

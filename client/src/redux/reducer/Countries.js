@@ -1,4 +1,14 @@
-import { CLEAN, GET_ALL_COUNTRIES, GET_ALL_COUNTRIES_BY_ALPHABETICALLY, GET_ALL_COUNTRIES_BY_CONTINENT, GET_ALL_COUNTRIES_BY_NAME, GET_ALL_COUNTRIES_BY_POPULATION } from "../actions/ActionTypes";
+import {
+    CLEAN,
+    CLEAN_COUNTRY_ID,
+    GET_ALL_COUNTRIES,
+    GET_ALL_COUNTRIES_BY_ACTIVITIES,
+    GET_ALL_COUNTRIES_BY_ALPHABETICALLY,
+    GET_ALL_COUNTRIES_BY_CONTINENT,
+    GET_ALL_COUNTRIES_BY_NAME,
+    GET_ALL_COUNTRIES_BY_POPULATION,
+    GET_COUNTRY_BY_ID
+} from "../actions/ActionTypes";
 
 const initialState = {
     countries: [],
@@ -6,6 +16,7 @@ const initialState = {
     countriesByContinent: [],
     countriesByPopulation: [],
     countriesByActivity: [],
+    countryById: {},
     loaded: false
 }
 
@@ -22,8 +33,22 @@ export default function countries(state = initialState, { type, payload }) {
             return { ...state, countries: payload, loaded: true }
         case GET_ALL_COUNTRIES_BY_POPULATION:
             return { ...state, countriesByPopulation: payload }
+        case GET_ALL_COUNTRIES_BY_ACTIVITIES:
+            return { ...state, countriesByActivity: payload }
+        case GET_COUNTRY_BY_ID:
+            return { ...state, countryById: payload }
+        case CLEAN_COUNTRY_ID:
+            return {...state, countryById: {}}
         case CLEAN:
-            return { countries: [], countriesByName: [], countriesByContinent: [], countriesByPopulation: [], loaded: false }
+            return {
+                countries: [],
+                countriesByName: [],
+                countriesByContinent: [],
+                countriesByPopulation: [],
+                countriesByActivity: [],
+                countryById: {},
+                loaded: false
+            }
         default:
             return state;
     }

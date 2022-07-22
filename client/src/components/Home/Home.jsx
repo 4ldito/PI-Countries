@@ -3,14 +3,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Card from './Card';
+import Loading from '../Loading/Loading';
+
 import { getCountriesByName, getCountriesByContinent, getCountriesAlphabetically, getCountriesByPopulation, getCountriesByActivity } from './../../redux/actions/countries';
+import { cleanActivity, getActivities } from './../../redux/actions/activities';
 
 import style from './Home.module.css';
 import styleAside from './Aside.module.css';
 import styleCountries from './Countries.module.css';
-import { cleanActivity, getActivities } from './../../redux/actions/activities';
-import Loading from '../Loading/Loading';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,6 +27,7 @@ const Home = () => {
   const countriesByName = useSelector(state => state.countries.countriesByName);
   const countriesByContinent = useSelector(state => state.countries.countriesByContinent);
   const countriesByPopulation = useSelector(state => state.countries.countriesByPopulation);
+  const countriesByActivity = useSelector(state => state.countries.countriesByActivity);
 
   const activities = useSelector(state => state.activities.activities);
 
@@ -105,6 +108,10 @@ const Home = () => {
   }
 
   useEffect(() => {
+    setFilteredCountries(countriesByActivity);
+  }, [countriesByActivity]);
+
+  useEffect(() => {
     setFilteredCountries(countriesByPopulation);
   }, [countriesByPopulation]);
 
@@ -122,7 +129,6 @@ const Home = () => {
   }, [activities]);
 
   useEffect(() => {
-
     return () => { cleanActivity() }
   }, []);
 
@@ -202,15 +208,18 @@ const Home = () => {
           {loaded ?
             <> {filteredCountries[0]?.error ? 'no se encontraron' :
 
-              filteredCountries.map((element, index) => {
+              filteredCountries.map((c, index) => {
                 if (index <= limit.max && index >= limit.min) {
-                  return <Card
-                    name={element.name}
-                    continent={element.continent}
-                    subregion={element.subregion}
-                    flag={element.flag}
-                    key={element.id}
-                  />
+                  return (
+                    <Link key={c.id} to={`/details/${c.id}`}>
+                      <Card
+                        name={c.name}
+                        continent={c.continent}
+                        subregion={c.subregion}
+                        flag={c.flag}
+
+                      />
+                    </Link>)
                 }
               })
             }
@@ -228,4 +237,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

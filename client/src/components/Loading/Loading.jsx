@@ -4,7 +4,7 @@ const Loading = () => {
     return (
         <div className={style.background}>
             <div className={style.containerLoading}>
-                <div className={`${style.globeLoader} fas fa-globe-americas`}>
+                <div className={`${style.globeLoader} fa-solid fa-globe`}>
                     <i className="fas fa-plane"></i>
                     <p>LOADING..</p>
                 </div>
@@ -12,5 +12,4 @@ const Loading = () => {
         </div>
     )
 }
-
 export default Loading
