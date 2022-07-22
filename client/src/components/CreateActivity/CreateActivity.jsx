@@ -12,6 +12,7 @@ import Loading from '../Loading/Loading';
 
 /**
  * modificar input range
+ * cuando se carga la actividad, vaciar los campos
  */
 
 const CreateActivity = () => {

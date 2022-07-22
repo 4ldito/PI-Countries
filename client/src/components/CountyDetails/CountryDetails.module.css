@@ -6,28 +6,21 @@
 }
 
 .infoContainer {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 0.9fr 1fr;
     background-color: #4484a98a;
     width: 70rem;
     min-height: 50rem;
     border-radius: 20px;
     margin-bottom: 5rem;
     border: 2px solid white;
-}
-
-.countryInfo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 2rem;
+    padding: 1rem;
+    gap: 1rem;
 }
 
 .detailsContainer {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     width: 100%;
@@ -38,10 +31,25 @@
     gap: 1rem;
 }
 
+.codeContainer p {
+    background-color: #0056A7F2;
+    border: 2px solid white;
+    padding: 1.6rem 1rem;
+    max-width: 5rem;
+    border-radius: 5000px;
+    position: absolute;
+    top: -7%;
+    left: 90%;
+}
+
 .codeContainer {
-    display: flex;
-    justify-content: center;
     font-size: 1.5rem;
+}
+
+.containerTitleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
 }
 
 .textIconContainer {
@@ -50,31 +58,32 @@
     gap: 1rem;
 }
 
-.titleContainer {
-    width: 100%;
-}
-
-.flagContainer {
-    margin: 1rem;
+.containerTitleFlag {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #0c3147e0;
+    border: 2px solid white;
+    border-radius: 20px;
+    gap: 1rem;
 }
 
 .flagContainer img {
-    width: 500px;
-    border-radius: 40px;
+    height: 90px;
+    border-radius: 100%;
+    width: 90px;
+    object-fit: cover;
+}
+
+.countryName {
+    font-size: 2.5rem;
+    margin: 0;
 }
 
 .titleContainer h3 {
     font-size: 2rem;
     margin: 0;
     padding: 1rem;
-}
-
-.title {
-    background-color: #1C1B22;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    margin-bottom: 1.3rem;
-    text-align: center;
 }
 
 .test {
@@ -89,5 +98,69 @@ path {
     background-color: #162025;
     padding: 0.2rem 0.6rem;
     border-radius: 5000px;
+}
 
+.containerActivities {
+    padding: 0.5rem;
+    background-color: #0c3147e0;
+    border: 2px solid white;
+    border-radius: 20px;
+    gap: 1rem;
+    height: max-content;
+    padding-bottom: 15rem;
+}
+
+.containerActivities h3 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.totalActivities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.activityContainer {
+    background-color: #000000c9;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.activityContainer h4 {
+    text-transform: uppercase;
+    margin: 0%;
+    font-size: 1.5rem;
+}
+
+.dontFound {
+    text-align: center;
+}
+
+.containerAddBtn {
+    display: flex;
+    justify-content: center;
+    margin: 0.4rem;
+}
+
+.containerAddBtn a {
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    background-color: #0082FC;
+    color: white;
+    cursor: pointer;
+    font-size: 1.4rem;
+    border: 2px solid white;
+    transition: background-color 0.5s;
+}
+
+.containerAddBtn a:hover {
+    background-color: #0059ac;
 }

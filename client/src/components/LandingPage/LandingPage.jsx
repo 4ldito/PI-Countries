@@ -8,7 +8,7 @@ const InitialPage = () => {
         <div className={style.container}>
             <div className={style.infoContainer}>
                 <img className={style.img} src={logo} alt="Logo" />
-                <Link to='/home' className={style.btn} >Home</Link>
+                <Link to='/home' className={style.btn} >Start</Link>
             </div>
         </div>
     )

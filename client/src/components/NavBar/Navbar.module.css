@@ -1,6 +1,7 @@
 .navbar {
     background-color: #ffffffe3;
     display: flex;
+    justify-content: space-between;
     /* left: 0; 
 	top: 0; 
 	position: fixed; 
@@ -8,11 +9,17 @@
     z-index: 10; */
 }
 
+.btnsContainer {
+    display: flex;
+    gap: 1rem;
+}
+
 .list {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
 }
 
 .btn {
