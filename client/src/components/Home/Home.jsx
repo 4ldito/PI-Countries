@@ -1,13 +1,14 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Loading from '../Loading/Loading';
 
-import { getCountriesByName, getCountriesByContinent, getCountriesAlphabetically, getCountriesByPopulation, getCountriesByActivity } from './../../redux/actions/countries';
+import { getCountries, filterCountries } from './../../redux/actions/countries';
 import { cleanActivity, getActivities } from './../../redux/actions/activities';
 
 import style from './Home.module.css';
@@ -20,16 +21,24 @@ const Home = () => {
   const [searchedCountry, setSearchedCountry] = useState({ value: '' });
 
   const [limit, setLimit] = useState({ min: 0, max: 8 });
+  // const [filteredCountries, setFilteredCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
+  const [actualFilters, setActualFilters] = useState({
+    name: '',
+    order: '', // este hace referencia a alfabeticamente y por poblacion
+    continent: '',
+    activity: ''
+  });
 
-  const countries = useSelector(state => state.countries.countries);
+  const filteredCountriesReal = useSelector(state => state.countries.filteredCountries);
   const loaded = useSelector(state => state.countries.loaded);
-  const countriesByName = useSelector(state => state.countries.countriesByName);
-  const countriesByContinent = useSelector(state => state.countries.countriesByContinent);
-  const countriesByPopulation = useSelector(state => state.countries.countriesByPopulation);
-  const countriesByActivity = useSelector(state => state.countries.countriesByActivity);
 
   const activities = useSelector(state => state.activities.activities);
+
+  const orderAlphabetically = useRef(null);
+  const orderContinent = useRef(null);
+  const orderPopulation = useRef(null);
+  const orderActivity = useRef(null);
 
   let buttonsPage = [];
 
@@ -50,7 +59,7 @@ const Home = () => {
       max = ((pag - 1) * 10) + 8;
     }
     setLimit({ min, max });
-    pageActive(btn)
+    pageActive(btn);
   }
 
   const getAllButtonsPages = () => {
@@ -63,9 +72,17 @@ const Home = () => {
   }
 
   const clearFilters = () => {
-    // setSearchedCountry({value: ''});
-    // console.log(selectRef.current);
     selectedPage(1);
+  }
+
+  const handleClearFilters = () => {
+    setSearchedCountry({ value: '' });
+    orderContinent.current.selectedIndex = 0;
+    orderAlphabetically.current.selectedIndex = 0;
+    orderPopulation.current.selectedIndex = 0;
+    orderActivity.current.selectedIndex = 0;
+    setActualFilters({ name: '', order: '', continent: '', activity: '' })
+    clearFilters();
   }
 
   const handleOnClick = (e) => {
@@ -77,7 +94,7 @@ const Home = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     clearFilters();
-    dispatch(getCountriesByName(searchedCountry.value.trim()));
+    setActualFilters(state => { return { ...state, name: searchedCountry.value.trim() } })
   }
 
   const handleInputChange = (e) => {
@@ -86,43 +103,39 @@ const Home = () => {
 
   const handleContinentSelect = (e) => {
     clearFilters();
-    dispatch(getCountriesByContinent(e.target.value));
+    setActualFilters(state => { return { ...state, continent: e.target.value } });
   }
 
   const handleAlphabeticallySelect = (e) => {
     clearFilters();
-    if (e.target.value === 'Z-A') dispatch(getCountriesAlphabetically('DES'))
-    else dispatch(getCountriesAlphabetically());
+    let order = 'None';
+    if (e.target.value === 'Z-A') order = 'DES_ALPHABETICALLY';
+    if (e.target.value === 'A-Z') order = 'ASC_ALPHABETICALLY';
+    orderPopulation.current.selectedIndex = 0;
+    setActualFilters(state => { return { ...state, order } });
   }
 
   const handlePopulationSelect = (e) => {
     clearFilters();
-    // console.log(countriesByPopulation)
-    if (e.target.value === 'Descendent') dispatch(getCountriesByPopulation('DES'))
-    else dispatch(getCountriesByPopulation());
+    let order = 'None';
+    if (e.target.value === 'Descendent') order = 'DES_POPULATION';
+    if (e.target.value === 'Ascendent') order = 'ASC_POPULATION';
+    orderAlphabetically.current.selectedIndex = 0;
+    setActualFilters(state => { return { ...state, order } });
   }
 
   const handleActivitySelect = (e) => {
     clearFilters();
-    dispatch(getCountriesByActivity(e.target.value));
+    setActualFilters(state => { return { ...state, activity: e.target.value } });
   }
 
   useEffect(() => {
-    setFilteredCountries(countriesByActivity);
-  }, [countriesByActivity]);
+    dispatch(filterCountries(actualFilters));
+  }, [actualFilters]);
 
   useEffect(() => {
-    setFilteredCountries(countriesByPopulation);
-  }, [countriesByPopulation]);
-
-  useEffect(() => {
-    if (countriesByContinent.length) setFilteredCountries(countriesByContinent);
-  }, [countriesByContinent]);
-
-  useEffect(() => {
-    // console.log(countries);
-    setFilteredCountries(countries);
-  }, [countries]);
+    setFilteredCountries(filteredCountriesReal);
+  }, [filteredCountriesReal]);
 
   useEffect(() => {
     if (!activities.loaded) dispatch(getActivities());
@@ -134,18 +147,19 @@ const Home = () => {
 
   useEffect(() => {
     if (!loaded) {
-      dispatch(getCountriesAlphabetically());
-    } else {
-      if (countriesByName.length) {
-        setFilteredCountries(countriesByName);
-      }
+      dispatch(getCountries());
     }
-  }, [loaded, countriesByName]);
+  }, [loaded]);
 
   return (
     <div className={style.container}>
       <aside className={styleAside.container}>
         <p htmlFor="">Filters</p>
+
+        <div className={styleAside.btnClearContainer}>
+          <button onClick={handleClearFilters} className={styleAside.btnClear}>Clear Filters</button>
+        </div>
+
         <div className={styleAside.searchContainer}>
           <div className={styleAside.labelSearch}>
             <label htmlFor="filter">By Name</label>
@@ -158,18 +172,8 @@ const Home = () => {
         </div>
 
         <div className={styleAside.filterContainer}>
-          <label>Order Alphabetically</label>
-          <select defaultValue={'A-Z'} className={styleAside.select} name="continent">
-            {Array.from(['A-Z', 'Z-A']).map((continent) => {
-              return <option onClick={handleAlphabeticallySelect} key={continent} value={continent}>{continent}</option>
-            })
-            }
-          </select>
-        </div>
-
-        <div className={styleAside.filterContainer}>
           <label>Order by Continent</label>
-          <select defaultValue={'All'} className={styleAside.select} name="continent">
+          <select ref={orderContinent} defaultValue={'All'} className={styleAside.select} name="continent">
             {Array.from(['All', 'Africa', 'Antarctica', 'Asia', 'Europe', 'South America', 'North America', 'Oceania']).map((continent) => {
               return <option onClick={handleContinentSelect} key={continent} value={continent}>{continent}</option>
             })
@@ -178,11 +182,22 @@ const Home = () => {
         </div>
 
         <div className={styleAside.filterContainer}>
+          <label>Order Alphabetically</label>
+          <select onChange={handleAlphabeticallySelect} ref={orderAlphabetically} defaultValue={'None'} className={styleAside.select} name="continent">
+            <option value='None'>None</option>
+            {Array.from(['A-Z', 'Z-A']).map((continent) => {
+              return <option key={continent} value={continent}>{continent}</option>
+            })
+            }
+          </select>
+        </div>
+
+        <div className={styleAside.filterContainer}>
           <label>Order by Population</label>
-          <select defaultValue={'None'} className={styleAside.select} name="continent">
-            <option disabled value="None">None</option>
+          <select ref={orderPopulation} onChange={handlePopulationSelect} defaultValue={'None'} className={styleAside.select} name="continent">
+            <option value="None">None</option>
             {Array.from(['Ascendent', 'Descendent']).map((continent) => {
-              return <option onClick={handlePopulationSelect} key={continent} value={continent}>{continent}</option>
+              return <option key={continent} value={continent}>{continent}</option>
             })
             }
           </select>
@@ -190,7 +205,7 @@ const Home = () => {
 
         <div className={styleAside.filterContainer}>
           <label>Order by Activity</label>
-          <select defaultValue={'All'} className={styleAside.select} name="continent">
+          <select ref={orderActivity} defaultValue={'All'} className={styleAside.select} name="continent">
             <option onClick={handleActivitySelect} value="All">All</option>
             {activities.all.map((activity) => {
               return <option onClick={handleActivitySelect} key={activity.id} value={activity.name}>{activity.name}</option>
@@ -205,7 +220,7 @@ const Home = () => {
           <h3>Countries</h3>
         </div>
         <div className={styleCountries.cardsContainer}>
-          {loaded ?
+          {loaded && filteredCountries ?
             <> {filteredCountries[0]?.error ? 'no se encontraron' :
 
               filteredCountries.map((c, index) => {

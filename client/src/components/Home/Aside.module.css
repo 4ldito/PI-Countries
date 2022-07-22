@@ -67,3 +67,15 @@ select {
     margin-top: 2rem;
     gap: 1rem;
 }
+
+.btnClearContainer {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.btnClear {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}

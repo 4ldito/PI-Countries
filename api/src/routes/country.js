@@ -9,6 +9,7 @@ const countryRoute = Router();
 const getAllCountries = async () => {
     const { data } = await axios.get(API_ALL_URL);
     if (!cache.allCountries) { // Si el cache está vacio, significa que la base de datos esta vacia, entonces la lleno
+        cache.allCountries = {};
         const countriesProps = data.map((element) => {
             return {
                 id: element.cca3,
@@ -25,18 +26,14 @@ const getAllCountries = async () => {
     }
     // Guardo en caché todos los paises con las nuevas actividades
     const countriesWithActivities = await Country.findAll({ include: Activity });
-    // console.log('En getAll')
-    // console.log(countriesWithActivities[0].dataValues.Activities);
     cache.allCountries = countriesWithActivities;
 }
 
 countryRoute.get('/', async (req, res, next) => {
-    const { name, order } = req.query;
+    const { name } = req.query;
     try {
-        if (!cache.allCountries) await getAllCountries();
 
-        if (order) cache.allCountries.sort((a, b) => b.name.localeCompare(a.name));
-        else cache.allCountries.sort((a, b) => a.name.localeCompare(b.name));
+        if (!cache.allCountries) await getAllCountries();
 
         if (name) {
             const filterCountries = cache.allCountries.filter(country => {
@@ -48,13 +45,14 @@ countryRoute.get('/', async (req, res, next) => {
                 }
             })
             filterCountries.sort((a, b) => a.index - b.index);
-            if (filterCountries.length <= 0) {
-                filterCountries.push({ error: 'No se encontraron paises' });
-            }
+            // if (filterCountries.length <= 0) {
+            //     filterCountries.push({ error: 'No se encontraron paises' });
+            // }
             return res.status(200).send(filterCountries);
         }
         res.status(200).send(cache.allCountries);
     } catch (error) {
+        console.log(error.message)
         next(error);
     }
 });
@@ -66,7 +64,7 @@ countryRoute.get('/population/', async (req, res, next) => {
 
         if (order) cache.allCountries.sort((a, b) => b.population - a.population);
         else cache.allCountries.sort((a, b) => a.population - b.population);
-        
+
         res.status(200).send(cache.allCountries);
     } catch (error) {
         next(error);
@@ -80,7 +78,8 @@ countryRoute.get('/:id', async (req, res, next) => {
         if (!cache.allCountries) await getAllCountries();
         const country = await Country.findByPk(id, { include: Activity });
 
-        if (!country) next(new Error('El ID es invalido'));
+        if (!country) res.status(500).send('El id es invalido');
+        console.log(country)
         res.status(200).send(country);
 
     } catch (error) {

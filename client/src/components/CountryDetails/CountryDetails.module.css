@@ -89,6 +89,7 @@
     border-radius: 100%;
     width: 90px;
     object-fit: cover;
+    border: 2px solid black;
 }
 
 .countryName {
@@ -102,10 +103,6 @@
     padding: 1rem;
 }
 
-.test {
-    color: red;
-}
-
 path {
     fill: white;
 }
@@ -114,6 +111,7 @@ path {
     background-color: #101010;
     padding: 0.2rem 0.6rem;
     border-radius: 5000px;
+    border: 2px solid white;
 }
 
 .containerActivities {
@@ -193,22 +191,32 @@ path {
     top: 0;
     right: 0;
     bottom: 0;
-    display: none;
+    visibility: hidden;
 }
 
 .containerMoreInfo {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.1);
     background-color: #1c1b22e6;
     padding: 1rem;
     border-radius: 20px;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.animationFlag {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    top: 50%;
 }
 
 .containerMoreInfo img {
     border: 2px solid #101010;
     border-radius: 20px;
+    max-width: 800px;
+    max-height: 800px;
 }
 
 .titleMoreInfo {
@@ -216,5 +224,15 @@ path {
 }
 
 .display {
-    display: block;
+    visibility: visible;
+}
+
+.backgroundAlert {
+    background-color: #1c1b2294;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    visibility: visible;
 }

@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useRef } from 'react';
-import imgOK from '../../img/ok_Icon.png';  
-import imgError from '../../img/error_icon.png';  
+import imgOK from '../../img/ok_Icon.png';
+import imgError from '../../img/error_icon.png';
 import style from './Alert.module.css'
 import styleBackground from '../CreateActivity/CreateActivity.module.css';
-const Alert = ({ title, text, textBTN, background, type}) => {
+const Alert = ({ title, text, textBTN, background, type }) => {
 
     const alert = useRef();
 
@@ -16,7 +16,7 @@ const Alert = ({ title, text, textBTN, background, type}) => {
 
     return (
         <div ref={alert} className={style.popup}>
-            <img className={style.img} src={type === 'success' ? imgOK : imgError} alt={'OK'} />
+            <img className={style.img} src={type === 'success' ? imgOK : imgError} alt={'Icon'} />
             <h3 className={style.title}>{title}</h3>
             <p>{text}</p>
             <a onClick={handleOnClick} className={style.btn} href='#'>{textBTN}</a>

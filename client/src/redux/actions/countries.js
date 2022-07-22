@@ -1,71 +1,32 @@
 import {
     CLEAN,
-    GET_ALL_COUNTRIES_BY_ACTIVITIES,
     GET_ALL_COUNTRIES,
-    GET_ALL_COUNTRIES_BY_ALPHABETICALLY,
-    GET_ALL_COUNTRIES_BY_CONTINENT,
-    GET_ALL_COUNTRIES_BY_NAME,
-    GET_ALL_COUNTRIES_BY_POPULATION,
     GET_COUNTRY_BY_ID,
-    CLEAN_COUNTRY_ID
+    CLEAN_COUNTRY_ID,
+    FILTER_COUNTRIES
 } from "./ActionTypes";
 
 import axios from 'axios';
 
 export function getCountries() {
     return async function (dispatch) {
-        const response = await axios.get('http://127.0.0.1:3001/api/countries/');
-        dispatch({ type: GET_ALL_COUNTRIES, payload: response.data });
-    }
-}
-
-export function getCountriesByName(name) {
-    return function (dispatch) {
-        return axios.get(`http://127.0.0.1:3001/api/countries?name=${name}`)
-            .then((response) => {
-                dispatch({ type: GET_ALL_COUNTRIES_BY_NAME, payload: response.data });
-            }).catch(err => console.log(err))
-    }
-}
-
-export function getCountriesAlphabetically(order) {
-    order ? order = `?order=${order}` : order = '';
-    return async function (dispatch) {
         try {
-            const response = await axios.get(`http://127.0.0.1:3001/api/countries${order}`);
-            dispatch({ type: GET_ALL_COUNTRIES_BY_ALPHABETICALLY, payload: response.data });
-        } catch (err) {
-            return console.log(err);
+            const response = await axios.get('http://127.0.0.1:3001/api/countries/');
+            dispatch({ type: GET_ALL_COUNTRIES, payload: response.data });
+        } catch (error) {
+            console.log('error');
         }
     }
 }
 
-export function getCountriesByContinent(name) {
+export function filterCountries(filters) {
     return function (dispatch) {
-        return axios.get(`http://127.0.0.1:3001/api/countries/continent/${name}`)
+        return axios.get(`http://127.0.0.1:3001/api/countries?name=${filters.name}`)
             .then((response) => {
-
-                dispatch({ type: GET_ALL_COUNTRIES_BY_CONTINENT, payload: response.data })
-            })
+                dispatch({ type: FILTER_COUNTRIES, payload: { filterByName: response.data, ...filters } });
+            }).catch(err => console.log(err))
     }
-}
 
-export function getCountriesByPopulation(order) {
-    order ? order = `?order=${order}` : order = '';
-    return async function (dispatch) {
-        const response = await axios.get(`http://127.0.0.1:3001/api/countries/population${order}`);
-        dispatch({ type: GET_ALL_COUNTRIES_BY_POPULATION, payload: response.data });
-    }
-}
-
-export function getCountriesByActivity(name) {
-    return function (dispatch) {
-        return axios.get(`http://127.0.0.1:3001/api/countries/activities/${name}`)
-            .then((response) => {
-                console.log('Respondio con:', response.data);
-                dispatch({ type: GET_ALL_COUNTRIES_BY_ACTIVITIES, payload: response.data })
-            })
-    }
 }
 
 export function getCountryById(id) {
@@ -73,7 +34,9 @@ export function getCountryById(id) {
         return axios.get(`http://127.0.0.1:3001/api/countries/${id}`)
             .then((response) => {
                 dispatch({ type: GET_COUNTRY_BY_ID, payload: response.data });
-            }).catch(err => console.log(err))
+            }).catch(err => {
+                dispatch({ type: GET_COUNTRY_BY_ID, payload: { error: err.response.data } });
+            })
     }
 }
 

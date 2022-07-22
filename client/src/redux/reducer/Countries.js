@@ -1,21 +1,14 @@
 import {
     CLEAN,
     CLEAN_COUNTRY_ID,
+    FILTER_COUNTRIES,
     GET_ALL_COUNTRIES,
-    GET_ALL_COUNTRIES_BY_ACTIVITIES,
-    GET_ALL_COUNTRIES_BY_ALPHABETICALLY,
-    GET_ALL_COUNTRIES_BY_CONTINENT,
-    GET_ALL_COUNTRIES_BY_NAME,
-    GET_ALL_COUNTRIES_BY_POPULATION,
     GET_COUNTRY_BY_ID
 } from "../actions/ActionTypes";
 
 const initialState = {
     countries: [],
-    countriesByName: [],
-    countriesByContinent: [],
-    countriesByPopulation: [],
-    countriesByActivity: [],
+    filteredCountries: [],
     countryById: {},
     loaded: false
 }
@@ -24,21 +17,43 @@ export default function countries(state = initialState, { type, payload }) {
 
     switch (type) {
         case GET_ALL_COUNTRIES:
-            return { ...state, countries: payload, loaded: true }
-        case GET_ALL_COUNTRIES_BY_NAME:
-            return { ...state, countriesByName: payload }
-        case GET_ALL_COUNTRIES_BY_CONTINENT:
-            return { ...state, countriesByContinent: payload }
-        case GET_ALL_COUNTRIES_BY_ALPHABETICALLY:
-            return { ...state, countries: payload, loaded: true }
-        case GET_ALL_COUNTRIES_BY_POPULATION:
-            return { ...state, countriesByPopulation: payload }
-        case GET_ALL_COUNTRIES_BY_ACTIVITIES:
-            return { ...state, countriesByActivity: payload }
+            return { ...state, countries: payload, filteredCountries: payload, loaded: true }
+        case FILTER_COUNTRIES:
+            let { filterByName, activity, order, continent } = payload;
+            console.log(activity)
+            if (continent && continent !== 'All') filterByName = filterByName.filter((c) => c.continent === continent);
+
+            if (activity && activity !== 'All') filterByName = filterByName.filter((c) => {
+                const activities = c.Activities.filter(acc => {
+                    return acc.name === activity;
+                });
+                return activities.length ? activities : false;
+            });
+
+            if (order) {
+                switch (order) {
+                    case 'ASC_ALPHABETICALLY':
+                        filterByName = filterByName.sort((a, b) => a.name.localeCompare(b.name));
+                        break;
+                    case 'DES_ALPHABETICALLY':
+                        filterByName = filterByName.sort((a, b) => b.name.localeCompare(a.name));
+                        break;
+                    case 'ASC_POPULATION':
+                        filterByName = filterByName.sort((a, b) => a.population - b.population);
+                        break;
+                    case 'DES_POPULATION':
+                        filterByName = filterByName.sort((a, b) => b.population - a.population);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (filterByName.length === 0) filterByName.push({ error: 'No se encontraron paises' });
+            return { ...state, filteredCountries: filterByName }
         case GET_COUNTRY_BY_ID:
-            return { ...state, countryById: payload }
+            return { ...state, countryById: { data: payload, loaded: true } }
         case CLEAN_COUNTRY_ID:
-            return {...state, countryById: {}}
+            return { ...state, countryById: {} }
         case CLEAN:
             return {
                 countries: [],
