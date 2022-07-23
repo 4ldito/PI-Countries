@@ -20,9 +20,7 @@ export default function countries(state = initialState, { type, payload }) {
             return { ...state, countries: payload, filteredCountries: payload, loaded: true }
         case FILTER_COUNTRIES:
             let { filterByName, activity, order, continent } = payload;
-            console.log(activity)
             if (continent && continent !== 'All') filterByName = filterByName.filter((c) => c.continent === continent);
-
             if (activity && activity !== 'All') filterByName = filterByName.filter((c) => {
                 const activities = c.Activities.filter(acc => {
                     return acc.name === activity;

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,7 +7,6 @@ import { cleanCountryId, getCountries, getCountryById } from './../../redux/acti
 import style from './CountryDetails.module.css';
 import Loading from './../Loading/Loading';
 import { useNavigate } from 'react-router-dom';
-import Alert from './../Alert/Alert';
 
 const subregions = {
   'Caribbean': 'America',
@@ -50,7 +48,6 @@ const CountryDetails = () => {
   const [infoCountry, setInfoCountry] = useState({});
 
   const moreInfo = useRef();
-  const containerAlert = useRef();
   const moreInfoContainer = useRef();
 
   const [randomCountry, setRandomCountry] = useState(false);
@@ -118,18 +115,9 @@ const CountryDetails = () => {
   return (
     <div className={style.container}>
 
-      <div className={style.infoContainer}>
+      <div className={infoCountry.error ? `${style.errorContainer}` : style.infoContainer}>
         {infoCountry.error ?
-          // <div className={style.backgroundAlert} ref={containerAlert}>
-          //   <Alert
-          //     title='Error!'
-          //     text="The country doesn't exists"
-          //     textBTN='Go Home'
-          //     type='error'
-          //     background={containerAlert}
-          //   />
-          // </div>
-          <p>no se encontro</p>
+          <h3 className={style.titleError}>There is no country with this ID =(<p>Go find another one!</p></h3>
           :
           infoCountry.id ?
             <>

@@ -1,0 +1,93 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+.infoContainer {
+    background-color: #4484a98a;
+    width: 70rem;
+    min-height: 33rem;
+    border-radius: 20px;
+    margin-bottom: 5rem;
+    border: 2px solid white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    background-color: #000;
+    border: 2px solid white;
+    display: inline-block;
+    border-radius: 20px;
+    color: #0082FC;
+    font-family: "Font Awesome 6 Free";
+}
+
+.containerAnimation {
+    display: flex;
+}
+
+.globeLoader {
+    position: absolute;
+    font-size: 12rem;
+    color: #0082FC;
+    z-index: 10;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000c;
+
+    padding: 1.4rem 6rem;
+    border-radius: 20px;
+}
+
+.globeLoader i {
+    display: block;
+    position: absolute;
+    color: white;
+    font-size: 0.2em;
+    height: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(0deg);
+    transform-origin: center bottom;
+    animation: loader-spin 3s infinite ease-in-out;
+}
+
+.globeLoader i::before {
+    position: relative;
+    top: -0.7em;
+}
+.globeLoader a {
+    display: block;
+    margin-top: 1rem;
+    padding: 1rem 0;
+    background-color: #003E79;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    border: 2px solid white;
+    transition: background-color 0.5s;
+    font-family: 'Roboto', sans-serif;
+}
+
+.globeLoader a:hover {
+    background-color: #0059ac;
+}
+
+@keyframes loader-spin {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+
+    to {
+        transform: translateX(-50%) rotate(1turn);
+    }
+}
+
+

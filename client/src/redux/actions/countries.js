@@ -20,6 +20,7 @@ export function getCountries() {
 }
 
 export function filterCountries(filters) {
+    if (!filters.name) filters.name = '';
     return function (dispatch) {
         return axios.get(`http://127.0.0.1:3001/api/countries?name=${filters.name}`)
             .then((response) => {

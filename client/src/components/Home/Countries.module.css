@@ -34,6 +34,20 @@
     gap: 2rem;
 }
 
+.errorContainer {
+    max-width: 1200px;
+    min-height: 570px;
+    padding: 1rem;
+}
+
+.countryDontFoundTitle {
+    background-color: #101010;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
 .cardsContainer a {
     width: 200px;
     height: 250px;

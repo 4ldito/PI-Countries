@@ -1,5 +1,5 @@
 :root {
-    --container-background-color: #0275bae0;
+    --container-background-color: #154662e0;
 }
 
 .container {
@@ -20,6 +20,26 @@
     border: 2px solid white;
     padding: 1rem;
     gap: 1rem;
+}
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #4484a98a;
+    min-width: 55rem;
+    padding: 1rem 15rem;
+    border-radius: 20px;
+    margin-bottom: 5rem;
+    border: 2px solid white;
+    text-align: center;
+}
+
+.titleError {
+    background-color: #101010;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 20px;
+    border: 2px solid white;
 }
 
 .detailsContainer {
@@ -166,7 +186,7 @@ path {
     margin: 5rem 0rem 0rem 0rem;
     padding: 1rem 2rem;
     border-radius: 10px;
-    background-color: #0082FC;
+    background-color: #003E79;
     color: white;
     cursor: pointer;
     font-size: 1.4rem;

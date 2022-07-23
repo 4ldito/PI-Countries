@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cleanActivity, createActivity } from '../../redux/actions/activities';
-import { getCountries } from './../../redux/actions/countries';
+import { filterCountries } from './../../redux/actions/countries';
 import Alert from './../Alert/Alert';
 
 import style from './CreateActivity.module.css';
@@ -12,19 +12,23 @@ import Loading from '../Loading/Loading';
 
 /**
  * modificar input range
- * cuando se carga la actividad, vaciar los campos
  */
 
 const CreateActivity = () => {
 
   const dispatch = useDispatch();
 
-  const allCountries = useSelector(state => state.countries.countries);
+  const countriesTest = useSelector(state => state.countries.filteredCountries);
   const createdActivity = useSelector(state => state.activities.newActivity);
 
   const containerAlert = useRef(null);
   const containerLoading = useRef(null);
   const diffText = useRef(null);
+
+  const inputDuration = useRef(null);
+  const selectedSeason = useRef(null);
+  const selectedCountries = useRef(null);
+  const inputDifficulty = useRef(null);
 
   const [newActivity, setNewActivity] = useState({
     name: { text: '', error: false },
@@ -44,15 +48,15 @@ const CreateActivity = () => {
         setNewActivity(state => { return { ...state, name: { text: state.name.text, error: true } } });
       }
       if (!Number(duration.hours)) {
-        setNewActivity(state => { return { ...state, duration: { hours: state.duration.hours, error: true } } })
+        setNewActivity(state => { return { ...state, duration: { hours: state.duration.hours, error: true } } });
       }
       if (!season.name) {
-        setNewActivity(state => { return { ...state, season: { name: state.season.name, error: true } } })
+        setNewActivity(state => { return { ...state, season: { name: state.season.name, error: true } } });
       }
       if (!countries.all.length) {
         setNewActivity(state => { return { ...state, countries: { all: state.countries.all, error: true } } });
       }
-      return showAlert('Error!', 'All inputs are required.', 'OK', 'error')
+      return showAlert('Error!', 'All inputs are required.', 'OK', 'error');
     }
     showLoading();
     const activity = {
@@ -63,6 +67,20 @@ const CreateActivity = () => {
       countries: newActivity.countries.all
     }
     dispatch(createActivity(activity));
+  }
+
+  const clearForm = () => {
+    setNewActivity({
+      name: { text: '', error: false },
+      difficulty: '1',
+      duration: { hours: '', error: false },
+      season: { name: '', error: false },
+      countries: { all: [], error: false }
+    });
+    selectedSeason.current.selectedIndex = 0;
+    selectedCountries.current.selectedIndex = 0;
+    inputDifficulty.current.value = 1;
+    changeLblDifficulty(1);
   }
 
   const showLoading = () => {
@@ -81,7 +99,10 @@ const CreateActivity = () => {
   const handleChangeDifficulty = (e) => {
     const difficulty = e.target.value
     setNewActivity(state => { return { ...state, difficulty } });
-    // const difficulties = ['Very Easy', 'Easy', 'Normal', 'Hard', 'Extreme'];
+    changeLblDifficulty(difficulty);
+  }
+
+  const changeLblDifficulty = (difficulty) => {
     const difficulties = [
       { name: 'Very Easy', className: style.veryEasy },
       { name: 'Easy', className: style.easy },
@@ -122,9 +143,7 @@ const CreateActivity = () => {
   }
 
   const dontAllowLeters = (e) => {
-    if (!/[0-9]/.test(e.key)) {
-      e.preventDefault();
-    }
+    if (!/[0-9]/.test(e.key)) e.preventDefault();
   }
 
   const showAlert = (title, text, textBTN, type) => {
@@ -136,7 +155,7 @@ const CreateActivity = () => {
   }, [newActivity.duration.hours]);
 
   useEffect(() => {
-    if (!allCountries.length) dispatch(getCountries());
+    dispatch(filterCountries({ order: 'ASC_ALPHABETICALLY' }));
   }, []);
 
   useEffect(() => {
@@ -150,7 +169,9 @@ const CreateActivity = () => {
   useEffect(() => {
     if (createdActivity.created) {
       containerLoading.current.classList.remove(style.display);
-      showAlert('Activity Created', 'Activity has been created successfully =)', 'OK', 'success')
+      showAlert('Activity Created', 'Activity has been created successfully =)', 'OK', 'success');
+      clearForm();
+      // dispatch(cleanActivity()); //Con esto se quita que cuando se ACTUALICE la pagina en modo de desarollo se no aparezca la alerta. 
     } else if (createdActivity.info.error) {
       containerLoading.current.classList.remove(style.display);
       showAlert('Error', createdActivity.info.error, 'OK', 'error')
@@ -182,19 +203,19 @@ const CreateActivity = () => {
 
             <div className={style.containerInput}>
               <label className={style.label} htmlFor="difficulty">Difficulty</label>
-              <input defaultValue={1} onChange={handleChangeDifficulty} id='difficulty' type="range" min='1' max='5' />
+              <input ref={inputDifficulty} defaultValue={1} onChange={handleChangeDifficulty} id='difficulty' type="range" min='1' max='5' />
               <p ref={diffText} className={style.veryEasy} >Very Easy</p>
             </div>
 
             <div className={newActivity.duration.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
               <label className={style.label} htmlFor="duration">Duration in hours (Max: 24)</label>
-              <input className={style.durationInput} value={newActivity.duration.hours} onKeyPress={dontAllowLeters} onChange={hanldeChangeDuration} min={0} max={24} type="number" placeholder='Duration' id='duration' />
+              <input ref={inputDuration} className={style.durationInput} value={newActivity.duration.hours} onKeyPress={dontAllowLeters} onChange={hanldeChangeDuration} min={0} max={24} type="number" placeholder='Duration' id='duration' />
               {newActivity.duration.error && <label htmlFor="duration" className={style.lblWrong}>Please, type a duration for the activity</label>}
             </div>
 
             <div className={newActivity.season.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
               <label className={style.label} htmlFor="season">Season</label>
-              <select className={style.select} onChange={hanldeSeasonChange} defaultValue={'None'} name="continent" id='continent'>
+              <select ref={selectedSeason} className={style.select} onChange={hanldeSeasonChange} defaultValue={'None'} name="continent" id='continent'>
                 <option disabled value="None">Select Season</option>
                 <option value="Summer">Summer</option>
                 <option value="Autumn">Autumn</option>
@@ -206,9 +227,9 @@ const CreateActivity = () => {
 
             <div className={newActivity.countries.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
               <label className={style.label} htmlFor="countries">Countries</label>
-              <select className={style.select} onChange={handleCountrySelect} defaultValue={'None'} name="countries" id='countries'>
+              <select ref={selectedCountries} className={style.select} onChange={handleCountrySelect} defaultValue={'None'} name="countries" id='countries'>
                 <option disabled value="None">Select a Country</option>
-                {allCountries?.map((country) => {
+                {countriesTest?.map((country) => {
                   return <option key={country.id} value={country.id}>{country.name}</option>
                 })}
               </select>
@@ -220,7 +241,7 @@ const CreateActivity = () => {
                     {newActivity.countries.all.length ?
                       <div className={style.listCountriesContainer}>
                         {newActivity.countries.all.map(country => {
-                          const actualCountry = allCountries.find((c) => c.id === country)
+                          const actualCountry = countriesTest.find((c) => c.id === country)
                           return (
                             <div key={actualCountry.id} className={style.actualCountriesContainer}>
                               <a href='#' onClick={handleRemoveClick} id={actualCountry.id} className={`${style.btnX}`}>&times;</a>

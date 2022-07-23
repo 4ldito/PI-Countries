@@ -21,7 +21,6 @@ const Home = () => {
   const [searchedCountry, setSearchedCountry] = useState({ value: '' });
 
   const [limit, setLimit] = useState({ min: 0, max: 8 });
-  // const [filteredCountries, setFilteredCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [actualFilters, setActualFilters] = useState({
     name: '',
@@ -219,10 +218,15 @@ const Home = () => {
         <div className={styleCountries.titleContainer}>
           <h3>Countries</h3>
         </div>
-        <div className={styleCountries.cardsContainer}>
-          {loaded && filteredCountries ?
-            <> {filteredCountries[0]?.error ? 'no se encontraron' :
-
+        {loaded && filteredCountries?.length ?
+          <div className={filteredCountries[0].error ? styleCountries.errorContainer : styleCountries.cardsContainer}>
+            <> {filteredCountries[0]?.error ?
+              // cuando no se encontró el país
+              <div>
+                <h3 className={styleCountries.countryDontFoundTitle}>There is no country with those filters =(<p>Try something else!</p></h3>
+              </div>
+              // cuando si existe el pais
+              :
               filteredCountries.map((c, index) => {
                 if (index <= limit.max && index >= limit.min) {
                   return (
@@ -232,15 +236,15 @@ const Home = () => {
                         continent={c.continent}
                         subregion={c.subregion}
                         flag={c.flag}
-
                       />
                     </Link>)
                 }
               })
             }
             </>
-            : <Loading />}
-        </div>
+          </div>
+          : <div className={styleCountries.cardsContainer}><Loading /></div>
+        }
         <div className={styleCountries.containerPages}>
           <div className={styleCountries.pages}>
             {loaded ? getAllButtonsPages() : ''}
