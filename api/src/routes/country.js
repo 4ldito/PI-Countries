@@ -22,7 +22,11 @@ const getAllCountries = async () => {
                 population: element.population,
             }
         });
-        await Country.bulkCreate(countriesProps);
+        try {
+            await Country.bulkCreate(countriesProps);
+        } catch (error) {
+            console.log(error)
+        }
     }
     // Guardo en caché todos los paises con las nuevas actividades
     const countriesWithActivities = await Country.findAll({ include: Activity });

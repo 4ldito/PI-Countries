@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cleanActivity, createActivity } from '../../redux/actions/activities';
 import { filterCountries } from './../../redux/actions/countries';
+import { useSearchParams } from 'react-router-dom';
+
 import Alert from './../Alert/Alert';
+import Loading from '../Loading/Loading';
 
 import style from './CreateActivity.module.css';
 import styleAlert from '../Alert/Alert.module.css'
-import Loading from '../Loading/Loading';
 
 /**
  * modificar input range
@@ -18,8 +20,10 @@ const CreateActivity = () => {
 
   const dispatch = useDispatch();
 
-  const countriesTest = useSelector(state => state.countries.filteredCountries);
+  const countries = useSelector(state => state.countries.filteredCountries);
   const createdActivity = useSelector(state => state.activities.newActivity);
+
+  let [searchParams] = useSearchParams();
 
   const containerAlert = useRef(null);
   const containerLoading = useRef(null);
@@ -117,8 +121,7 @@ const CreateActivity = () => {
   const hanldeChangeDuration = (e) => {
     const value = e.target.value;
     if (!value) {
-      setNewActivity(state => { return { ...state, duration: { hours: value, error: true } } });
-      return;
+      return setNewActivity(state => { return { ...state, duration: { hours: value, error: true } } });
     }
     setNewActivity(state => { return { ...state, duration: { hours: value, error: false } } });
   }
@@ -152,11 +155,8 @@ const CreateActivity = () => {
 
   useEffect(() => {
     if (newActivity.duration.hours > 24) setNewActivity(state => { return { ...state, duration: { hours: 24, error: false } } });
+    if (newActivity.duration.hours < 0) setNewActivity(state => { return { ...state, duration: { hours: 0, error: false } } });
   }, [newActivity.duration.hours]);
-
-  useEffect(() => {
-    dispatch(filterCountries({ order: 'ASC_ALPHABETICALLY' }));
-  }, []);
 
   useEffect(() => {
     if (alertInfo.showed) {
@@ -179,6 +179,15 @@ const CreateActivity = () => {
   }, [createdActivity]);
 
   useEffect(() => {
+    const queryCountry = searchParams.get('country');
+    if (queryCountry && countries?.length) {
+      const country = countries.find(c => c.id === queryCountry);
+      if (country) setNewActivity(state => { return { ...state, countries: { all: [queryCountry], error: false } } });
+    }
+  }, [countries]);
+
+  useEffect(() => {
+    dispatch(filterCountries({ order: 'ASC_ALPHABETICALLY' }));
     return () => {
       dispatch(cleanActivity());
     }
@@ -229,7 +238,7 @@ const CreateActivity = () => {
               <label className={style.label} htmlFor="countries">Countries</label>
               <select ref={selectedCountries} className={style.select} onChange={handleCountrySelect} defaultValue={'None'} name="countries" id='countries'>
                 <option disabled value="None">Select a Country</option>
-                {countriesTest?.map((country) => {
+                {countries?.map((country) => {
                   return <option key={country.id} value={country.id}>{country.name}</option>
                 })}
               </select>
@@ -240,14 +249,17 @@ const CreateActivity = () => {
                   <div className={style.selectedCountries}>
                     {newActivity.countries.all.length ?
                       <div className={style.listCountriesContainer}>
-                        {newActivity.countries.all.map(country => {
-                          const actualCountry = countriesTest.find((c) => c.id === country)
-                          return (
-                            <div key={actualCountry.id} className={style.actualCountriesContainer}>
-                              <a href='#' onClick={handleRemoveClick} id={actualCountry.id} className={`${style.btnX}`}>&times;</a>
-                              <img src={actualCountry.flag} alt={`${actualCountry.id} flag`} />
-                              <span>{actualCountry.id}</span>
-                            </div>)
+                        {newActivity.countries?.all.map(country => {
+                          const actualCountry = countries?.find((c) => c.id === country)
+                          if (actualCountry) {
+                            return (
+                              <div key={actualCountry.id} className={style.actualCountriesContainer}>
+                                <a href='#' onClick={handleRemoveClick} id={actualCountry.id} className={`${style.btnX}`}>&times;</a>
+                                <img src={actualCountry.flag} alt={`${actualCountry.id} flag`} />
+                                <span>{actualCountry.id}</span>
+                              </div>)
+                          }
+                          return <div className={style.actualCountriesContainer}></div>
                         })}
                       </div> : <p className={style.noneCountry}>None</p>}
                   </div>

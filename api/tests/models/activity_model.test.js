@@ -1,6 +1,6 @@
 const { Activity, conn } = require('../../src/db.js');
 
-xdescribe('Activity Model', () => {
+describe('Activity Model', () => {
     beforeEach(async () => {
         await conn.sync({ force: true });
     });

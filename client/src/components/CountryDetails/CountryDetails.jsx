@@ -190,7 +190,7 @@ const CountryDetails = () => {
                     }
                   </div>
                   <div className={style.containerAddBtn}>
-                    <Link className={style.btn} to='/create-activities'>Add one by yourself!</Link>
+                    <Link className={style.btn} to={`/create-activities?country=${infoCountry.id}`}>Add one by yourself!</Link>
                   </div>
                 </div>
               </div>

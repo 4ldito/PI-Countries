@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../../src/app.js');
 const { conn } = require('../../src/db.js');
 
-xdescribe('Country Routes', () => {
+describe('Country Routes', () => {
     beforeAll(async () => {
         await conn.sync({ force: true });
     })
@@ -11,7 +11,7 @@ xdescribe('Country Routes', () => {
         it('should call the api and get all countries and return them', async () => {
             const res = await request(app).get('/api/countries/');
             expect(res.statusCode).toBe(200);
-            expect(res.body.length).toBe(250);
+            expect(res.body).toHaveLength(250);
         });
 
         it('should search and return countries that match with the name in the query', async () => {

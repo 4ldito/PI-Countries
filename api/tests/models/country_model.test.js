@@ -1,6 +1,6 @@
 const { Country, conn } = require('../../src/db.js');
 
-xdescribe('Country Model', () => {
+describe('Country Model', () => {
     beforeEach(async () => {
         await conn.sync({ force: true });
     });

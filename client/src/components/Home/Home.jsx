@@ -61,6 +61,12 @@ const Home = () => {
     pageActive(btn);
   }
 
+  const handleOnClick = (e) => {
+    e.preventDefault();
+    const pag = Number(e.target.innerText);
+    selectedPage(pag, e.target);
+  }
+
   const getAllButtonsPages = () => {
     const totalPages = ((filteredCountries.length + 1) / 10);
     buttonsPage = [];
@@ -69,6 +75,7 @@ const Home = () => {
     }
     return buttonsPage;
   }
+  
 
   const clearFilters = () => {
     selectedPage(1);
@@ -82,12 +89,6 @@ const Home = () => {
     orderActivity.current.selectedIndex = 0;
     setActualFilters({ name: '', order: '', continent: '', activity: '' })
     clearFilters();
-  }
-
-  const handleOnClick = (e) => {
-    e.preventDefault();
-    const pag = Number(e.target.innerText);
-    selectedPage(pag, e.target);
   }
 
   const handleOnSubmit = (e) => {

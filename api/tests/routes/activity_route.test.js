@@ -35,7 +35,7 @@ const activity4 = {
 }
 
 describe('Activity Routes', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
         await conn.sync({ force: true });
     })
     describe('GET /api/activities', () => {
@@ -74,9 +74,15 @@ describe('Activity Routes', () => {
             try {
                 const res = await request(app)
                     .post('/api/activities/')
-                    .send({ activity4 });
+                    .send({
+                        name: "Surfing",
+                        difficulty: 2,
+                        duration: 2,
+                        season: "Summer",
+                        countries: ["USA"]
+                    });
                 expect(res.statusCode).toBe(201);
-                expect(activity4.name).toEqual(res.body.name);
+                expect(activity4.name).toBe(res.body.name);
             } catch (error) {
                 console.log('error', error)
             }
@@ -85,7 +91,8 @@ describe('Activity Routes', () => {
 
     afterAll(async () => {
         await conn.sync({ force: true });
-        await conn.close();
+        conn.close();
+
     });
 })
 
