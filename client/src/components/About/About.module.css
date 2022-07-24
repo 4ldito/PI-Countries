@@ -6,7 +6,7 @@
 }
 
 .infoContainer {
-    background-color: #4484a98a;
+    background-color: var(--container-background-first);
     width: 70rem;
     min-height: 50rem;
     border-radius: 20px;
@@ -25,7 +25,7 @@
 }
 
 .title {
-    background-color: #1C1B22;
+    background-color: var(--color-gray);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     margin-bottom: 1.3rem;

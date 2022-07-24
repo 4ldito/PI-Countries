@@ -1,5 +1,5 @@
 .container {
-    background-color: #1C1B22;
+    background-color: var(--color-gray);
     color: white;
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@
 }
 
 h4.nameCountry {
-    color: #1EB53A;
+    color: var(--name-countries);
     margin-bottom: 0.4rem;
 }
 

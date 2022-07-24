@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useRef } from 'react';
+
 import imgOK from '../../img/ok_Icon.png';
 import imgError from '../../img/error_icon.png';
+
 import style from './Alert.module.css'
 import styleBackground from '../CreateActivity/CreateActivity.module.css';
 const Alert = ({ title, text, textBTN, background, type }) => {

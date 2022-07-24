@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+
+import Loading from './../Loading/Loading';
+
 import { cleanCountryId, getCountries, getCountryById } from './../../redux/actions/countries';
 
 import style from './CountryDetails.module.css';
-import Loading from './../Loading/Loading';
-import { useNavigate } from 'react-router-dom';
 
 const subregions = {
   'Caribbean': 'America',

@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+
 import logo from '../../img/logo.png';
 
 import style from './Navbar.module.css';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink className={style.btn} to='/create-activities'>Create Activity</NavLink>
+          </li>
+          <li>
+            <NavLink className={style.btn} to='/quiz'>Quiz</NavLink>
           </li>
           <li>
             <NavLink className={style.btn} to='/about'>About</NavLink>

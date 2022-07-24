@@ -1,7 +1,3 @@
-:root {
-    --container-background-color: #154662e0;
-}
-
 .container {
     display: flex;
     justify-content: center;
@@ -12,12 +8,12 @@
 .infoContainer {
     display: grid;
     grid-template-columns: 0.9fr 1fr;
-    background-color: #4484a98a;
+    background-color: var(--container-background-first);
     width: 70rem;
     min-height: 50rem;
     border-radius: 20px;
     margin-bottom: 5rem;
-    border: 2px solid white;
+    border: 2px solid #fff;
     padding: 1rem;
     gap: 1rem;
 }
@@ -25,21 +21,21 @@
 .errorContainer {
     display: flex;
     flex-direction: column;
-    background-color: #4484a98a;
+    background-color: var(--container-background-first);
     min-width: 55rem;
     padding: 1rem 15rem;
     border-radius: 20px;
     margin-bottom: 5rem;
-    border: 2px solid white;
+    border: 2px solid #fff;
     text-align: center;
 }
 
 .titleError {
-    background-color: #101010;
+    background-color: var(--color-black);
     margin: 0;
     padding: 1rem;
     border-radius: 20px;
-    border: 2px solid white;
+    border: 2px solid #fff;
 }
 
 .detailsContainer {
@@ -48,16 +44,16 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    background-color: var(--container-background-color);
-    border: 2px solid white;
+    background-color: var(--container-country-details-background-color);
+    border: 2px solid #fff;
     border-radius: 20px;
     padding: 1rem;
     gap: 1rem;
 }
 
 .codeContainer p {
-    background-color: #101010;
-    border: 2px solid white;
+    background-color: var(--color-black);
+    border: 2px solid #fff;
     padding: 1.6rem 1rem;
     max-width: 5rem;
     border-radius: 5000px;
@@ -86,8 +82,8 @@
     display: flex;
     align-items: center;
     padding: 0.5rem;
-    background-color: var(--container-background-color);
-    border: 2px solid white;
+    background-color: var(--container-country-details-background-color);
+    border: 2px solid #fff;
     border-radius: 20px;
     gap: 1rem;
 }
@@ -109,7 +105,7 @@
     border-radius: 100%;
     width: 90px;
     object-fit: cover;
-    border: 2px solid black;
+    border: 2px solid #000;
 }
 
 .countryName {
@@ -124,20 +120,20 @@
 }
 
 path {
-    fill: white;
+    fill: #fff;
 }
 
 .icon {
-    background-color: #101010;
+    background-color: var(--color-black);
     padding: 0.2rem 0.6rem;
     border-radius: 5000px;
-    border: 2px solid white;
+    border: 2px solid #fff;
 }
 
 .containerActivities {
     padding: 0.5rem;
-    background-color: var(--container-background-color);
-    border: 2px solid white;
+    background-color: var(--container-country-details-background-color);
+    border: 2px solid #fff;
     border-radius: 20px;
     height: max-content;
 }
@@ -157,7 +153,7 @@ path {
 
 .activityContainer {
     background-color: #3a03ff47;
-    border: 2px solid white;
+    border: 2px solid #fff;
     border-radius: 20px;
     padding: 0.5rem;
     display: flex;
@@ -187,10 +183,10 @@ path {
     padding: 1rem 2rem;
     border-radius: 10px;
     background-color: #003E79;
-    color: white;
+    color: #fff;
     cursor: pointer;
     font-size: 1.4rem;
-    border: 2px solid white;
+    border: 2px solid #fff;
     transition: background-color 0.5s;
 }
 
@@ -205,7 +201,7 @@ path {
 }
 
 .background {
-    background-color: #1c1b2294;
+    background-color: var(--color-gray-opacity);
     position: fixed;
     left: 0;
     top: 0;
@@ -219,7 +215,7 @@ path {
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
-    background-color: #1c1b22e6;
+    background-color: var(--color-gray-opacity-darker);
     padding: 1rem;
     border-radius: 20px;
     visibility: hidden;
@@ -233,7 +229,7 @@ path {
 }
 
 .containerMoreInfo img {
-    border: 2px solid #101010;
+    border: 2px solid var(--color-black);
     border-radius: 20px;
     max-width: 800px;
     max-height: 800px;
@@ -248,7 +244,7 @@ path {
 }
 
 .backgroundAlert {
-    background-color: #1c1b2294;
+    background-color: var(--color-gray-opacity);
     position: fixed;
     left: 0;
     top: 0;

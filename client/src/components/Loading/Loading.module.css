@@ -7,7 +7,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #1C1B22;
+    background-color: var(--color-gray);
     padding: 1.4rem 6rem;
     border-radius: 20px;
 }
@@ -45,14 +45,14 @@
 }
 
 .containerLoading {
-    background-color: black;
+    background-color: #000;
     position: absolute;
     top: 50%;
     left: 50%;
 }
 
 .background {
-    background-color: #1c1b2294;
+    background-color: var(--color-gray);
     position: fixed;
     left: 0;
     top: 0;

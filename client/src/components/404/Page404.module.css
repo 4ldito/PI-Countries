@@ -6,7 +6,7 @@
 }
 
 .infoContainer {
-    background-color: #4484a98a;
+    background-color: var(--container-background-first);
     width: 70rem;
     min-height: 33rem;
     border-radius: 20px;

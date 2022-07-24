@@ -1,5 +1,5 @@
 .container {
-    background-color: #4484a98a;
+    background-color: var(--container-background-first);
     margin: 2rem 3rem 5rem 3rem;
     border-radius: 20px;
     text-align: center;
@@ -12,7 +12,7 @@
 }
 
 .titleContainer {
-    background: #1C1B22;
+    background: var(--color-gray);
     width: 100%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -41,7 +41,7 @@
 }
 
 .countryDontFoundTitle {
-    background-color: #101010;
+    background-color: var(--color-black);
     margin: 0;
     padding: 1rem;
     border-radius: 20px;

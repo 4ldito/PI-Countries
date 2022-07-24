@@ -3,13 +3,26 @@
 @import url(./normalize.css);
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
 
+:root {
+    --container-background-first: #4484a98a;
+    --container-country-details-background-color: #154662e0;
+    --name-countries: #1EB53A;
+    --color-gray: #1C1B22;
+    --color-gray-opacity: #1c1b2294;
+    --color-gray-opacity-darker: #1c1b22e6;
+    --color-black: #101010
+}
+
 html {
     box-sizing: border-box;
-  }
-  *, *:before, *:after {
+}
+
+*,
+*:before,
+*:after {
     box-sizing: inherit;
-  }
-  
+}
+
 body {
     color: white;
     font-family: 'Roboto', sans-serif;

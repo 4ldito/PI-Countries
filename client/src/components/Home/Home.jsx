@@ -5,6 +5,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import Card from './Card';
 import Loading from '../Loading/Loading';
 
@@ -31,15 +32,12 @@ const Home = () => {
 
   const filteredCountriesReal = useSelector(state => state.countries.filteredCountries);
   const loaded = useSelector(state => state.countries.loaded);
-
   const activities = useSelector(state => state.activities.activities);
 
   const orderAlphabetically = useRef(null);
   const orderContinent = useRef(null);
   const orderPopulation = useRef(null);
   const orderActivity = useRef(null);
-
-  let buttonsPage = [];
 
   const pageActive = (btn) => {
     const lastActive = document.querySelector(`.${styleCountries.active}`);
@@ -52,7 +50,7 @@ const Home = () => {
     let min, max;
     if (pag === 1) {
       min = 0;
-      max = pag * 10 - 2
+      max = 8;
     } else {
       min = ((pag - 1) * 10) - 1;
       max = ((pag - 1) * 10) + 8;
@@ -61,24 +59,23 @@ const Home = () => {
     pageActive(btn);
   }
 
-  const handleOnClick = (e) => {
-    e.preventDefault();
-    const pag = Number(e.target.innerText);
-    selectedPage(pag, e.target);
-  }
-
   const getAllButtonsPages = () => {
     const totalPages = ((filteredCountries.length + 1) / 10);
-    buttonsPage = [];
+    const buttonsPage = [];
     for (let i = 0; i < totalPages; i++) {
       buttonsPage.push(<a key={i} onClick={handleOnClick} className={i === 0 ? `${styleCountries.active} ${styleCountries.btnPage}` : styleCountries.btnPage} href="#">{i + 1}</a>)
     }
     return buttonsPage;
   }
-  
 
   const clearFilters = () => {
     selectedPage(1);
+  }
+
+  const handleOnClick = (e) => {
+    e.preventDefault();
+    const pag = Number(e.target.innerText);
+    selectedPage(pag, e.target);
   }
 
   const handleClearFilters = () => {
@@ -110,7 +107,7 @@ const Home = () => {
     clearFilters();
     let order = 'None';
     if (e.target.value === 'Z-A') order = 'DES_ALPHABETICALLY';
-    if (e.target.value === 'A-Z') order = 'ASC_ALPHABETICALLY';
+    else if (e.target.value === 'A-Z') order = 'ASC_ALPHABETICALLY';
     orderPopulation.current.selectedIndex = 0;
     setActualFilters(state => { return { ...state, order } });
   }
@@ -119,7 +116,7 @@ const Home = () => {
     clearFilters();
     let order = 'None';
     if (e.target.value === 'Descendent') order = 'DES_POPULATION';
-    if (e.target.value === 'Ascendent') order = 'ASC_POPULATION';
+    else if (e.target.value === 'Ascendent') order = 'ASC_POPULATION';
     orderAlphabetically.current.selectedIndex = 0;
     setActualFilters(state => { return { ...state, order } });
   }
@@ -138,18 +135,13 @@ const Home = () => {
   }, [filteredCountriesReal]);
 
   useEffect(() => {
+    if (!loaded) dispatch(getCountries());
     if (!activities.loaded) dispatch(getActivities());
-  }, [activities]);
+  }, [loaded, activities]);
 
   useEffect(() => {
     return () => { cleanActivity() }
   }, []);
-
-  useEffect(() => {
-    if (!loaded) {
-      dispatch(getCountries());
-    }
-  }, [loaded]);
 
   return (
     <div className={style.container}>
@@ -172,8 +164,8 @@ const Home = () => {
         </div>
 
         <div className={styleAside.filterContainer}>
-          <label>Order by Continent</label>
-          <select ref={orderContinent} defaultValue={'All'} className={styleAside.select} name="continent">
+          <label htmlFor='continent'>Order by Continent</label>
+          <select ref={orderContinent} defaultValue={'All'} className={styleAside.select} id="continent">
             {Array.from(['All', 'Africa', 'Antarctica', 'Asia', 'Europe', 'South America', 'North America', 'Oceania']).map((continent) => {
               return <option onClick={handleContinentSelect} key={continent} value={continent}>{continent}</option>
             })
@@ -182,30 +174,30 @@ const Home = () => {
         </div>
 
         <div className={styleAside.filterContainer}>
-          <label>Order Alphabetically</label>
-          <select onChange={handleAlphabeticallySelect} ref={orderAlphabetically} defaultValue={'None'} className={styleAside.select} name="continent">
+          <label htmlFor='orderAlphabetically'>Order Alphabetically</label>
+          <select onChange={handleAlphabeticallySelect} ref={orderAlphabetically} defaultValue={'None'} className={styleAside.select} id="orderAlphabetically">
             <option value='None'>None</option>
-            {Array.from(['A-Z', 'Z-A']).map((continent) => {
-              return <option key={continent} value={continent}>{continent}</option>
+            {Array.from(['A-Z', 'Z-A']).map((order) => {
+              return <option key={order} value={order}>{order}</option>
             })
             }
           </select>
         </div>
 
         <div className={styleAside.filterContainer}>
-          <label>Order by Population</label>
-          <select ref={orderPopulation} onChange={handlePopulationSelect} defaultValue={'None'} className={styleAside.select} name="continent">
+          <label htmlFor='orderPopulation'>Order by Population</label>
+          <select ref={orderPopulation} onChange={handlePopulationSelect} defaultValue={'None'} className={styleAside.select} id="orderPopulation">
             <option value="None">None</option>
-            {Array.from(['Ascendent', 'Descendent']).map((continent) => {
-              return <option key={continent} value={continent}>{continent}</option>
+            {Array.from(['Ascendent', 'Descendent']).map((order) => {
+              return <option key={order} value={order}>{order}</option>
             })
             }
           </select>
         </div>
 
         <div className={styleAside.filterContainer}>
-          <label>Order by Activity</label>
-          <select ref={orderActivity} defaultValue={'All'} className={styleAside.select} name="continent">
+          <label htmlFor='activities'>Order by Activity</label>
+          <select ref={orderActivity} defaultValue={'All'} className={styleAside.select} id="activities">
             <option onClick={handleActivitySelect} value="All">All</option>
             {activities.all.map((activity) => {
               return <option onClick={handleActivitySelect} key={activity.id} value={activity.name}>{activity.name}</option>
@@ -244,7 +236,10 @@ const Home = () => {
             }
             </>
           </div>
-          : <div className={styleCountries.cardsContainer}><Loading /></div>
+          :
+          <div className={styleCountries.cardsContainer}>
+            <Loading />
+          </div>
         }
         <div className={styleCountries.containerPages}>
           <div className={styleCountries.pages}>

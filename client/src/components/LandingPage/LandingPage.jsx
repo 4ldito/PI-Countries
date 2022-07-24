@@ -1,7 +1,8 @@
-import React from 'react'
-import style from './LandingPage.module.css'
+import { Link } from 'react-router-dom';
+
 import logo from '../../img/logo.png';
-import { Link } from 'react-router-dom'
+
+import style from './LandingPage.module.css';
 
 const InitialPage = () => {
     return (

@@ -1,5 +1,6 @@
-import style from './Page404.module.css';
 import { Link } from 'react-router-dom';
+
+import style from './Page404.module.css';
 
 const Page404 = () => {
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 
 import style from './Card.module.css'
 
-const Card = ({ name, flag, continent, subregion }) => {
+const Card = ({ name, flag, continent }) => {
     return (
         <div className={style.container}>
             <div className={style.imgContainer}>

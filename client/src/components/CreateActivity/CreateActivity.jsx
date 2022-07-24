@@ -2,12 +2,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cleanActivity, createActivity } from '../../redux/actions/activities';
-import { filterCountries } from './../../redux/actions/countries';
 import { useSearchParams } from 'react-router-dom';
 
 import Alert from './../Alert/Alert';
 import Loading from '../Loading/Loading';
+
+import { cleanActivity, createActivity } from '../../redux/actions/activities';
+import { filterCountries } from './../../redux/actions/countries';
 
 import style from './CreateActivity.module.css';
 import styleAlert from '../Alert/Alert.module.css'
