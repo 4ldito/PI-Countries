@@ -32,9 +32,7 @@ const getAllCountries = async () => {
 countryRoute.get('/', async (req, res, next) => {
     const { name } = req.query;
     try {
-
         if (!cache.allCountries) await getAllCountries();
-
         if (name) {
             const filterCountries = cache.allCountries.filter(country => {
                 const regex = new RegExp(name, "gmi");
@@ -45,31 +43,28 @@ countryRoute.get('/', async (req, res, next) => {
                 }
             })
             filterCountries.sort((a, b) => a.index - b.index);
-            // if (filterCountries.length <= 0) {
-            //     filterCountries.push({ error: 'No se encontraron paises' });
-            // }
             return res.status(200).send(filterCountries);
         }
         res.status(200).send(cache.allCountries);
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         next(error);
     }
 });
 
-countryRoute.get('/population/', async (req, res, next) => {
-    const { order } = req.query;
-    try {
-        if (!cache.allCountries) await getAllCountries();
+// countryRoute.get('/population/', async (req, res, next) => {
+//     const { order } = req.query;
+//     try {
+//         if (!cache.allCountries) await getAllCountries();
 
-        if (order) cache.allCountries.sort((a, b) => b.population - a.population);
-        else cache.allCountries.sort((a, b) => a.population - b.population);
+//         if (order) cache.allCountries.sort((a, b) => b.population - a.population);
+//         else cache.allCountries.sort((a, b) => a.population - b.population);
 
-        res.status(200).send(cache.allCountries);
-    } catch (error) {
-        next(error);
-    }
-});
+//         res.status(200).send(cache.allCountries);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
 countryRoute.get('/:id', async (req, res, next) => {
     const { id } = req.params;
@@ -77,9 +72,7 @@ countryRoute.get('/:id', async (req, res, next) => {
     try {
         if (!cache.allCountries) await getAllCountries();
         const country = await Country.findByPk(id, { include: Activity });
-
-        if (!country) res.status(500).send('El id es invalido');
-        console.log(country)
+        if (!country) return res.status(404).send({ error: 'El id es invalido' });
         res.status(200).send(country);
 
     } catch (error) {
@@ -87,54 +80,53 @@ countryRoute.get('/:id', async (req, res, next) => {
     }
 });
 
-countryRoute.get('/continent/:name', async (req, res, next) => {
-    const { name } = req.params;
-    try {
-        if (!cache.allCountries) await getAllCountries();
+// countryRoute.get('/continent/:name', async (req, res, next) => {
+//     const { name } = req.params;
+//     try {
+//         if (!cache.allCountries) await getAllCountries();
 
-        if (name) {
-            let filterCountries;
-            if (name === 'All') filterCountries = cache.allCountries;
-            else {
-                filterCountries = cache.allCountries.filter(country => {
-                    if (country.continent === name) return country;
-                });
-            }
-            // filterCountries.sort((a, b) => a.index - b.index);
-            if (filterCountries.length <= 0) {
-                filterCountries.push({ error: 'No se encontraron continentes' });
-            }
-            return res.status(200).send(filterCountries);
-        }
-        res.status(404).send(new Error('El nombre del continente es requerido'));
-    } catch (error) {
-        next(error);
-    }
-});
+//         if (name) {
+//             let filterCountries;
+//             if (name === 'All') filterCountries = cache.allCountries;
+//             else {
+//                 filterCountries = cache.allCountries.filter(country => {
+//                     if (country.continent === name) return country;
+//                 });
+//             }
+//             if (filterCountries.length <= 0) {
+//                 filterCountries.push({ error: 'No se encontraron continentes' });
+//             }
+//             return res.status(200).send(filterCountries);
+//         }
+//         res.status(404).send(new Error('El nombre del continente es requerido'));
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
-countryRoute.get('/activities/:name', async (req, res, next) => {
-    const { name } = req.params;
+// countryRoute.get('/activities/:name', async (req, res, next) => {
+//     const { name } = req.params;
 
-    try {
-        if (!cache.allCountries) await getAllCountries();
-        if (name) {
-            let filterCountries;
-            if (name === 'All') filterCountries = cache.allCountries;
-            else {
-                filterCountries = cache.allCountries.filter(country => {
-                    if (country.Activities.length) {
-                        const countryHas = country.Activities.find((ac) => ac.name === name);
-                        return countryHas ? true : false;
-                    }
-                });
-                console.log(filterCountries);
-            }
-            return res.status(200).send(filterCountries);
-        }
-        res.status(404).send(new Error('El nombre de la actividad es requerido'));
-    } catch (error) {
-        next(error);
-    }
-});
+//     try {
+//         if (!cache.allCountries) await getAllCountries();
+//         if (name) {
+//             let filterCountries;
+//             if (name === 'All') filterCountries = cache.allCountries;
+//             else {
+//                 filterCountries = cache.allCountries.filter(country => {
+//                     if (country.Activities.length) {
+//                         const countryHas = country.Activities.find((ac) => ac.name === name);
+//                         return countryHas ? true : false;
+//                     }
+//                 });
+//                 console.log(filterCountries);
+//             }
+//             return res.status(200).send(filterCountries);
+//         }
+//         res.status(404).send(new Error('El nombre de la actividad es requerido'));
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
 module.exports = { countryRoute, getAllCountries };
