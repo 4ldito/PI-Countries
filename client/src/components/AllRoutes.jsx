@@ -6,6 +6,7 @@ import CreateActivity from './CreateActivity/CreateActivity';
 import About from './About/About';
 import CountryDetails from './CountryDetails/CountryDetails';
 import Quiz from './Quiz/Quiz';
+import PlayQuiz from './Quiz/PlayQuiz';
 import Page404 from './404/Page404';
 
 const AllRoutes = () => {
@@ -18,6 +19,7 @@ const AllRoutes = () => {
         <Route path='/about' element={<About />} />
         <Route path='/details/:id' element={<CountryDetails />} />
         <Route path='/quiz' element={<Quiz />} />
+        <Route path='/quiz/play' element={<PlayQuiz />} />
         <Route path='/*' element={<Page404 />} />
       </Routes>
     </>

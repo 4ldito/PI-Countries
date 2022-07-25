@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1rem 2rem 2rem 2rem;
+    background-color: #000000d4;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    font-size: 1.4rem;
+    text-align: center;
+    min-height: 28rem;
+    min-width: 24rem;
+    max-width: 500px;
+    gap: 1rem;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.infoContainer h3, .infoContainer h4 {
+    margin: 0;
+    color: var(--name-countries);
+    font-size: 2rem;
+}
+
+.btn {
+    background-color: var(--color-gray);
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding: 1rem;
+
+    transition: background-color 0.3s;
+    cursor: pointer;
+    color: white;
+}
+
+.btn:hover {
+    background-color: var(--color-black);
+}
+
+.correct {
+    font-size: 2rem;
+    color: #34FF5A;
+}
+
+.wrong {
+    font-size: 2rem;
+    color: #FF002A;
+}

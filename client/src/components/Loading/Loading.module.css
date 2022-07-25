@@ -10,12 +10,13 @@
     background-color: var(--color-gray);
     padding: 1.4rem 6rem;
     border-radius: 20px;
+    border: 2px solid white;
 }
 
 .globeLoader>i {
     display: block;
     position: absolute;
-    color: white;
+    color: #B5B5B5;
     font-size: 0.2em;
     height: 50%;
     top: 0;
@@ -52,7 +53,7 @@
 }
 
 .background {
-    background-color: var(--color-gray);
+    background-color: #1c1b2294;
     position: fixed;
     left: 0;
     top: 0;

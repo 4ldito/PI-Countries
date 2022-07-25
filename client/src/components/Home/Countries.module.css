@@ -1,5 +1,5 @@
 .container {
-    background-color: var(--container-background-first);
+    background-color: var(--container-background-darker);
     margin: 2rem 3rem 5rem 3rem;
     border-radius: 20px;
     text-align: center;

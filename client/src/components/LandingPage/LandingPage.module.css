@@ -7,7 +7,7 @@
 }
 
 .infoContainer {
-    background-color: #ffffff2e;
+    background-color: var(--container-background-darker);
     display: flex;
     justify-content: space-around;
     align-items: center;

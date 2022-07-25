@@ -8,7 +8,7 @@
 .infoContainer {
     display: grid;
     grid-template-columns: 0.9fr 1fr;
-    background-color: var(--container-background-first);
+    background-color: #0021338a;
     width: 70rem;
     min-height: 50rem;
     border-radius: 20px;
@@ -21,7 +21,7 @@
 .errorContainer {
     display: flex;
     flex-direction: column;
-    background-color: var(--container-background-first);
+    background-color: #0021338a;
     min-width: 55rem;
     padding: 1rem 15rem;
     border-radius: 20px;
@@ -44,7 +44,7 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    background-color: var(--container-country-details-background-color);
+    background-color: var(--container-background-blue);
     border: 2px solid #fff;
     border-radius: 20px;
     padding: 1rem;
@@ -82,7 +82,7 @@
     display: flex;
     align-items: center;
     padding: 0.5rem;
-    background-color: var(--container-country-details-background-color);
+    background-color: var(--container-background-blue);
     border: 2px solid #fff;
     border-radius: 20px;
     gap: 1rem;
@@ -132,7 +132,7 @@ path {
 
 .containerActivities {
     padding: 0.5rem;
-    background-color: var(--container-country-details-background-color);
+    background-color: var(--container-background-blue);
     border: 2px solid #fff;
     border-radius: 20px;
     height: max-content;

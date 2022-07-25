@@ -5,12 +5,14 @@
 
 :root {
     --container-background-first: #4484a98a;
-    --container-country-details-background-color: #154662e0;
+    --container-background-blue: #004974bf;
+    --container-background-darker: #0021338a;
+    /* --container-country-details-background-color: #4484a98a; */
     --name-countries: #1EB53A;
     --color-gray: #1C1B22;
     --color-gray-opacity: #1c1b2294;
     --color-gray-opacity-darker: #1c1b22e6;
-    --color-black: #101010
+    --color-black: #101010;
 }
 
 html {
@@ -26,14 +28,13 @@ html {
 body {
     color: white;
     font-family: 'Roboto', sans-serif;
-    background-color: #080808;
     background-image: url('../img/background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    min-height: 100vh;
-    max-height: 100vh;
+    /* min-height: 100vh;
+    max-height: 100vh; */
     font-size: 1.2rem;
 }
 
@@ -54,4 +55,38 @@ a.active {
 
 p {
     margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+.infoContainer {
+    background-color: #0021338a;
+    /* width: 70rem;
+    min-height: 50rem; */
+    border-radius: 20px;
+    margin-bottom: 5rem;
+    border: 2px solid white;
+}
+
+.titleContainer {
+    width: 100%;
+}
+
+.titleContainer h3 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 1rem;
+}
+
+.title {
+    background-color: var(--color-gray);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-bottom: 1.3rem;
+    text-align: center;
 }
