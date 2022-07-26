@@ -1,5 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable no-unused-vars */
-/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useRef, useState } from 'react';
@@ -34,6 +34,7 @@ const Home = () => {
   const loaded = useSelector(state => state.countries.loaded);
   const activities = useSelector(state => state.activities.activities);
 
+  const asideContainer = useRef(null);
   const orderAlphabetically = useRef(null);
   const orderContinent = useRef(null);
   const orderPopulation = useRef(null);
@@ -70,6 +71,11 @@ const Home = () => {
 
   const clearFilters = () => {
     selectedPage(1);
+  }
+
+  const handleShowFilters = (e) => {
+    e.preventDefault();
+    console.log(asideContainer.current.classList.toggle(styleAside.showContainer));
   }
 
   const handleOnClick = (e) => {
@@ -145,8 +151,11 @@ const Home = () => {
 
   return (
     <div className={style.container}>
-      <aside className={styleAside.container}>
-        <p htmlFor="">Filters</p>
+      <div className={styleAside.btnMenuFilters}>
+        <a onClick={handleShowFilters} href="#"><i className={`fa-solid fa-filter ${styleAside.icon}`}></i>Filters</a>
+      </div>
+      <aside ref={asideContainer} className={styleAside.container}>
+        <p>Filters</p>
 
         <div className={styleAside.btnClearContainer}>
           <button onClick={handleClearFilters} className={styleAside.btnClear}>Clear Filters</button>
@@ -223,15 +232,18 @@ const Home = () => {
               filteredCountries.map((c, index) => {
                 if (index <= limit.max && index >= limit.min) {
                   return (
-                    <Link key={c.id} to={`/details/${c.id}`}>
-                      <Card
-                        name={c.name}
-                        continent={c.continent}
-                        subregion={c.subregion}
-                        flag={c.flag}
-                      />
-                    </Link>)
+                    <div key={c.id} className={styleCountries.cardCointaner}>
+                      <Link to={`/details/${c.id}`}>
+                        <Card
+                          name={c.name}
+                          continent={c.continent}
+                          subregion={c.subregion}
+                          flag={c.flag}
+                        />
+                      </Link>
+                    </div>)
                 }
+                return '';
               })
             }
             </>

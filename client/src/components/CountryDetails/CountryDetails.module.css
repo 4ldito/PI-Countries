@@ -12,7 +12,6 @@
     width: 70rem;
     min-height: 50rem;
     border-radius: 20px;
-    margin-bottom: 5rem;
     border: 2px solid #fff;
     padding: 1rem;
     gap: 1rem;
@@ -25,7 +24,6 @@
     min-width: 55rem;
     padding: 1rem 15rem;
     border-radius: 20px;
-    margin-bottom: 5rem;
     border: 2px solid #fff;
     text-align: center;
 }
@@ -152,10 +150,10 @@ path {
 }
 
 .activityContainer {
-    background-color: #3a03ff47;
+    background-color: #14364adf;
     border: 2px solid #fff;
     border-radius: 20px;
-    padding: 0.5rem;
+    padding: 1.3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;

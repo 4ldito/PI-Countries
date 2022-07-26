@@ -27,7 +27,6 @@ export default function countries(state = initialState, { type, payload }) {
                 });
                 return activities.length ? activities : false;
             });
-
             if (order) {
                 switch (order) {
                     case 'ASC_ALPHABETICALLY':

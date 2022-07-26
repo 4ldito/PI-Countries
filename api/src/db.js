@@ -40,8 +40,6 @@ const { Country, Activity } = sequelize.models;
 Country.belongsToMany(Activity, { through: 'Country_Activity' });
 Activity.belongsToMany(Country, { through: 'Country_Activity' });
 
-// const test = Country.create({ name: 'argentina' }).then((value) => { console.log(value) })
-
 const cache = { allCountries: null };
 
 module.exports = {

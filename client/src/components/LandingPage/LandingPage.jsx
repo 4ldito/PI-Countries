@@ -10,6 +10,7 @@ const InitialPage = () => {
             <div className={style.infoContainer}>
                 <img className={style.img} src={logo} alt="Logo" />
                 <Link to='/home' className={style.btn} >Start</Link>
+                <a href="https://github.com/4ldito/PI-Countries" target='_blank' rel="noreferrer"><i className={`fa-brands fa-github ${style.icon}`}></i></a>
             </div>
         </div>
     )

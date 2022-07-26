@@ -10,14 +10,13 @@
     align-items: center;
     justify-content: space-evenly;
     padding: 1rem 2rem 2rem 2rem;
-    background-color: #000000d4;
+    background-color: #14364adf;
     border: 2px solid #fff;
     border-radius: 20px;
     font-size: 1.4rem;
     text-align: center;
     min-height: 28rem;
-    min-width: 24rem;
-    max-width: 500px;
+    width: 32rem;
     gap: 1rem;
 }
 

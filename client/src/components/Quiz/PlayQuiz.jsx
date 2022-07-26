@@ -97,11 +97,14 @@ const PlayQuiz = () => {
                         infoGame.gameStarted ?
                             <div className={style.infoContainer}>
                                 <p>Total Questions: {infoGame.numberQuestions}</p>
-                                <p>The answer is..</p>
+                                <p>Your answer is..</p>
                                 {infoGame.isAnswerCorrect ?
                                     <p className={style.correct}>Correct</p>
                                     :
-                                    <p className={style.wrong}>Wrong</p>}
+                                    <>
+                                        <p className={style.wrong}>Wrong</p>
+                                        <p>The correct answer was {question.correct.capital}</p>
+                                    </>}
                                 {infoGame.numberQuestions < 5 ?
                                     <button className={style.btn} onClick={getQuestion}>Next Question</button>
                                     :

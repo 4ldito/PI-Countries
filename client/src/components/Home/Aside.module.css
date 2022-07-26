@@ -11,7 +11,6 @@
     gap: 1rem;
     margin-top: 1.5rem;
 }
-
 .icon {
     align-self: end;
     font-size: 1.6rem;
@@ -78,4 +77,45 @@ select {
     font-size: 1.4rem;
     padding: 0.5rem;
     cursor: pointer;
+}
+
+.btnMenuFilters {
+    display: none;
+    background-color: #191919;
+    padding: 1rem;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #fff;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-align: center;
+}
+
+.icon {
+    padding-right: 1rem;
+}
+
+
+@media screen and (max-width: 930px) {
+    .container {
+        position: absolute;
+        padding: 2rem;
+        flex-direction: column;
+        align-items: center;
+        background: #002339;
+        left: 0px;
+        top: -1000px;
+        text-align: center;
+        transition: left .5s;
+        z-index: 1;
+        width: 100%;
+        transition: top 0.5s ease-in-out;
+    }
+    .btnMenuFilters {
+        display: block;
+    }
+
+    .showContainer {
+        top: 120px;
+    }
+    
 }

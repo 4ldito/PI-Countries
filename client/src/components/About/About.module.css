@@ -1,8 +1,9 @@
 .content {
     padding: 2rem;
     font-size: 1.5rem;
-    background-color: #010014e0;
+    background-color: #14364adf;
     display: inline-block;
     margin: 1rem;
     border-radius: 20px;
+    max-width: 1000px;
 }

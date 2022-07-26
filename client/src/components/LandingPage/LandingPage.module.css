@@ -9,18 +9,18 @@
 .infoContainer {
     background-color: var(--container-background-darker);
     display: flex;
-    justify-content: space-around;
-    align-items: center;
     flex-direction: column;
-    padding: 12rem 24rem;
+    padding: 10rem 24rem;
     gap: 4rem;
     border-radius: 10px;
     margin-bottom: 1rem;
     border: 2px solid #fff;
+    text-align: center;
+    position: relative;
 }
 
 .img {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgb(255, 255, 255);
     padding: 1rem;
     border-radius: 10px;
 }
@@ -30,9 +30,27 @@
     padding: 1rem 4rem;
     border-radius: 10px;
     font-size: 1.8rem;
+    border: 2px solid white;
     transition: background-color 0.3s;
 }
 
 .btn:hover { 
     background-color: #000000;;
+}
+
+.icon {
+    position: absolute;
+    top: 86%;
+    left: 92%;
+    font-size: 2rem;
+    background-color: var(--color-gray);
+    padding: 1rem;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.icon:hover {
+    background-color: #101010;
 }
