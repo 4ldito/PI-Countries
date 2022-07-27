@@ -22,7 +22,7 @@ const Home = () => {
   const [searchedCountry, setSearchedCountry] = useState({ value: '' });
 
   const [limit, setLimit] = useState({ min: 0, max: 8 });
-  const [filteredCountries, setFilteredCountries] = useState([]);
+  // const [filteredCountries, setFilteredCountries] = useState([]);
   const [actualFilters, setActualFilters] = useState({
     name: '',
     order: '', // este hace referencia a alfabeticamente y por poblacion
@@ -61,7 +61,7 @@ const Home = () => {
   }
 
   const getAllButtonsPages = () => {
-    const totalPages = ((filteredCountries.length + 1) / 10);
+    const totalPages = ((filteredCountriesReal.length + 1) / 10);
     const buttonsPage = [];
     for (let i = 0; i < totalPages; i++) {
       buttonsPage.push(<a key={i} onClick={handleOnClick} className={i === 0 ? `${styleCountries.active} ${styleCountries.btnPage}` : styleCountries.btnPage} href="#">{i + 1}</a>)
@@ -75,7 +75,7 @@ const Home = () => {
 
   const handleShowFilters = (e) => {
     e.preventDefault();
-    console.log(asideContainer.current.classList.toggle(styleAside.showContainer));
+    asideContainer.current.classList.toggle(styleAside.showContainer);
   }
 
   const handleOnClick = (e) => {
@@ -136,9 +136,9 @@ const Home = () => {
     dispatch(filterCountries(actualFilters));
   }, [actualFilters]);
 
-  useEffect(() => {
-    setFilteredCountries(filteredCountriesReal);
-  }, [filteredCountriesReal]);
+  // useEffect(() => {
+  //   setFilteredCountries(filteredCountriesReal);
+  // }, [filteredCountriesReal]);
 
   useEffect(() => {
     if (!loaded) dispatch(getCountries());
@@ -167,7 +167,8 @@ const Home = () => {
           </div>
           <div className={styleAside.inputSearchContainer}>
             <form onSubmit={handleOnSubmit} >
-              <input onChange={handleInputChange} value={searchedCountry.value} type="text" placeholder='Country name' id='filter' /><a onClick={handleOnSubmit} href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
+              <input onChange={handleInputChange} value={searchedCountry.value} type="text" placeholder='Country name' id='filter' />
+              <a onClick={handleOnSubmit} href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
             </form>
           </div>
         </div>
@@ -220,16 +221,16 @@ const Home = () => {
         <div className={styleCountries.titleContainer}>
           <h3>Countries</h3>
         </div>
-        {loaded && filteredCountries?.length ?
-          <div className={filteredCountries[0].error ? styleCountries.errorContainer : styleCountries.cardsContainer}>
-            <> {filteredCountries[0]?.error ?
+        {loaded && filteredCountriesReal?.length ?
+          <div className={filteredCountriesReal[0].error ? styleCountries.errorContainer : styleCountries.cardsContainer}>
+            <> {filteredCountriesReal[0]?.error ?
               // cuando no se encontró el país
               <div>
                 <h3 className={styleCountries.countryDontFoundTitle}>There is no country with those filters =(<p>Try something else!</p></h3>
               </div>
               // cuando si existe el pais
               :
-              filteredCountries.map((c, index) => {
+              filteredCountriesReal.map((c, index) => {
                 if (index <= limit.max && index >= limit.min) {
                   return (
                     <div key={c.id} className={styleCountries.cardCointaner}>

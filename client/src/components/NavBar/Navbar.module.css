@@ -69,7 +69,7 @@ li:last-child {
 @media screen and (max-width: 930px) {
 
     .list {
-        position: fixed;
+        position: absolute;
         padding: 2rem;
         flex-direction: column;
         align-items: center;
@@ -97,5 +97,4 @@ li:last-child {
     .visible {
         left: 0;
     }
-
 }

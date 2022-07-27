@@ -82,11 +82,17 @@
 
 @media screen and (max-width: 1500px) {
     .cardsContainer {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
     .btnPage{
         margin: 0.2rem;
         padding: 0.3rem 0.2rem;
+    }
+}
+
+@media screen and (max-width: 1290px) {
+    .cardsContainer {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
