@@ -5,5 +5,82 @@
     display: inline-block;
     margin: 1rem;
     border-radius: 20px;
-    max-width: 1000px;
+    max-width: 850px;
+    font-size: 1.2rem;
+}
+
+.img {
+    width: 250px;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.list {
+    list-style: disclosure-closed;
+}
+
+.content p {
+    margin-bottom: 1rem;
+}
+
+.link {
+    color: #4498C6;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+.containerAllIcons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    background-color: #0000008a;
+    padding: 1rem;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
+.iconContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.iconContainer p {
+    margin: 0;
+}
+
+.faReact {
+    color: #5CD3FC;
+    font-size: 3rem;
+}
+
+@media screen and (max-width: 580px) {
+
+    .floatRight,
+    .floatLeft {
+        float: none;
+    }
+
+    .containerImg {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
 }

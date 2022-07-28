@@ -29,14 +29,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     margin-bottom: 1.5rem;
-    /* max-width: 1200px; */
+    min-width: 1220px;
     min-height: 570px;
     padding: 1rem;
     gap: 2rem;
 }
 
 .errorContainer {
-    max-width: 1200px;
+    min-width: 1220px;
     min-height: 570px;
     padding: 1rem;
 }
@@ -83,6 +83,8 @@
 @media screen and (max-width: 1500px) {
     .cardsContainer {
         grid-template-columns: 1fr 1fr 1fr 1fr;
+        min-height: 350px;
+        min-width: auto;
     }
     .btnPage{
         margin: 0.2rem;
@@ -103,7 +105,6 @@
     .pages {
         display: flex;
         flex-wrap: wrap;
-        /* width: 500px; */
     }
 }
 

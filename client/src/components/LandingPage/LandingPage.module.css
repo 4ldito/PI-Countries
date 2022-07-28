@@ -3,7 +3,7 @@
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    margin-top: 2rem;
 }
 
 .infoContainer {
@@ -26,7 +26,8 @@
 }
 
 .btn {
-    background-color: #0e0e14;;
+    background-color: #0e0e14;
+    ;
     padding: 1rem 4rem;
     border-radius: 10px;
     font-size: 1.8rem;
@@ -34,8 +35,9 @@
     transition: background-color 0.3s;
 }
 
-.btn:hover { 
-    background-color: #000000;;
+.btn:hover {
+    background-color: #000000;
+    ;
 }
 
 .icon {
@@ -53,4 +55,55 @@
 
 .icon:hover {
     background-color: #101010;
+}
+
+@media screen and (max-width: 1180px) {
+    .infoContainer {
+        padding: 10rem 20rem;
+    }
+
+    .icon {
+        left: 90%;
+    }
+}
+
+@media screen and (max-width: 975px) {
+    .infoContainer {
+        padding: 10rem 12rem;
+    }
+
+    .icon {
+        left: 88%;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .infoContainer {
+        padding: 10rem 8rem;
+    }
+
+    .icon {
+        left: 86%;
+    }
+}
+
+@media screen and (max-width: 604px) {
+    .infoContainer {
+        padding: 8rem 4rem;
+    }
+
+    .icon {
+        left: 84%;
+    }
+}
+
+@media screen and (max-width: 482px) {
+    .infoContainer {
+        padding: 6rem 1rem;
+    }
+
+    .icon {
+        top: 84%;
+        left: 80%;
+    }
 }

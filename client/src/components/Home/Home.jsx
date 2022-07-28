@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,6 @@ const Home = () => {
   const [searchedCountry, setSearchedCountry] = useState({ value: '' });
 
   const [limit, setLimit] = useState({ min: 0, max: 8 });
-  // const [filteredCountries, setFilteredCountries] = useState([]);
   const [actualFilters, setActualFilters] = useState({
     name: '',
     order: '', // este hace referencia a alfabeticamente y por poblacion
@@ -30,7 +29,7 @@ const Home = () => {
     activity: ''
   });
 
-  const filteredCountriesReal = useSelector(state => state.countries.filteredCountries);
+  const filteredCountries = useSelector(state => state.countries.filteredCountries);
   const loaded = useSelector(state => state.countries.loaded);
   const activities = useSelector(state => state.activities.activities);
 
@@ -61,7 +60,7 @@ const Home = () => {
   }
 
   const getAllButtonsPages = () => {
-    const totalPages = ((filteredCountriesReal.length + 1) / 10);
+    const totalPages = ((filteredCountries.length + 1) / 10);
     const buttonsPage = [];
     for (let i = 0; i < totalPages; i++) {
       buttonsPage.push(<a key={i} onClick={handleOnClick} className={i === 0 ? `${styleCountries.active} ${styleCountries.btnPage}` : styleCountries.btnPage} href="#">{i + 1}</a>)
@@ -71,6 +70,7 @@ const Home = () => {
 
   const clearFilters = () => {
     selectedPage(1);
+    asideContainer.current.classList.toggle(styleAside.showContainer);
   }
 
   const handleShowFilters = (e) => {
@@ -135,10 +135,6 @@ const Home = () => {
   useEffect(() => {
     dispatch(filterCountries(actualFilters));
   }, [actualFilters]);
-
-  // useEffect(() => {
-  //   setFilteredCountries(filteredCountriesReal);
-  // }, [filteredCountriesReal]);
 
   useEffect(() => {
     if (!loaded) dispatch(getCountries());
@@ -221,16 +217,16 @@ const Home = () => {
         <div className={styleCountries.titleContainer}>
           <h3>Countries</h3>
         </div>
-        {loaded && filteredCountriesReal?.length ?
-          <div className={filteredCountriesReal[0].error ? styleCountries.errorContainer : styleCountries.cardsContainer}>
-            <> {filteredCountriesReal[0]?.error ?
+        {loaded && filteredCountries?.length ?
+          <div className={filteredCountries[0].error ? styleCountries.errorContainer : styleCountries.cardsContainer}>
+            <> {filteredCountries[0]?.error ?
               // cuando no se encontró el país
               <div>
                 <h3 className={styleCountries.countryDontFoundTitle}>There is no country with those filters =(<p>Try something else!</p></h3>
               </div>
               // cuando si existe el pais
               :
-              filteredCountriesReal.map((c, index) => {
+              filteredCountries.map((c, index) => {
                 if (index <= limit.max && index >= limit.min) {
                   return (
                     <div key={c.id} className={styleCountries.cardCointaner}>

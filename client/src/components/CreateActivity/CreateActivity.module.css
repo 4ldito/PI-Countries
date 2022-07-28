@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 2rem;
+    margin: 2rem 0.5rem; 
 }
 
 .infoContainer {
@@ -103,7 +103,7 @@
 }
 
 .select {
-    width: auto;
+    width: 100%;
 }
 
 .containerSelectedCountries {
@@ -193,4 +193,11 @@
 
 .showVisibility {
     visibility: visible;
+}
+
+@media screen and (max-width: 580px) {
+
+    .infoContainer form {
+        width: 100%;
+    }
 }

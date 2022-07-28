@@ -21,12 +21,14 @@ export default function countries(state = initialState, { type, payload }) {
         case FILTER_COUNTRIES:
             let { filterByName, activity, order, continent } = payload;
             if (continent && continent !== 'All') filterByName = filterByName.filter((c) => c.continent === continent);
+
             if (activity && activity !== 'All') filterByName = filterByName.filter((c) => {
                 const activities = c.Activities.filter(acc => {
                     return acc.name === activity;
                 });
                 return activities.length ? activities : false;
             });
+            
             if (order) {
                 switch (order) {
                     case 'ASC_ALPHABETICALLY':

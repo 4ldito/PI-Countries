@@ -26,7 +26,8 @@
     gap: 1rem;
 }
 
-.infoContainer h3, .infoContainer h4 {
+.infoContainer h3,
+.infoContainer h4 {
     margin: 0;
     color: var(--name-countries);
     font-size: 2rem;
@@ -55,4 +56,17 @@
 .wrong {
     font-size: 2rem;
     color: #FF002A;
+}
+
+@media screen and (max-width: 580px) {
+
+    .container {
+        padding: 1rem;
+    }
+
+    .infoContainer {
+        width: auto;
+        padding: 0.5rem;
+    }
+
 }

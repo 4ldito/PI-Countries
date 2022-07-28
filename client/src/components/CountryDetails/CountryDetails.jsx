@@ -83,10 +83,10 @@ const CountryDetails = () => {
     moreInfoContainer.current.classList.remove(style.animationFlag);
   }
 
-  const handleBtnBack = () => {
-    dispatch(cleanCountryId());
-    navigate(-1);
-  }
+  // const handleBtnBack = () => {
+  //   dispatch(cleanCountryId());
+  //   navigate(-1, { replace: true });
+  // }
 
   useEffect(() => {
     if (randomCountry) {
@@ -95,6 +95,7 @@ const CountryDetails = () => {
   }, [allCountries]);
 
   useEffect(() => {
+    console.log(params.id);
     if (!country.data) dispatch(getCountryById(params.id));
     else {
       if (country.data.error) return setInfoCountry({ ...country.data });
@@ -109,6 +110,7 @@ const CountryDetails = () => {
       left: 0
     });
     return () => {
+      console.log('lo vacia');
       dispatch(cleanCountryId());
     }
   }, []);
@@ -177,9 +179,11 @@ const CountryDetails = () => {
                           return (
                             <div key={activity.id} className={style.activityContainer}>
                               <h4>{activity.name}</h4>
-                              <p>Duration: {activity.duration} hours</p>
-                              <p>Perfect season: {activity.season}</p>
-                              <p>Difficulty: {difficulties[activity.difficulty - 1]}</p>
+                              <div className={style.infoActivityContainer}>
+                                <p className={style.infoText}>Duration <span>{activity.duration} hs</span></p>
+                                <p className={style.infoText}>Season <span>{activity.season}</span></p>
+                                <p className={style.infoText}>Difficulty <span>{difficulties[activity.difficulty - 1]}</span></p>
+                              </div>
                             </div>
                           )
                         })}
@@ -205,8 +209,8 @@ const CountryDetails = () => {
             : <Loading />
         }
         <div className={style.containerButons}>
-          <button onClick={handleBtnBack} className={style.btn}>Back</button>
-          <button onClick={randomPage} className={style.btn}>Random Country</button>
+          {/* <button onClick={handleBtnBack} className={style.btn}>Back</button> */}
+          <button onClick={randomPage} className={`${style.btn} ${style.randomBtn}`}>Random Country</button>
         </div>
       </div>
     </div>

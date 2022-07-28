@@ -117,15 +117,12 @@
     padding: 1rem;
 }
 
-path {
-    fill: #fff;
-}
-
 .icon {
     background-color: var(--color-black);
     padding: 0.2rem 0.6rem;
     border-radius: 5000px;
     border: 2px solid #fff;
+    fill: #fff;
 }
 
 .containerActivities {
@@ -153,7 +150,6 @@ path {
     background-color: #14364adf;
     border: 2px solid #fff;
     border-radius: 20px;
-    padding: 1.3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -161,9 +157,35 @@ path {
 }
 
 .activityContainer h4 {
+    padding-top: 1rem;
     text-transform: uppercase;
-    margin: 0%;
+    margin: 0;
     font-size: 1.5rem;
+    color: var(--name-countries);
+    margin-bottom: 0.5rem;
+    padding: 1rem 1rem 0 1rem;
+}
+
+.infoActivityContainer {
+    padding: 1rem;
+    border: 2px solid white;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #191919;
+}
+
+.infoText {
+    color: #0083FF;
+    font-weight: bold;
+}
+
+.infoText span {
+    color: #fff;
+    text-decoration: none;
 }
 
 .dontFound {
@@ -191,6 +213,9 @@ path {
 .btn:hover {
     background-color: #0059ac;
 }
+.randomBtn {
+    width: 100%;
+}
 
 .containerButons {
     display: flex;
@@ -212,16 +237,14 @@ path {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.1);
+    transform: translate(-50%, -50%) scale(0);
     background-color: var(--color-gray-opacity-darker);
     padding: 1rem;
     border-radius: 20px;
-    visibility: hidden;
     transition: transform 0.4s, top 0.4s;
 }
 
 .animationFlag {
-    visibility: visible;
     transform: translate(-50%, -50%) scale(1);
     top: 50%;
 }
@@ -229,6 +252,8 @@ path {
 .containerMoreInfo img {
     border: 2px solid var(--color-black);
     border-radius: 20px;
+    min-width: 400px;
+    min-height: 400px;
     max-width: 800px;
     max-height: 800px;
 }
@@ -249,4 +274,12 @@ path {
     right: 0;
     bottom: 0;
     visibility: visible;
+}
+
+@media screen and (max-width: 930px) {
+
+    .infoContainer {
+        grid-template-columns: 1fr;
+    }
+
 }
