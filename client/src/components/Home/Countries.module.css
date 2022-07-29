@@ -86,7 +86,14 @@
         min-height: 350px;
         min-width: auto;
     }
-    .btnPage{
+
+    .errorContainer {
+        min-height: 350px;
+        min-width: auto;
+
+    }
+
+    .btnPage {
         margin: 0.2rem;
         padding: 0.3rem 0.2rem;
     }
@@ -102,6 +109,7 @@
     .cardsContainer {
         grid-template-columns: 1fr 1fr;
     }
+
     .pages {
         display: flex;
         flex-wrap: wrap;
@@ -112,8 +120,13 @@
     .container {
         margin: 2rem 1rem 5rem 1rem;
     }
+
     .cardsContainer {
         grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .errorContainer h3 {
+        font-size: 1.5rem;
     }
 }
 
