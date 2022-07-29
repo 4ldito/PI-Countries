@@ -11,7 +11,7 @@ import axios from 'axios';
 export function getCountries() {
     return async function (dispatch) {
         try {
-            const response = await axios.get('http://127.0.0.1:3001/api/countries/');
+            const response = await axios.get('api/countries/');
             dispatch({ type: GET_ALL_COUNTRIES, payload: response.data });
         } catch (error) {
             console.log('error');
@@ -22,7 +22,7 @@ export function getCountries() {
 export function filterCountries(filters) {
     if (!filters.name) filters.name = '';
     return function (dispatch) {
-        return axios.get(`http://127.0.0.1:3001/api/countries?name=${filters.name}`)
+        return axios.get(`api/countries?name=${filters.name}`)
             .then((response) => {
                 dispatch({ type: FILTER_COUNTRIES, payload: { filterByName: response.data, ...filters } });
             }).catch(err => console.log(err))
@@ -32,7 +32,7 @@ export function filterCountries(filters) {
 
 export function getCountryById(id) {
     return function (dispatch) {
-        return axios.get(`http://127.0.0.1:3001/api/countries/${id}`)
+        return axios.get(`api/countries/${id}`)
             .then((response) => {
                 dispatch({ type: GET_COUNTRY_BY_ID, payload: response.data });
             }).catch(err => {

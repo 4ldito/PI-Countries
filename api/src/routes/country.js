@@ -10,7 +10,6 @@ const getAllCountries = async () => {
     const { data } = await axios.get(API_ALL_URL);
 
     if (!cache.allCountries) { // Si el cache está vacio, significa que la base de datos esta vacia, entonces la lleno
-        console.log('entro aca')
         cache.allCountries = {};
         const countriesProps = data.map((element) => {
             return {

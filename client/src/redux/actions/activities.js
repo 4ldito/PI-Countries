@@ -4,7 +4,7 @@ import { CREATE_NEW_ACTIVITY, CLEAN, GET_ALL_ACTIVITIES, LOADING_NEW_ACTIVITY } 
 
 export function getActivities() {
     return async function (dispatch) {
-        const response = await axios.get('http://127.0.0.1:3001/api/activities/');
+        const response = await axios.get('api/activities/');
         dispatch({ type: GET_ALL_ACTIVITIES, payload: response.data });
     }
 }
@@ -13,7 +13,7 @@ export function createActivity(activity) {
     return async function (dispatch) {
         try {
             dispatch({ type: LOADING_NEW_ACTIVITY, payload: true });
-            const response = await axios.post('http://127.0.0.1:3001/api/activities/', activity);
+            const response = await axios.post('api/activities/', activity);
             dispatch({ type: LOADING_NEW_ACTIVITY, payload: false });
             dispatch({ type: CREATE_NEW_ACTIVITY, payload: response.data });
         } catch (error) {
