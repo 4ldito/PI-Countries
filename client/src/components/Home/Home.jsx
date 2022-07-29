@@ -171,9 +171,9 @@ const Home = () => {
 
         <div className={styleAside.filterContainer}>
           <label htmlFor='continent'>Order by Continent</label>
-          <select ref={orderContinent} defaultValue={'All'} className={styleAside.select} id="continent">
+          <select onChange={handleContinentSelect} ref={orderContinent} defaultValue={'All'} className={styleAside.select} id="continent">
             {Array.from(['All', 'Africa', 'Antarctica', 'Asia', 'Europe', 'South America', 'North America', 'Oceania']).map((continent) => {
-              return <option onClick={handleContinentSelect} key={continent} value={continent}>{continent}</option>
+              return <option key={continent} value={continent}>{continent}</option>
             })
             }
           </select>
@@ -203,10 +203,10 @@ const Home = () => {
 
         <div className={styleAside.filterContainer}>
           <label htmlFor='activities'>Order by Activity</label>
-          <select ref={orderActivity} defaultValue={'All'} className={styleAside.select} id="activities">
-            <option onClick={handleActivitySelect} value="All">All</option>
+          <select onChange={handleActivitySelect} ref={orderActivity} defaultValue={'All'} className={styleAside.select} id="activities">
+            <option value="All">All</option>
             {activities.all.map((activity) => {
-              return <option onClick={handleActivitySelect} key={activity.id} value={activity.name}>{activity.name}</option>
+              return <option key={activity.id} value={activity.name}>{activity.name}</option>
             })
             }
           </select>
