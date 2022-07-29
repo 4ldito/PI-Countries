@@ -10,6 +10,7 @@ const getAllCountries = async () => {
     const { data } = await axios.get(API_ALL_URL);
 
     if (!cache.allCountries) { // Si el cache está vacio, significa que la base de datos esta vacia, entonces la lleno
+        console.log('entro aca')
         cache.allCountries = {};
         const countriesProps = data.map((element) => {
             return {
@@ -32,13 +33,16 @@ const getAllCountries = async () => {
     // Guardo en caché todos los paises con las nuevas actividades
     const countriesWithActivities = await Country.findAll({ include: Activity });
     cache.allCountries = countriesWithActivities;
+    // cache.allCountries = true;
 }
 
 countryRoute.get('/', async (req, res, next) => {
     const { name } = req.query;
     try {
-        // await getAllCountries();
+        //await getAllCountries();
         if (!cache.allCountries) await getAllCountries();
+
+        let countries;
         if (name) {
             const filterCountries = cache.allCountries.filter(country => {
                 const regex = new RegExp(name, "gmi");
@@ -49,9 +53,13 @@ countryRoute.get('/', async (req, res, next) => {
                 }
             })
             filterCountries.sort((a, b) => a.index - b.index);
+            // countries = await Country.findAll({ where: { name }, include: Activity })
+            // return res.status(200).send(countries);
             return res.status(200).send(filterCountries);
         }
-        res.status(200).send(cache.allCountries);
+        countries = await Country.findAll({ include: Activity });
+        res.status(200).send(countries);
+        // res.status(200).send(cache.allCountries);
     } catch (error) {
         next(error);
     }

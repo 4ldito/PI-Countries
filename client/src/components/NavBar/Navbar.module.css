@@ -73,12 +73,13 @@ li:last-child {
         padding: 2rem;
         flex-direction: column;
         align-items: center;
-        background: #002339;
+        background: #191919;
         left: -1000px;
         top: 40px;
         text-align: center;
         z-index: 1;
         transition: left .5s;
+        z-index: 2;
     }
 
     li:last-child {
@@ -88,6 +89,7 @@ li:last-child {
     .btn {
         display: block;
         width: 250px;
+        background-color: #191919;
     }
 
     .containerMenu {
