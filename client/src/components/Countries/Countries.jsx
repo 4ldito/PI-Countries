@@ -54,7 +54,11 @@ const Countries = () => {
     }
 
     useEffect(() => {
-        if (loaded) selectedPage(activePage.page, activePage.btn);
+        if (loaded) {
+            activePage ?
+                selectedPage(activePage.page, activePage.btn)
+                : selectedPage(1, null);
+        }
     }, [loaded, activePage]);
 
     useEffect(() => {
