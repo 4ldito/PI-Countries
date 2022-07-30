@@ -3,8 +3,7 @@ import {
     GET_ALL_COUNTRIES,
     GET_COUNTRY_BY_ID,
     CLEAN_COUNTRY_ID,
-    FILTER_COUNTRIES,
-    SET_ACTIVE_PAGE
+    FILTER_COUNTRIES
 } from "./ActionTypes";
 
 import axios from 'axios';
@@ -45,14 +44,6 @@ export function getCountryById(id) {
 export function cleanCountryId() {
     return {
         type: CLEAN_COUNTRY_ID
-    }
-}
-
-export function setActivePage(page, btn) {
-    if (!btn) btn = null;
-    return {
-        type: SET_ACTIVE_PAGE,
-        payload: { page, btn }
     }
 }
 

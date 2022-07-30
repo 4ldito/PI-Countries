@@ -1,28 +1,40 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCountries } from '../../redux/actions/countries';
-import styleCountries from './Countries.module.css';
+import { useFetchCountries } from '../../hooks/useFetchCountries';
 import { Link } from 'react-router-dom';
+
 import Card from '../Card/Card';
 import Loading from '../Loading/Loading';
-import { setActivePage } from './../../redux/actions/countries';
+
+import style from './Countries.module.css';
 
 const Countries = () => {
-    const dispatch = useDispatch();
-
     const [limit, setLimit] = useState({ min: 0, max: 8 });
+    const { filteredCountries, loaded } = useFetchCountries();
 
-    const filteredCountries = useSelector(state => state.countries.filteredCountries);
-    const loaded = useSelector(state => state.countries.loaded);
-    const activePage = useSelector(state => state.countries.activePage);
+    const getAllButtonsPages = () => {
+        const totalPages = ((filteredCountries.length + 1) / 10);
+        const buttonsPage = [];
+        for (let i = 0; i < totalPages; i++) {
+            buttonsPage.push(<a key={i} onClick={handleOnClickPage} className={i === 0 ? `${style.active} ${style.btnPage}` : style.btnPage} href="#">{i + 1}</a>)
+        }
+        return buttonsPage;
+    }
+
+    const handleOnClickPage = (e) => {
+        e.preventDefault();
+        const pag = Number(e.target.innerText);
+        selectedPage(pag, e.target);
+    }
 
     const pageActive = (btn) => {
-        const lastActive = document.querySelector(`.${styleCountries.active}`);
-        if (lastActive) lastActive.classList.remove(styleCountries.active);
-        if (!btn) btn = document.querySelector(`.${styleCountries.btnPage}`);
-        btn.classList.add(styleCountries.active);
+        const lastActive = document.querySelector(`.${style.active}`);
+        if (lastActive) lastActive.classList.remove(style.active);
+        if (!btn) btn = document.querySelector(`.${style.btnPage}`);
+        if (!btn) return;
+        btn.classList.add(style.active);
     }
 
     const selectedPage = (pag, btn) => {
@@ -38,51 +50,28 @@ const Countries = () => {
         pageActive(btn);
     }
 
-    const getAllButtonsPages = () => {
-        const totalPages = ((filteredCountries.length + 1) / 10);
-        const buttonsPage = [];
-        for (let i = 0; i < totalPages; i++) {
-            buttonsPage.push(<a key={i} onClick={handleOnClick} className={i === 0 ? `${styleCountries.active} ${styleCountries.btnPage}` : styleCountries.btnPage} href="#">{i + 1}</a>)
-        }
-        return buttonsPage;
-    }
-
-    const handleOnClick = (e) => {
-        e.preventDefault();
-        const pag = Number(e.target.innerText);
-        dispatch(setActivePage(pag, e.target));
-    }
-
     useEffect(() => {
-        if (loaded) {
-            activePage ?
-                selectedPage(activePage.page, activePage.btn)
-                : selectedPage(1, null);
-        }
-    }, [loaded, activePage]);
-
-    useEffect(() => {
-        if (!loaded) dispatch(getCountries());
-    }, [loaded]);
+        selectedPage(1, null);
+    }, [filteredCountries]);
 
     return (
-        <main className={styleCountries.container}>
-            <div className={styleCountries.titleContainer}>
+        <main className={style.container}>
+            <div className={style.titleContainer}>
                 <h3>Countries</h3>
             </div>
             {loaded && filteredCountries?.length ?
-                <div className={filteredCountries[0].error ? styleCountries.errorContainer : styleCountries.cardsContainer}>
+                <div className={filteredCountries[0].error ? style.errorContainer : style.cardsContainer}>
                     <> {filteredCountries[0]?.error ?
                         // cuando no se encontró el país
                         <div>
-                            <h3 className={styleCountries.countryDontFoundTitle}>There is no country with those filters =(<p>Try something else!</p></h3>
+                            <h3 className={style.countryDontFoundTitle}>There is no country with those filters =(<p>Try something else!</p></h3>
                         </div>
                         // cuando si existe el pais
                         :
                         filteredCountries.map((c, index) => {
                             if (index <= limit.max && index >= limit.min) {
                                 return (
-                                    <div key={c.id} className={styleCountries.cardCointaner}>
+                                    <div key={c.id} className={style.cardCointaner}>
                                         <Link to={`/details/${c.id}`}>
                                             <Card
                                                 name={c.name}
@@ -99,13 +88,13 @@ const Countries = () => {
                     </>
                 </div>
                 :
-                <div className={styleCountries.cardsContainer}>
+                <div className={style.cardsContainer}>
                     <Loading />
                 </div>
             }
-            <div className={styleCountries.containerPages}>
-                <div className={styleCountries.pages}>
-                    {loaded ? getAllButtonsPages() : ''}
+            <div className={style.containerPages}>
+                <div className={style.pages}>
+                    {loaded ? getAllButtonsPages() : 1}
                 </div>
             </div>
         </main>

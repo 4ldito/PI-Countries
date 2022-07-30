@@ -35,9 +35,18 @@ const activity4 = {
 }
 
 describe('Activity Routes', () => {
-    beforeEach(async () => {
-        await conn.sync({ force: true });
+    beforeAll(async () => {
+        try {
+            await conn.sync({ force: true });
+        } catch (error) {
+            console.error(error);
+        }
     })
+
+    // beforeEach(async () => {
+    //     await conn.close();
+    //     await conn.sync({ force: true });
+    // })
     describe('GET /api/activities', () => {
         it('should return empty array if the database is empty', async () => {
             const res = await request(app).get('/api/activities/');
@@ -63,9 +72,15 @@ describe('Activity Routes', () => {
 
     describe('POST /api/activities', () => {
         it('should not create the Ability if the body is empty', async () => {
-            const res = await request(app)
-                .post('/api/activities/')
-                .send({});
+            let res;
+            try {
+                res = await request(app)
+                    .post('/api/activities/')
+                    .send({});
+            } catch (error) {
+                console.log(error)
+            }
+
             expect(res.statusCode).toBe(500);
             expect(res.body.error).toBe('Wrong data');
         });
@@ -90,7 +105,7 @@ describe('Activity Routes', () => {
     })
 
     afterAll(async () => {
-        await conn.sync({ force: true });
+        // await conn.sync({ force: true });
         conn.close();
 
     });

@@ -3,7 +3,6 @@ import programmer from '../../img/programming.png'
 
 import style from './About.module.css';
 
-
 const About = () => {
   return (
     <div data-testid="test" className='container'>

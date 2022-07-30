@@ -3,8 +3,7 @@ import {
     CLEAN_COUNTRY_ID,
     FILTER_COUNTRIES,
     GET_ALL_COUNTRIES,
-    GET_COUNTRY_BY_ID,
-    SET_ACTIVE_PAGE
+    GET_COUNTRY_BY_ID
 } from "../actions/ActionTypes";
 
 const initialState = {
@@ -53,8 +52,6 @@ export default function countries(state = initialState, { type, payload }) {
             return { ...state, filteredCountries: filterByName }
         case GET_COUNTRY_BY_ID:
             return { ...state, countryById: { data: payload, loaded: true } }
-        case SET_ACTIVE_PAGE:
-            return { ...state, activePage: { page: payload.page, btn: payload.btn } }
         case CLEAN_COUNTRY_ID:
             return { ...state, countryById: {} }
         case CLEAN:

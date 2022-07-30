@@ -109,11 +109,11 @@ const CreateActivity = () => {
 
   const changeLblDifficulty = (difficulty) => {
     const difficulties = [
-      { name: 'Very Easy', className: style.veryEasy },
-      { name: 'Easy', className: style.easy },
+      { name: 'Begginer', className: style.veryEasy },
+      { name: 'Amateur', className: style.easy },
       { name: 'Normal', className: style.normal },
-      { name: 'Hard', className: style.hard },
-      { name: 'Extreme', className: style.extreme }
+      { name: 'Professional', className: style.hard },
+      { name: 'Expert', className: style.extreme }
     ];
     diffText.current.innerText = difficulties[difficulty - 1].name;
     diffText.current.className = difficulties[difficulty - 1].className;
@@ -214,7 +214,7 @@ const CreateActivity = () => {
             <div className={style.containerInput}>
               <label className={style.label} htmlFor="difficulty">Difficulty</label>
               <input ref={inputDifficulty} defaultValue={1} onChange={handleChangeDifficulty} id='difficulty' type="range" min='1' max='5' />
-              <p ref={diffText} className={style.veryEasy} >Very Easy</p>
+              <p ref={diffText} className={style.veryEasy} >Begginer</p>
             </div>
 
             <div className={newActivity.duration.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>

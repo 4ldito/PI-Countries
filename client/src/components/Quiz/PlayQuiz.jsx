@@ -1,16 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Loading from '../Loading/Loading';
+import { useState } from 'react';
+import { useFetchCountries } from '../../hooks/useFetchCountries';
 
-import { getCountries } from './../../redux/actions/countries';
+import Loading from '../Loading/Loading';
 
 import style from './PlayQuiz.module.css';
 
 const PlayQuiz = () => {
 
-    const dispatch = useDispatch();
-    const loaded = useSelector(state => state.countries.loaded);
-    const countries = useSelector(state => state.countries.countries);
+    const { filteredCountries, loaded } = useFetchCountries();
 
     const [infoGame, setInfoGame] = useState({
         gameStarted: false,
@@ -39,7 +36,7 @@ const PlayQuiz = () => {
 
     const getQuestion = () => {
         // Le damos un orden aleatorio al array de countries y agarramos las primeras 4 posiciones.
-        const randomCountries = shuffleArray(countries).splice(0, 4);
+        const randomCountries = shuffleArray(filteredCountries).splice(0, 4);
         const correct = randomCountries[0];
         //desordenamos para que las respuestas se pongan en un orden aleatorio
         shuffleArray(randomCountries);
@@ -78,10 +75,6 @@ const PlayQuiz = () => {
         }
         setQuestion(state => { return { ...state, seeQuestion: false } });
     }
-
-    useEffect(() => {
-        if (!loaded) dispatch(getCountries());
-    }, [loaded, dispatch]);
 
     return (
         <div className='container'>

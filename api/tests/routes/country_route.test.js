@@ -42,7 +42,7 @@ describe('Country Routes', () => {
     });
 
     afterAll(async () => {
-        await conn.sync({ force: true });
+        // await conn.sync({ force: true });
         await conn.close();
     });
 })

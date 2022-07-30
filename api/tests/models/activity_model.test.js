@@ -1,9 +1,15 @@
 const { Activity, conn } = require('../../src/db.js');
 
 describe('Activity Model', () => {
-    beforeEach(async () => {
+
+    beforeAll(async () => {
         await conn.sync({ force: true });
-    });
+    })
+
+    // beforeEach(async () => {
+    //     await conn.close();
+    //     await conn.sync({ force: true });
+    // });
 
     it('should not create the Ability if the body is empty', async () => {
         expect.assertions(1);
@@ -88,11 +94,11 @@ describe('Activity Model', () => {
         await Activity.create(act2);
         await Activity.create(act3);
         const activities = await Activity.findAll();
-        expect(activities.length).toEqual(3);
+        expect(activities.length).toEqual(5);
     });
 
     afterAll(async () => {
-        await conn.sync({ force: true });
+        // await conn.sync({ force: true });
         conn.close();
     });
 

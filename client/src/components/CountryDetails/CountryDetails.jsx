@@ -37,7 +37,7 @@ const subregions = {
   'Antarctica': 'Antarctica'
 }
 
-const difficulties = ['Very Easy', 'Easy', 'Normal', 'Hard', 'Extreme'];
+const difficulties = ['Begginer', 'Amateur', 'Normal', 'Professional', 'Expert'];
 
 const CountryDetails = () => {
   const dispatch = useDispatch();
@@ -83,11 +83,6 @@ const CountryDetails = () => {
     moreInfoContainer.current.classList.remove(style.animationFlag);
   }
 
-  // const handleBtnBack = () => {
-  //   dispatch(cleanCountryId());
-  //   navigate(-1, { replace: true });
-  // }
-
   useEffect(() => {
     if (randomCountry) {
       randomPage();
@@ -95,7 +90,6 @@ const CountryDetails = () => {
   }, [allCountries]);
 
   useEffect(() => {
-    console.log(params.id);
     if (!country.data) dispatch(getCountryById(params.id));
     else {
       if (country.data.error) return setInfoCountry({ ...country.data });
@@ -106,11 +100,9 @@ const CountryDetails = () => {
 
   useEffect(() => {
     window.scroll({
-      top: 0,
-      left: 0
+      top: 0
     });
     return () => {
-      console.log('lo vacia');
       dispatch(cleanCountryId());
     }
   }, []);

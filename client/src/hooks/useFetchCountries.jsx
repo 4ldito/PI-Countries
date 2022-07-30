@@ -1,0 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCountries } from "../redux/actions/countries";
+
+export const useFetchCountries = () => {
+    const dispatch = useDispatch();
+
+    const filteredCountries = useSelector(state => state.countries.filteredCountries);
+    const loaded = useSelector(state => state.countries.loaded);
+
+    useEffect(() => {
+        if (!loaded) dispatch(getCountries());
+    }, [loaded]);
+
+    return { filteredCountries, loaded }
+}

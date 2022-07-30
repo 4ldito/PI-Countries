@@ -1,9 +1,15 @@
 const { Country, conn } = require('../../src/db.js');
 
 describe('Country Model', () => {
-    beforeEach(async () => {
+
+    beforeAll(async () => {
         await conn.sync({ force: true });
-    });
+    })
+
+    // beforeEach(async () => {
+    //     await conn.close();
+    //     await conn.sync({ force: true });
+    // });
 
     it('should not create the Country if the body is empty', async () => {
         expect.assertions(1);
@@ -77,7 +83,7 @@ describe('Country Model', () => {
 
     it('should get all Countries from database', async () => {
         const country = {
-            id: "AAA",
+            id: "AAD",
             name: 'NewArgentina',
             capital: 'Buenos Aires',
             flag: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
@@ -85,7 +91,7 @@ describe('Country Model', () => {
         }
 
         const country2 = {
-            id: "AAB",
+            id: "AAE",
             name: 'NewArgentina',
             capital: 'Buenos Aires',
             flag: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
@@ -93,18 +99,23 @@ describe('Country Model', () => {
         }
 
         const country3 = {
-            id: "AAC",
+            id: "AAF",
             name: 'NewArgentina',
             capital: 'Buenos Aires',
             flag: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
             continent: "America",
         }
 
-        await Country.create(country);
-        await Country.create(country2);
-        await Country.create(country3);
+        try {
+            await Country.create(country);
+            await Country.create(country2);
+            await Country.create(country3);
+        } catch (error) {
+            console.error(error)
+        }
+
         const countries = await Country.findAll();
-        expect(countries.length).toEqual(3);
+        expect(countries.length).toEqual(6);
     });
 
     it('should not create the Country if the id is wrong', async () => {
@@ -126,19 +137,19 @@ describe('Country Model', () => {
     it('should not create the Country if the name, capital, flag or continent are empty', async () => {
         expect.assertions(3);
         const country = {
-            id: "AAE",
+            id: "AAG",
             capital: 'Buenos Aires',
             flag: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
             continent: "America",
         }
         const country2 = {
-            id: "AAF",
+            id: "AAH",
             name: 'newArgentina',
             capital: 'Buenos Aires',
             flag: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
         }
         const country3 = {
-            id: "AAG",
+            id: "AAI",
             name: 'NewArgentina',
             flag: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
             continent: "America",
@@ -164,7 +175,7 @@ describe('Country Model', () => {
     });
 
     afterAll(async () => {
-        await conn.sync({ force: true });
+        // await conn.sync({ force: true });
         conn.close();
     });
 

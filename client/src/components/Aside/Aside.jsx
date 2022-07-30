@@ -2,11 +2,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterCountries, setActivePage } from '../../redux/actions/countries';
+import { useDispatch } from 'react-redux';
 
-import styleAside from './Aside.module.css';
-import { getActivities } from './../../redux/actions/activities';
+import { filterCountries } from '../../redux/actions/countries';
+
+import style from './Aside.module.css';
+import { useFetchActivities } from './../../hooks/useFetchActivities';
 
 const Aside = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const Aside = () => {
     });
     const [searchedCountry, setSearchedCountry] = useState({ value: '' });
 
-    const activities = useSelector(state => state.activities.activities);
+    // const activities = useSelector(state => state.activities.activities);
+    const { activities } = useFetchActivities();
 
     const asideContainer = useRef(null);
     const orderAlphabetically = useRef(null);
@@ -27,13 +29,12 @@ const Aside = () => {
     const orderActivity = useRef(null);
 
     const clearFilters = () => {
-        dispatch(setActivePage(1));
-        asideContainer.current.classList.toggle(styleAside.showContainer);
+        asideContainer.current.classList.toggle(style.showContainer);
     }
 
     const handleShowFilters = (e) => {
         e.preventDefault();
-        asideContainer.current.classList.toggle(styleAside.showContainer);
+        asideContainer.current.classList.toggle(style.showContainer);
     }
 
     const handleClearFilters = () => {
@@ -88,28 +89,23 @@ const Aside = () => {
         dispatch(filterCountries(actualFilters));
     }, [actualFilters]);
 
-    useEffect(() => {
-        if (!activities.loaded) dispatch(getActivities());
-    }, [activities]);
-
-
     return (
         <>
-            <div className={styleAside.btnMenuFilters}>
-                <a onClick={handleShowFilters} href="#"><i className={`fa-solid fa-filter ${styleAside.icon}`}></i>Filters</a>
+            <div className={style.btnMenuFilters}>
+                <a onClick={handleShowFilters} href="#"><i className={`fa-solid fa-filter ${style.icon}`}></i>Filters</a>
             </div>
-            <aside ref={asideContainer} className={styleAside.container}>
+            <aside ref={asideContainer} className={style.container}>
                 <p>Filters</p>
 
-                <div className={styleAside.btnClearContainer}>
-                    <button onClick={handleClearFilters} className={styleAside.btnClear}>Clear Filters</button>
+                <div className={style.btnClearContainer}>
+                    <button onClick={handleClearFilters} className={style.btnClear}>Clear Filters</button>
                 </div>
 
-                <div className={styleAside.searchContainer}>
-                    <div className={styleAside.labelSearch}>
+                <div className={style.searchContainer}>
+                    <div className={style.labelSearch}>
                         <label htmlFor="filter">By Name</label>
                     </div>
-                    <div className={styleAside.inputSearchContainer}>
+                    <div className={style.inputSearchContainer}>
                         <form onSubmit={handleOnSubmit} >
                             <input onChange={handleInputChange} value={searchedCountry.value} type="text" placeholder='Country name' id='filter' />
                             <a onClick={handleOnSubmit} href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
@@ -117,9 +113,9 @@ const Aside = () => {
                     </div>
                 </div>
 
-                <div className={styleAside.filterContainer}>
+                <div className={style.filterContainer}>
                     <label htmlFor='continent'>Order by Continent</label>
-                    <select onChange={handleContinentSelect} ref={orderContinent} defaultValue={'All'} className={styleAside.select} id="continent">
+                    <select onChange={handleContinentSelect} ref={orderContinent} defaultValue={'All'} className={style.select} id="continent">
                         {Array.from(['All', 'Africa', 'Antarctica', 'Asia', 'Europe', 'South America', 'North America', 'Oceania']).map((continent) => {
                             return <option key={continent} value={continent}>{continent}</option>
                         })
@@ -127,9 +123,9 @@ const Aside = () => {
                     </select>
                 </div>
 
-                <div className={styleAside.filterContainer}>
+                <div className={style.filterContainer}>
                     <label htmlFor='orderAlphabetically'>Order Alphabetically</label>
-                    <select onChange={handleAlphabeticallySelect} ref={orderAlphabetically} defaultValue={'None'} className={styleAside.select} id="orderAlphabetically">
+                    <select onChange={handleAlphabeticallySelect} ref={orderAlphabetically} defaultValue={'None'} className={style.select} id="orderAlphabetically">
                         <option value='None'>None</option>
                         {Array.from(['A-Z', 'Z-A']).map((order) => {
                             return <option key={order} value={order}>{order}</option>
@@ -138,9 +134,9 @@ const Aside = () => {
                     </select>
                 </div>
 
-                <div className={styleAside.filterContainer}>
+                <div className={style.filterContainer}>
                     <label htmlFor='orderPopulation'>Order by Population</label>
-                    <select ref={orderPopulation} onChange={handlePopulationSelect} defaultValue={'None'} className={styleAside.select} id="orderPopulation">
+                    <select ref={orderPopulation} onChange={handlePopulationSelect} defaultValue={'None'} className={style.select} id="orderPopulation">
                         <option value="None">None</option>
                         {Array.from(['Ascendent', 'Descendent']).map((order) => {
                             return <option key={order} value={order}>{order}</option>
@@ -149,9 +145,9 @@ const Aside = () => {
                     </select>
                 </div>
 
-                <div className={styleAside.filterContainer}>
+                <div className={style.filterContainer}>
                     <label htmlFor='activities'>Order by Activity</label>
-                    <select onChange={handleActivitySelect} ref={orderActivity} defaultValue={'All'} className={styleAside.select} id="activities">
+                    <select onChange={handleActivitySelect} ref={orderActivity} defaultValue={'All'} className={style.select} id="activities">
                         <option value="All">All</option>
                         {activities.all.map((activity) => {
                             return <option key={activity.id} value={activity.name}>{activity.name}</option>
