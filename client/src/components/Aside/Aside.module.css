@@ -1,0 +1,118 @@
+.container {
+    background-color: var(--color-gray);
+    padding: 1rem;
+    width: 230px;
+}
+
+.searchContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.icon {
+    align-self: end;
+    font-size: 1.6rem;
+}
+
+input {
+    padding: 0.48rem 0.8rem;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    box-shadow: none;
+    width: 100%;
+}
+
+.inputSearchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.inputSearchContainer form {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.inputSearchContainer a {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background-color: #173CAA;
+    padding: 0.8rem;
+    border-top-right-radius: 10px;
+    transition: background-color 0.5s;
+}
+
+.inputSearchContainer a:hover {
+    background-color: #0e2468;
+}
+
+select {
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.filterContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.btnClearContainer {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.btnClear {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.btnMenuFilters {
+    display: none;
+    background-color: #191919;
+    padding: 1rem;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #fff;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-align: center;
+}
+
+.icon {
+    padding-right: 1rem;
+}
+
+
+@media screen and (max-width: 930px) {
+    .container {
+        position: absolute;
+        padding: 2rem;
+        flex-direction: column;
+        align-items: center;
+        background: #002339;
+        left: 0px;
+        top: -1000px;
+        text-align: center;
+        transition: left .5s;
+        z-index: 1;
+        width: 100%;
+        transition: top 0.5s ease-in-out;
+    }
+    .btnMenuFilters {
+        display: block;
+    }
+
+    .showContainer {
+        top: 120px;
+    }
+    
+}
