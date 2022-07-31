@@ -42,7 +42,34 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
     const { id } = req.params;
-    
+    try {
+        const activity = await Activity.findByPk(id);
+        if (!activity) res.send({ error: "Invalid id" });
+
+        const { name, difficulty, duration, season } = req.body;
+
+        if (name) activity.name = name;
+        if (difficulty) activity.difficulty = difficulty;
+        if (duration) activity.duration = duration;
+        if (season) activity.season = season;
+
+        await activity.save();
+
+        res.send(activity);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete('/:id', async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const activity = await Activity.destroy({ where: { id } });
+        if (activity > 0) return res.send({ msg: "Activity deleted correctly." });
+        res.send({ msg: "Activity doesn't exists" });
+    } catch (error) {
+        next(error);
+    }
 });
 
 module.exports = router;
