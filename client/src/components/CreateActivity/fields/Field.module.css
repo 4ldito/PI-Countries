@@ -1,0 +1,32 @@
+.containerInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: #14364adf;
+}
+
+.errorContainer {
+    border: 2px solid #d93025;
+}
+
+.lblWrong {
+    padding-top: 0.2rem;
+    font-weight: 100;
+    color: #d93025;
+
+}
+
+.label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+}
+
+.containerInput p {
+    font-size: 1.4rem;
+}

@@ -27,8 +27,8 @@ router.post('/', async (req, res, next) => {
         countries.forEach(id => {
             Country.findByPk(id).then(async country => {
                 await country.addActivity(activity);
-            }).catch(error => {});
-            
+            }).catch(error => { });
+
             const cacheCountry = cache.allCountries.find(c => c.id === id);
             cacheCountry.dataValues.Activities.push(activity);
         });
@@ -38,8 +38,11 @@ router.post('/', async (req, res, next) => {
         if (error.name === 'SequelizeUniqueConstraintError') return res.status(500).send('Activity already exists.');
         res.status(500).send(error.message);
     });
-
 });
 
+router.put('/:id', async (req, res, next) => {
+    const { id } = req.params;
+    
+});
 
 module.exports = router;

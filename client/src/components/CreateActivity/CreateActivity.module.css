@@ -58,14 +58,6 @@
 
 }
 
-.containerLoading {
-    display: none;
-}
-
-.display {
-    display: inline-block;
-}
-
 .label {
     font-size: 1.5rem;
     font-weight: bold;
@@ -76,6 +68,13 @@
     font-size: 1.4rem;
 }
 
+.containerLoading {
+    display: none;
+}
+
+.display {
+    display: inline-block;
+}
 
 .veryEasy {
     color: #34FF5A;

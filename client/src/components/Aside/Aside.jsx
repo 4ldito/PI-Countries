@@ -8,6 +8,7 @@ import { filterCountries } from '../../redux/actions/countries';
 
 import style from './Aside.module.css';
 import { useFetchActivities } from './../../hooks/useFetchActivities';
+import FieldAside from './fields/FieldAside';
 
 const Aside = () => {
     const dispatch = useDispatch();
@@ -113,18 +114,22 @@ const Aside = () => {
                     </div>
                 </div>
 
-                <div className={style.filterContainer}>
-                    <label htmlFor='continent'>Order by Continent</label>
+                <FieldAside
+                    id={'continent'}
+                    text={'Order by Continent'}
+                >
                     <select onChange={handleContinentSelect} ref={orderContinent} defaultValue={'All'} className={style.select} id="continent">
                         {Array.from(['All', 'Africa', 'Antarctica', 'Asia', 'Europe', 'South America', 'North America', 'Oceania']).map((continent) => {
                             return <option key={continent} value={continent}>{continent}</option>
                         })
                         }
                     </select>
-                </div>
+                </FieldAside>
 
-                <div className={style.filterContainer}>
-                    <label htmlFor='orderAlphabetically'>Order Alphabetically</label>
+                <FieldAside
+                    id={'orderAlphabetically'}
+                    text={'Order Alphabetically'}
+                >
                     <select onChange={handleAlphabeticallySelect} ref={orderAlphabetically} defaultValue={'None'} className={style.select} id="orderAlphabetically">
                         <option value='None'>None</option>
                         {Array.from(['A-Z', 'Z-A']).map((order) => {
@@ -132,10 +137,12 @@ const Aside = () => {
                         })
                         }
                     </select>
-                </div>
+                </FieldAside>
 
-                <div className={style.filterContainer}>
-                    <label htmlFor='orderPopulation'>Order by Population</label>
+                <FieldAside
+                    id={'orderPopulation'}
+                    text={'Order by Population'}
+                >
                     <select ref={orderPopulation} onChange={handlePopulationSelect} defaultValue={'None'} className={style.select} id="orderPopulation">
                         <option value="None">None</option>
                         {Array.from(['Ascendent', 'Descendent']).map((order) => {
@@ -143,10 +150,12 @@ const Aside = () => {
                         })
                         }
                     </select>
-                </div>
+                </FieldAside>
 
-                <div className={style.filterContainer}>
-                    <label htmlFor='activities'>Order by Activity</label>
+                <FieldAside
+                    id={'activities'}
+                    text={'Order by Activity<'}
+                >
                     <select onChange={handleActivitySelect} ref={orderActivity} defaultValue={'All'} className={style.select} id="activities">
                         <option value="All">All</option>
                         {activities.all.map((activity) => {
@@ -154,7 +163,7 @@ const Aside = () => {
                         })
                         }
                     </select>
-                </div>
+                </FieldAside>
             </aside>
         </>
     )

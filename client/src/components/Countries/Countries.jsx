@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react';
@@ -14,11 +13,38 @@ const Countries = () => {
     const [limit, setLimit] = useState({ min: 0, max: 8 });
     const { filteredCountries, loaded } = useFetchCountries();
 
+    const renderCountries = () => {
+        const countries = [];
+        for (let i = limit.min; i <= limit.max; i++) {
+            const country = filteredCountries[i];
+            if (!country) break;
+            countries.push(
+                <div key={country.id} className={style.cardCointaner}>
+                    <Link to={`/details/${country.id}`}>
+                        <Card
+                            name={country.name}
+                            continent={country.continent}
+                            subregion={country.subregion}
+                            flag={country.flag}
+                        />
+                    </Link>
+                </div>
+            )
+
+        }
+        return countries;
+    }
+
     const getAllButtonsPages = () => {
         const totalPages = ((filteredCountries.length + 1) / 10);
         const buttonsPage = [];
         for (let i = 0; i < totalPages; i++) {
-            buttonsPage.push(<a key={i} onClick={handleOnClickPage} className={i === 0 ? `${style.active} ${style.btnPage}` : style.btnPage} href="#">{i + 1}</a>)
+            buttonsPage.push(
+                <a key={i}
+                    onClick={handleOnClickPage}
+                    className={i === 0 ? `${style.active} ${style.btnPage}` : style.btnPage}
+                    href="#">{i + 1}
+                </a>)
         }
         return buttonsPage;
     }
@@ -68,22 +94,7 @@ const Countries = () => {
                         </div>
                         // cuando si existe el pais
                         :
-                        filteredCountries.map((c, index) => {
-                            if (index <= limit.max && index >= limit.min) {
-                                return (
-                                    <div key={c.id} className={style.cardCointaner}>
-                                        <Link to={`/details/${c.id}`}>
-                                            <Card
-                                                name={c.name}
-                                                continent={c.continent}
-                                                subregion={c.subregion}
-                                                flag={c.flag}
-                                            />
-                                        </Link>
-                                    </div>)
-                            }
-                            return '';
-                        })
+                        renderCountries()
                     }
                     </>
                 </div>

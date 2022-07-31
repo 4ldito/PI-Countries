@@ -6,16 +6,13 @@ import { useSearchParams } from 'react-router-dom';
 
 import Alert from './../Alert/Alert';
 import Loading from '../Loading/Loading';
+import FieldActivity from './fields/FieldActivity';
 
 import { cleanActivity, createActivity } from '../../redux/actions/activities';
 import { filterCountries } from './../../redux/actions/countries';
 
 import style from './CreateActivity.module.css';
-import styleAlert from '../Alert/Alert.module.css'
-
-/**
- * modificar input range
- */
+import styleAlert from '../Alert/Alert.module.css';
 
 const CreateActivity = () => {
 
@@ -205,11 +202,14 @@ const CreateActivity = () => {
             <h3 className={style.title}>New Activity</h3>
           </div>
           <form action="" method="post" onSubmit={handleOnSubmit}>
-            <div className={newActivity.name.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
-              <label className={style.label} htmlFor="name">Name</label>
-              <input value={newActivity.name.text} onChange={handleChangeName} type="text" placeholder='Name' id='name' />
-              {newActivity.name.error && <label htmlFor="name" className={style.lblWrong}>Please, type a name for the activity</label>}
-            </div>
+
+            <FieldActivity
+              field={newActivity.name}
+              id='name'
+              text='Name'
+              textWrong='Please, type a name for the activity'>
+              <input autoComplete='off' value={newActivity.name.text} onChange={handleChangeName} type="text" placeholder='Name' id='name' />
+            </FieldActivity>
 
             <div className={style.containerInput}>
               <label className={style.label} htmlFor="difficulty">Difficulty</label>
@@ -217,14 +217,19 @@ const CreateActivity = () => {
               <p ref={diffText} className={style.veryEasy} >Begginer</p>
             </div>
 
-            <div className={newActivity.duration.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
-              <label className={style.label} htmlFor="duration">Duration in hours (Max: 24)</label>
-              <input ref={inputDuration} className={style.durationInput} value={newActivity.duration.hours} onKeyPress={dontAllowLeters} onChange={hanldeChangeDuration} min={0} max={24} type="number" placeholder='Duration' id='duration' />
-              {newActivity.duration.error && <label htmlFor="duration" className={style.lblWrong}>Please, type a duration for the activity</label>}
-            </div>
-
-            <div className={newActivity.season.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
-              <label className={style.label} htmlFor="season">Season</label>
+            <FieldActivity
+              field={newActivity.duration}
+              id='duration'
+              text='Duration in hours (Max: 24)'
+              textWrong='Please, type a duration for the activity'>
+              <input value={newActivity.duration.hours} ref={inputDuration} className={style.durationInput} onKeyPress={dontAllowLeters} onChange={hanldeChangeDuration} min={0} max={24} type="number" placeholder='Duration' id='duration' />
+            </FieldActivity>
+            
+            <FieldActivity
+              field={newActivity.season}
+              id='season'
+              text='Season'
+              textWrong='Please, choose a season for the activity'>
               <select ref={selectedSeason} className={style.select} onChange={hanldeSeasonChange} defaultValue={'None'} name="continent" id='continent'>
                 <option disabled value="None">Select Season</option>
                 <option value="Summer">Summer</option>
@@ -232,18 +237,19 @@ const CreateActivity = () => {
                 <option value="Winter">Winter</option>
                 <option value="Spring">Spring</option>
               </select>
-              {newActivity.season.error && <label htmlFor="continent" className={style.lblWrong}>Please, choose a season for the activity</label>}
-            </div>
+            </FieldActivity>
 
-            <div className={newActivity.countries.error ? `${style.containerInput} ${style.errorContainer}` : style.containerInput}>
-              <label className={style.label} htmlFor="countries">Countries</label>
+            <FieldActivity
+              field={newActivity.countries}
+              id='countries'
+              text='Select a Country'
+              textWrong='Please, choose at least one country for the activity'>
               <select ref={selectedCountries} className={style.select} onChange={handleCountrySelect} defaultValue={'None'} name="countries" id='countries'>
                 <option disabled value="None">Select a Country</option>
                 {countries?.map((country) => {
                   return <option key={country.id} value={country.id}>{country.name}</option>
                 })}
               </select>
-              {newActivity.countries.error && <label htmlFor="countries" className={style.lblWrong}>Please, choose at least one country for the activity</label>}
               <div>
                 <div className={style.containerSelectedCountries}>
                   <h4>Selected Countries</h4>
@@ -266,7 +272,8 @@ const CreateActivity = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </FieldActivity>
+
             <div className={style.containerButton}>
               <button className={style.btn} type="submit">Create Activity</button>
             </div>

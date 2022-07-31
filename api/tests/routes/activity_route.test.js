@@ -97,7 +97,7 @@ describe('Activity Routes', () => {
                         countries: ["USA"]
                     });
                 expect(res.statusCode).toBe(201);
-                expect(activity4.name).toBe(res.body.name);
+                expect(res.body.name).toBe('Surfing');
             } catch (error) {
                 console.log('error', error)
             }

@@ -6,38 +6,9 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import Loading from './../Loading/Loading';
 
 import { cleanCountryId, getCountries, getCountryById } from './../../redux/actions/countries';
+import { difficulties, subregions } from '../../utils/utils';
 
 import style from './CountryDetails.module.css';
-
-const subregions = {
-  'Caribbean': 'America',
-  'Central America': 'America',
-  'North America': 'America',
-  'South America': 'America',
-  'Southern Africa': 'Africa',
-  'Eastern Africa': 'Africa',
-  'Western Africa': 'Africa',
-  'Northern Africa': 'Africa',
-  'Middle Africa': 'Africa',
-  'Australia and New Zealand': 'Oceania',
-  'Micronesia': 'Oceania',
-  'Polynesia': 'Oceania',
-  'Melanesia': 'Oceania',
-  'Central Europe': 'Europe',
-  'Eastern Europe': 'Europe',
-  'Southeast Europe': 'Europe',
-  'Southern Europe': 'Europe',
-  'Western Europe': 'Europe',
-  'Northern Europe': 'Europe',
-  'Western Asia': 'Asia',
-  'Southern Asia': 'Asia',
-  'South-Eastern Asia': 'Asia',
-  'Eastern Asia': 'Asia',
-  'Central Asia': 'Asia',
-  'Antarctica': 'Antarctica'
-}
-
-const difficulties = ['Begginer', 'Amateur', 'Normal', 'Professional', 'Expert'];
 
 const CountryDetails = () => {
   const dispatch = useDispatch();
