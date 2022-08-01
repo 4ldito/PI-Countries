@@ -154,7 +154,7 @@ const Aside = () => {
 
                 <FieldAside
                     id={'activities'}
-                    text={'Order by Activity<'}
+                    text={'Order by Activity'}
                 >
                     <select onChange={handleActivitySelect} ref={orderActivity} defaultValue={'All'} className={style.select} id="activities">
                         <option value="All">All</option>

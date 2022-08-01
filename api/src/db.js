@@ -34,17 +34,6 @@ let sequelize =
       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
     });
 
-// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/countries`, {
-//   define: {
-//     charset: 'utf8',
-//     collate: 'utf8_general_ci',
-//     timestamps: true
-//   },
-//   logging: false, // set to console.log to see the raw SQL queries
-//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-// });
-
-
 const basename = path.basename(__filename);
 
 const modelDefiners = [];

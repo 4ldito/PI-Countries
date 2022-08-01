@@ -24,7 +24,6 @@ const Countries = () => {
                         <Card
                             name={country.name}
                             continent={country.continent}
-                            subregion={country.subregion}
                             flag={country.flag}
                         />
                     </Link>
