@@ -7,7 +7,7 @@ import style from './PlayQuiz.module.css';
 
 const PlayQuiz = () => {
 
-    const { filteredCountries, loaded } = useFetchCountries();
+    const { filteredCountries, loaded } = useFetchCountries(true);
 
     const [infoGame, setInfoGame] = useState({
         gameStarted: false,
