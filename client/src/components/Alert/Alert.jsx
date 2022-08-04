@@ -21,7 +21,7 @@ const Alert = ({ title, text, textBTN, background, type }) => {
             <img className={style.img} src={type === 'success' ? imgOK : imgError} alt={'Icon'} />
             <h3 className={style.title}>{title}</h3>
             <p>{text}</p>
-            <a onClick={handleOnClick} className={style.btn} href='#'>{textBTN}</a>
+            <button onClick={handleOnClick} className={style.btn} href='#'>{textBTN}</button>
         </div>
     )
 }
