@@ -293,4 +293,4 @@ const CreateActivity = () => {
   )
 }
 
-export default CreateActivity
+export default CreateActivity;

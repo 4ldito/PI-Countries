@@ -1,0 +1,77 @@
+.cardsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-bottom: 1.5rem;
+    min-width: 1220px;
+    min-height: 570px;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.errorContainer {
+    min-width: 1220px;
+    min-height: 570px;
+    padding: 1rem;
+}
+
+.countryDontFoundTitle {
+    background-color: #14364adf;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
+.cardCointaner {
+    display: flex;
+    justify-content: center;
+    height: max-content;
+}
+
+
+@media screen and (max-width: 1500px) {
+    .cardsContainer {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        min-height: 350px;
+        min-width: auto;
+    }
+
+    .errorContainer {
+        min-height: 350px;
+        min-width: auto;
+    }
+}
+
+@media screen and (max-width: 1290px) {
+    .cardsContainer {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .cardsContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 930px) {
+    .cardsContainer {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .errorContainer h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .cardsContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .cardsContainer {
+        grid-template-columns: 1fr;
+    }
+}

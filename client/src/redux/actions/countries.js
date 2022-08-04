@@ -14,7 +14,7 @@ export function getCountries() {
             const response = await axios.get('api/countries/');
             dispatch({ type: GET_ALL_COUNTRIES, payload: response.data });
         } catch (error) {
-            console.log('error');
+            console.log(error);
         }
     }
 }

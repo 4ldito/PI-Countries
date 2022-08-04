@@ -1,0 +1,39 @@
+.containerPages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pages {
+    margin: 1rem;
+    border: 2px solid white;
+    padding: 1rem;
+    /* width: max-content; */
+    border-radius: 10px;
+    background-color: #0000008a;
+}
+
+.btnPage {
+    color: white;
+    margin: 0.3rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+}
+
+.active {
+    background-color: #0082FC;
+}
+
+@media screen and (max-width: 1500px) {
+    .btnPage {
+        margin: 0.2rem;
+        padding: 0.3rem 0.2rem;
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .pages {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

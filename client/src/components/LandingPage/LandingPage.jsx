@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 
-// import logo from '../../img/logo.png';
 import logo from '../../img/logo.png'
 
 import style from './LandingPage.module.css';
+import { useFetchCountries } from './../../hooks/useFetchCountries';
 
 const InitialPage = () => {
+    useFetchCountries();
     return (
         <div className={style.container}>
             <div className={style.infoContainer}>

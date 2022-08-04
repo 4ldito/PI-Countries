@@ -15,11 +15,11 @@ const AllRoutes = () => {
       <Navbar />
       <Routes>
         <Route path='/home' element={<Home />} />
-        <Route path='/create-activities' element={<CreateActivity />} />
-        <Route path='/about' element={<About />} />
         <Route path='/details/:id' element={<CountryDetails />} />
+        <Route path='/create-activities' element={<CreateActivity />} />
         <Route path='/quiz' element={<Quiz />} />
         <Route path='/quiz/play' element={<PlayQuiz />} />
+        <Route path='/about' element={<About />} />
         <Route path='/*' element={<Page404 />} />
       </Routes>
     </>

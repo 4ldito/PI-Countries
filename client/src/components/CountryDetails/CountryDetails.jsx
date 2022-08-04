@@ -73,6 +73,7 @@ const CountryDetails = () => {
     window.scroll({
       top: 0
     });
+    
     return () => {
       dispatch(cleanCountryId());
     }
@@ -91,7 +92,7 @@ const CountryDetails = () => {
                 <div className={style.containerTitleFlag}>
                   <div className={style.flagContainer}>
                     <button onClick={handleBtnImg} className={style.btnImg}>
-                      <img src={infoCountry.flag} alt="" />
+                      <img src={infoCountry.flag} alt={`${infoCountry.name} flag`} />
                     </button>
                   </div>
                   <h2 className={style.countryName}>{infoCountry.name}</h2>
@@ -165,7 +166,7 @@ const CountryDetails = () => {
               <div onClick={closeMoreInfo} ref={moreInfo} className={style.background}>
                 <div ref={moreInfoContainer} className={style.containerMoreInfo}>
                   <h2 className={style.titleMoreInfo}>{infoCountry.name}</h2>
-                  <img src={infoCountry.flag} alt="" />
+                  <img src={infoCountry.flag} alt={`${infoCountry.name} flag`} />
                 </div>
               </div>
             </>

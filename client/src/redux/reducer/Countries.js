@@ -60,7 +60,7 @@ export default function countries(state = initialState, { type, payload }) {
                 countriesByName: [],
                 countriesByContinent: [],
                 countriesByPopulation: [],
-                countriesByActivity: [],
+                countriesByActivity: [],    
                 countryById: {},
                 loaded: false
             }
