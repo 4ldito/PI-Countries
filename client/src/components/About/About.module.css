@@ -84,3 +84,15 @@
         margin-bottom: 1rem;
     }
 }
+
+@media screen and (max-width: 400px) {
+
+    .img {
+        width: 150px;
+    }
+
+    .content {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+}

@@ -102,3 +102,13 @@ img {
     }
 
 }
+
+
+@media screen and (max-width: 350px) {
+    
+
+    .container {
+        margin: 1rem 0.5rem;
+    }
+
+}
