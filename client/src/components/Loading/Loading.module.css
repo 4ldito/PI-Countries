@@ -1,3 +1,19 @@
+.background {
+    background-color: #1c1b2294;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.containerLoading {
+    background-color: #000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
 .globeLoader {
     position: fixed;
     font-size: 15rem;
@@ -30,6 +46,7 @@
     position: relative;
     top: -1.25em;
 }
+
 .globeLoader>p {
     padding: 3rem 0 1rem 0;
     font-size: 1.2rem;
@@ -45,18 +62,15 @@
     }
 }
 
-.containerLoading {
-    background-color: #000;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+@media screen and (max-width: 520px) {
+    .globeLoader {
+        font-size: 10rem;
+    }
 }
 
-.background {
-    background-color: #1c1b2294;
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
+@media screen and (max-width: 330px) {
+    .globeLoader {
+        padding: 1rem 3rem;
+        font-size: 8rem;
+    }
 }

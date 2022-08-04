@@ -73,7 +73,7 @@ const CountryDetails = () => {
     window.scroll({
       top: 0
     });
-    
+
     return () => {
       dispatch(cleanCountryId());
     }
@@ -153,7 +153,7 @@ const CountryDetails = () => {
                         })}
                       </>
                       :
-                      <div style={{ width: '500px' }}>
+                      <div>
                         <p className={style.dontFound}>There is no activities for this country =(</p>
                       </div>
                     }

@@ -213,6 +213,7 @@
 .btn:hover {
     background-color: #0059ac;
 }
+
 .randomBtn {
     width: 100%;
 }
@@ -277,9 +278,31 @@
 }
 
 @media screen and (max-width: 930px) {
+    .infoContainer {
+        width: auto;
+        grid-template-columns: 1fr;
+    }
+
+    .countryName {
+        font-size: 2rem;
+        margin: 0;
+    }
+
+}
+
+@media screen and (max-width: 530px) {
+    .container {
+        margin: 1rem;
+    }
 
     .infoContainer {
-        grid-template-columns: 1fr;
+        padding: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .codeContainer p {
+        left: 70%;
     }
 
 }
