@@ -27,7 +27,9 @@ router.post('/', async (req, res, next) => {
         countries.forEach(id => {
             Country.findByPk(id).then(async country => {
                 await country.addActivity(activity);
-            }).catch(error => { });
+            }).catch(error => {
+                console.log(error);
+            });
 
             const cacheCountry = cache.allCountries.find(c => c.id === id);
             cacheCountry.dataValues.Activities.push(activity);
