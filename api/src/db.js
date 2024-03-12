@@ -27,7 +27,7 @@ const { RAILWAY_DATABASE_URL } = process.env;
 //       },
 //       ssl: true
 //     })
-    // : new Sequelize(`postgresql://postgres:5ga5gef6a432d64Bf35DAc2E5CCaB6d4@viaduct.proxy.rlwy.net:51089/railway`, {
+    // : new Sequelize(``, {
     //   logging: false, // set to console.log to see the raw SQL queries
     //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
     // });
