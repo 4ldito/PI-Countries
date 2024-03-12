@@ -2,37 +2,40 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PGPORT
-} = process.env;
+const { RAILWAY_DATABASE_URL } = process.env;
 
-let sequelize =
-  process.env.NODE_ENV === 'production' ?
-    new Sequelize({
-      database: DB_NAME,
-      dialect: 'postgres',
-      host: DB_HOST,
-      port: PGPORT,
-      username: DB_USER,
-      password: DB_PASSWORD,
-      pool: {
-        max: 3,
-        min: 1,
-        idle: 10000
-      },
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
-        keepAlive: true
-      },
-      ssl: true
-    })
-    : new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
-      logging: false, // set to console.log to see the raw SQL queries
-      native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-    });
+// let sequelize =
+//   process.env.NODE_ENV === 'production' ?
+//     new Sequelize({
+//       database: DB_NAME,
+//       dialect: 'postgres',
+//       host: DB_HOST,
+//       port: PGPORT,
+//       username: DB_USER,
+//       password: DB_PASSWORD,
+//       pool: {
+//         max: 3,
+//         min: 1,
+//         idle: 10000
+//       },
+//       dialectOptions: {
+//         ssl: {
+//           require: true,
+//           rejectUnauthorized: false,
+//         },
+//         keepAlive: true
+//       },
+//       ssl: true
+//     })
+    // : new Sequelize(`postgresql://postgres:5ga5gef6a432d64Bf35DAc2E5CCaB6d4@viaduct.proxy.rlwy.net:51089/railway`, {
+    //   logging: false, // set to console.log to see the raw SQL queries
+    //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+    // });
+
+const sequelize = new Sequelize(RAILWAY_DATABASE_URL, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+});
 
 const basename = path.basename(__filename);
 
